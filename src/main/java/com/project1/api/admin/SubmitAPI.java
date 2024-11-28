@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/uploads/")
+@RequestMapping("/uploads")
 public class SubmitAPI {
 
     private final String UPLOAD_DIR = "D:/webcode/uploads/";

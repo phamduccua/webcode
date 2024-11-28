@@ -35,7 +35,7 @@
         .inputFile_value{
             border: 1px solid black;
             background-color: #FFFF;
-            width:300px;
+            width:350px;
             height:20px;
             border-radius: 4px;
             padding:4px;
@@ -61,7 +61,7 @@
             height:30px;
             padding: 5px;
             border-radius: 4px;
-            margin-right:230px;
+            margin-right:180px;
         }
         button{
             float: right;
@@ -291,7 +291,7 @@
         <p>Giới hạn bài tập: ${detail.time_limit}s</p>
         <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p>
     <div>
-        <form action="/uploads/file" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" enctype="multipart/form-data">
             <div class="form-container">
                 <p>Trình biên dịch</p>
                 <select>
@@ -299,7 +299,7 @@
                 </select>
                 <p class="inputFile_value" onclick="upload()">Chọn tệp</p>
                 <p class="inputFile_browser" onclick="upload()">Duyệt</p>
-                <input type="file" name="code_file" id="fileInput" accept=".c,.cpp,.java,.py"/>
+                <input type="file" name="file" id="fileInput" accept=".c,.cpp,.java,.py"/>
             </div>
             <button type="submit">Nộp bài</button> <br> <br>
         </form>
@@ -334,10 +334,46 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function upload(){
         $('#fileInput').click();
     }
+    $('#fileInput').change(function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('.inputFile_value').text(fileName ? 'C:\\fakepath\\' +  fileName : 'Chọn tệp');
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#uploadForm').on('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData();
+            var fileInput = $('#fileInput')[0].files[0];
+            formData.append('file', fileInput);
+
+            $.ajax({
+                url: '/uploads/file',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log("Thành công");
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Lỗi!',
+                        text: "File không hợp lệ !!! Vui lòng kiểm tra lại !!!",
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    });
+
 </script>
 </body>
 </html>
