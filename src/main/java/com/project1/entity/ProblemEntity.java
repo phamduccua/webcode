@@ -59,4 +59,7 @@ public class ProblemEntity {
 
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
+
+    @OneToMany(mappedBy="problem")
+    private List<ProgramingLanguageEntity> programingLanguages = new ArrayList<>();
 }

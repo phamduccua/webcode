@@ -1,5 +1,9 @@
 package com.project1.model.dto;
 
+import com.project1.entity.ProgramingLanguageEntity;
+
+import java.util.List;
+
 public class ProblemDTO extends AbstractDTO{
     private String code;
     private String title;
@@ -15,6 +19,7 @@ public class ProblemDTO extends AbstractDTO{
     private String color;
     private float time_limit;
     private Long memory_limit;
+    private List<String> programingLanguage;
 
     public String getCode() {
         return code;
@@ -126,5 +131,13 @@ public class ProblemDTO extends AbstractDTO{
 
     public void setMemory_limit(Long memory_limit) {
         this.memory_limit = memory_limit;
+    }
+
+    public List<String> getProgramingLanguage() {
+        return programingLanguage;
+    }
+
+    public void setProgramingLanguage(List<String> programingLanguage) {
+        this.programingLanguage = programingLanguage;
     }
 }

@@ -10,7 +10,7 @@
   </div>
   <a class="button button-exam" href="list">Bài tập</a>
   <a class="button button-status" href="https://www.youtube.com/">Trạng thái</a>
-  <a class="button button-history" href="#">Lịch sử</a>
+  <a class="button button-history" href="history">Lịch sử</a>
   <a class="button button-rank" href="#">Bảng xếp hạng</a>
   <a class="button button-configuration">
     <div style="display: flex; align-items: center; gap: 8px; position: relative;">

@@ -287,16 +287,19 @@
         </table>
     </div>
 </c:if>
-        </div>
+</div>
         <p>Giới hạn bài tập: ${detail.time_limit}s</p>
         <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p>
     <div>
         <form id="uploadForm" enctype="multipart/form-data">
             <div class="form-container">
                 <p>Trình biên dịch</p>
-                <select>
-                    <option>C/C++</option>
+                <select id="selectPogram" name="programingLanguage">
+                    <c:forEach var="item" items="${listLanguage}" >
+                        <option value="${item}" >${item}</option>
+                    </c:forEach>
                 </select>
+
                 <p class="inputFile_value" onclick="upload()">Chọn tệp</p>
                 <p class="inputFile_browser" onclick="upload()">Duyệt</p>
                 <input type="file" name="file" id="fileInput" accept=".c,.cpp,.java,.py"/>
@@ -332,6 +335,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="id" value="${detail.id}" />
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -351,8 +355,11 @@
 
             var formData = new FormData();
             var fileInput = $('#fileInput')[0].files[0];
+            var language = $('#selectPogram').val();
+            var id = $('#id').val();
             formData.append('file', fileInput);
-
+            formData.append('language',language);
+            formData.append('id', id);
             $.ajax({
                 url: '/uploads/file',
                 type: 'POST',
@@ -361,6 +368,7 @@
                 contentType: false,
                 success: function(response) {
                     console.log("Thành công");
+                    window.location.href = '/admin/history';
                 },
                 error: function(xhr, status, error) {
                     Swal.fire({

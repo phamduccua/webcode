@@ -2,17 +2,21 @@ package com.project1.controller.admin;
 
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
+import com.project1.entity.enums.language;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.request.ProblemSearchRequest;
 import com.project1.model.response.ProblemSearchReponse;
 import com.project1.service.*;
 
+import com.project1.utils.LanguegeUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,6 +44,11 @@ public class ProblemController {
         return mav;
     }
 
+    @GetMapping("/admin/history")
+    public ModelAndView problemHistory(HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/history");
+        return mav;
+    }
     @GetMapping("admin/add")
     public ModelAndView problemEdit(@ModelAttribute("problemAdd") ProblemDTO problemDTO , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/add");
@@ -77,8 +86,10 @@ public class ProblemController {
         ModelAndView mav = new ModelAndView("admin/problem/assignment");
         ProblemDTO problemDTO = findProblemService.findByCode(code);
         List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
+        List<String> program = problemDTO.getProgramingLanguage();
         mav.addObject("detail", problemDTO);
         mav.addObject("listTest", listTest);
+        mav.addObject("listLanguage", LanguegeUtils.language(program));
         return mav;
     }
 }
