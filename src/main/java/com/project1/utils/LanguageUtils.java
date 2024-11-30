@@ -21,20 +21,20 @@ public class LanguageUtils {
     }
     public static String unLanguage(String language){
         return switch (language) {
-            case "C" -> "C";
-            case "CPP" -> "C/C++";
-            case "Java" -> "Java";
-            case "Python3" -> "Python3";
+            case "c" -> "C";
+            case "cpp17" -> "C/C++";
+            case "java" -> "Java";
+            case "python3" -> "Python3";
             default -> null;
         };
     }
 
     public static String language(String language){
         return switch (language) {
-            case "C" -> "C";
-            case "C/C++" -> "CPP";
-            case "Java" -> "Java";
-            case "Python3" -> "Python3";
+            case "C" -> "c";
+            case "C/C++" -> "cpp17";
+            case "Java" -> "java";
+            case "Python3" -> "python3";
             default -> null;
         };
     }

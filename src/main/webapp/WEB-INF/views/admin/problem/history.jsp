@@ -94,7 +94,16 @@
                 contentType : "application/json",
                 data : JSON.stringify({ids : ids}),
                 success: function(response) {
-                    console.log('Cập nhật thành công');
+                    response.forEach(function(item){
+                        $("tr").each(function(){
+                            var subId = $(this).find("td:nth-child(1)").text();
+                            if(subId == item.id){
+                                $(this).find("td:nth-child(4)").text(item.status);
+                                $(this).find("td:nth-child(5)").text(item.executionTime);
+                                $(this).find("td:nth-child(6)").text(item.memoryUsed);
+                            }
+                        });
+                    });
                 },
                 error: function(error) {
                     console.error('Cập nhật thất bại', error);

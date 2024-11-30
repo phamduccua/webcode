@@ -27,7 +27,7 @@
 
         .detail {
             position: relative !important;
-            width: 850px !important;
+            width: 870px !important;
             margin: 30.39px auto 0 !important;
             padding: 25.6px 39.19px !important;
             border-radius: 4px !important;
@@ -324,7 +324,7 @@
         </table>
     </div>
 </c:if>
-</div>
+</div><br>
         <p>Giới hạn bài tập: ${detail.time_limit}s</p>
         <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p> <br>
     <div>

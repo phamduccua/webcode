@@ -42,10 +42,9 @@
                         <p>${item.formattedTime}</p>
                     </td>
                     <td>
-                    <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;"/>${item.problemName}
+                    <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
                     <c:if test="${item.status == 0}">
-                    <div>
                         <td class="spinner">
                             <div class="spinner-border text-primary small-spinner" role="status">
                                 <span class="visually-hidden">Loading...</span>
@@ -53,8 +52,6 @@
                         </td>
                         <td></td>
                         <td></td>
-                    </div>
-
                     </c:if>
                     <c:if test="${item.status != 0}">
                         <td>${item.status}</td>
@@ -70,6 +67,7 @@
         </table>
     </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var submittedAt = "2024-11-30T14:30:00";
     var dateTime = new Date(submittedAt);
@@ -79,7 +77,42 @@
 
     document.getElementById("date-time").innerHTML = "<span>" + date + "</span><br><span>" + time + "</span>";
 </script>
-
+<script>
+    function  updateStatus(){
+        var ids = [];
+        $("tr").each(function(){
+            var status  = $(this).find("td:nth-child(4)").text();
+            if(status == "0"){
+                var id = $(this).find("td:nth-child(1)").text();
+                ids.push(id);
+            }
+        });
+        if(ids.length > 0){
+            $ajax({
+                type : "POST",
+                url : "/admin/update-status",
+                contentType : "application/json",
+                data : JSON.stringify({ids : ids}),
+                success: function(response) {
+                    response.forEach(function(item){
+                        $("tr").each(function(){
+                            var subId = $(this).find("td:nth-child(1)").text();
+                            if(subId == item.id){
+                                $(this).find("td:nth-child(4)").text(item.status);
+                                $(this).find("td:nth-child(5)").text(item.executionTime);
+                                $(this).find("td:nth-child(6)").text(item.memoryUsed);
+                            }
+                        });
+                    });
+                },
+                error: function(error) {
+                    console.error('Cập nhật thất bại', error);
+                }
+            });
+        }
+    }
+    setTimeout(updateStatus, 3000);
+</script>
 
 <style>
     .head {

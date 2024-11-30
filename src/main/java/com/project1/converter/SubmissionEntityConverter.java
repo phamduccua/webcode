@@ -22,6 +22,7 @@ public class SubmissionEntityConverter {
         submissionEntity.setProblem(problemEntity);
         LocalDateTime now = LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(now);
+        submissionEntity.setSubmittedAt(timestamp);
         return submissionEntity;
     }
 }

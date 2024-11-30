@@ -17,14 +17,13 @@ public class AddOrUpdateSubRepositoryImpl implements AddOrUpdateSubRepository {
     @Autowired
     private SubmissionRepository submissionRepository;
     @Override
-    public void addOrUpdateSub(SubmissionEntity submissionEntity) {
+    public Long addOrUpdateSub(SubmissionEntity submissionEntity) {
         if(submissionEntity.getId() == null){
             entityManager.persist(submissionEntity);
         }
         else{
-            SubmissionEntity sub = submissionRepository.findById(submissionEntity.getId()).get();
-            sub = submissionEntity;
-            entityManager.merge(sub);
+            SubmissionEntity sub = entityManager.merge(submissionEntity);
         }
+        return submissionEntity.getId();
     }
 }
