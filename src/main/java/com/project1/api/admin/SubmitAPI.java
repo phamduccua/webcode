@@ -1,6 +1,10 @@
 package com.project1.api.admin;
 
+import com.project1.converter.SubmissionEntityConverter;
+import com.project1.entity.SubmissionEntity;
 import com.project1.entity.enums.language;
+import com.project1.repository.AddOrUpdateSubRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +20,10 @@ import java.nio.file.Paths;
 @RestController
 @RequestMapping("/uploads")
 public class SubmitAPI {
-
+    @Autowired
+    private SubmissionEntityConverter submissionEntityConverter;
+    @Autowired
+    private AddOrUpdateSubRepository addOrUpdateSubRepository;
     private final String UPLOAD_DIR = "D:/webcode/uploads/";
 
     @PostMapping("/file")
@@ -41,7 +48,8 @@ public class SubmitAPI {
             file.transferTo(destFile);
             String fileContent = readFileContent(destFile);
             destFile.delete();
-
+            SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, id);
+            addOrUpdateSubRepository.addOrUpdateSub(submission);
             return ResponseEntity.ok("File uploaded successfully: /uploads/" + file.getOriginalFilename());
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());

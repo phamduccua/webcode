@@ -24,7 +24,7 @@ public class ProblemAPI {
     private DeleteProblemService deleteProblemService;
     @PostMapping
     public ResponseEntity<?> addOrUpdateProblem(@RequestBody ProblemDTO problemDTO) {
-        try {
+//        try {
             Long problemId;
             if (problemDTO.getId() == null) {
                 problemId = addProblemService.addProblem(problemDTO);
@@ -32,15 +32,15 @@ public class ProblemAPI {
                 problemId = editProblemService.updateProblem(problemDTO);
             }
             return ResponseEntity.ok(problemId);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("message", "Mã bài tập " + problemDTO.getCode() + " đã tồn tại !!!!!!");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(errorResponse);
-        }
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        } catch (Exception e) {
+//            Map<String, String> errorResponse = new HashMap<>();
+//            errorResponse.put("message", "Mã bài tập " + problemDTO.getCode() + " đã tồn tại !!!!!!");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .body(errorResponse);
+//        }
     }
     @DeleteMapping("/delete-item/{id}")
     public ResponseEntity<Void> deleteProblem(@PathVariable Long id) {

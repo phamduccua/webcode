@@ -13,231 +13,268 @@
 <head>
     <meta charset="UTF-8">
     <title>Đề bài</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .main {
-            position: relative;
-            width: 800px;
-            margin: 30.39px auto 0;
-            padding: 25.6px 39.19px;
-            border-radius: 4px;
+            position: relative !important;
+            width: 950px !important;
+            margin: 30.39px auto 0 !important;
+            padding: 25.6px 39.19px !important;
+            border-radius: 4px !important;
             background-color: #FEF9F9 !important;
-            text-align: left;
+            text-align: left !important;
         }
+
         .detail {
-            position: relative;
-            width: 700px;
-            margin: 30.39px auto 0;
-            padding: 25.6px 39.19px;
-            border-radius: 4px;
-            background-color: #FFFF;
-            text-align: left;
+            position: relative !important;
+            width: 850px !important;
+            margin: 30.39px auto 0 !important;
+            padding: 25.6px 39.19px !important;
+            border-radius: 4px !important;
+            background-color: #FFFF !important;
+            text-align: left !important;
         }
-        .inputFile_value{
-            border: 1px solid black;
-            background-color: #FFFF;
-            width:350px;
-            height:20px;
-            border-radius: 4px;
-            padding:4px;
+
+        .inputFile_value {
+            border: 1px solid black !important;
+            background-color: #FFFF !important;
+            width: 350px !important;
+            height: 33px !important;
+            border-radius: 4px !important;
+            padding: 4px !important;
         }
-        .inputFile_browser{
-            float: right;
-            width:50px;
-            height:20px;
-            border: 1px solid black;
-            background-color: #fdedf6;
-            text-align: center;
-            border-radius: 4px;
+
+        .inputFile_browser {
+            float: right !important;
+            width: 50px !important;
+            height: 31px !important;
+            border: 1px solid black !important;
+            background-color: #fdedf6 !important;
+            text-align: center !important;
+            border-radius: 4px !important;
         }
+
         .form-container {
-            display:inline;
-            align-items: center; /* Căn giữa theo chiều dọc */
-            gap: 10px; /* Khoảng cách giữa các phần tử */
-            display: flex;             /* Đặt các phần tử ngang hàng */
-            flex-wrap: nowrap;
+            display: inline !important;
+            align-items: center !important;
+            gap: 10px !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
         }
+
         select {
-            width:80px;
-            height:30px;
-            padding: 5px;
-            border-radius: 4px;
-            margin-right:180px;
+            width: 80px !important;
+            height: 35px !important;
+            padding: 5px !important;
+            border-radius: 4px !important;
+            margin-right: 250px !important;
+            text-align: center !important;
         }
-        button{
-            float: right;
-            background-color: #bb2019;
-            color:#FFFF;
-            border-radius: 4px;
-            width:154.32px;
-            height:37.35px;
+
+        button {
+            float: right !important;
+            background-color: #bb2019 !important;
+            color: #FFFF !important;
+            border-radius: 4px !important;
+            width: 154.32px !important;
+            height: 37.35px !important;
         }
-        h2{
-            position:relative;
-            text-align: center;
+
+        h2 {
+            position: relative !important;
+            text-align: center !important;
         }
+
         table.table {
-            width: 100%;
-            border-collapse: collapse;
+            width: 100% !important;
+            border-collapse: collapse !important;
+            text-align: center !important;
         }
-        table.table th{
-            height:80px;
-            text-align: center;
-            background-color:#FAEDED;
+
+        table.table th {
+            height: 40px !important;
+            text-align: center !important;
+            background-color: #FAEDED !important;
+            top: 10px !important;
         }
-        table.table td{
-            text-align: center;
-            background-color: #F1ECEC;
+
+        table.table td {
+            text-align: center !important;
+            background-color: #F1ECEC !important;
         }
+
         .head {
-            width: 100%;
-            height: 60px;
-            box-sizing: border-box;
-            background-color: #8B1A1A;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 60px !important;
+            box-sizing: border-box !important;
+            background-color: #8B1A1A !important;
         }
+
         .button {
-            color: white;
-            position: absolute;
-            top:18px;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
+            color: white !important;
+            position: absolute !important;
+            top: 18px !important;
+            border: none !important;
+            padding: 10px 20px !important;
+            text-align: center !important;
         }
+
         .button-exam {
-            left: 120px;
+            top: 7px !important;
+            left: 120px !important;
         }
+
         .button-status {
-            left: 200px;
+            top: 7px !important;
+            left: 200px !important;
         }
+
         .button-history {
-            left: 300px;
+            top: 7px !important;
+            left: 300px !important;
         }
+
         .button-rank {
-            left: 380px;
+            top: 7px !important;
+            left: 380px !important;
         }
-        .button-configuration{
-            left: 510px;
+
+        .button-configuration {
+            top: 7px !important;
+            left: 510px !important;
         }
+
         .button-gui {
-            left: 620px;
+            top: 7px !important;
+            left: 620px !important;
         }
+
         .avatar {
-            background-color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            position: absolute;
-            top: 15px;
-            right: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: white !important;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            position: absolute !important;
+            top: 15px !important;
+            right: 40px !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
         }
 
         .img {
-            width: 70%;
-            height: 70%;
+            width: 70% !important;
+            height: 70% !important;
         }
+
         .dropdown {
-            position: relative; /* Định vị tương đối */
-            display: inline-block;
-            overflow: visible;
+            position: relative !important;
+            display: inline-block !important;
+            overflow: visible !important;
         }
 
-        /* Nút "Cấu hình" */
         .dropdown-btn {
-            cursor: pointer; /* Biểu tượng trỏ chuột khi hover */
-            color: white; /* Màu chữ */
-            font-weight: bold;
-        }
-        .dropdown-icon {
-            cursor: pointer; /* Trỏ chuột khi hover vào icon */
+            cursor: pointer !important;
+            color: white !important;
+            font-weight: bold !important;
         }
 
-        /* Ẩn menu mặc định */
-        /* Định vị lại menu để không bị che khuất */
+        .dropdown-icon {
+            cursor: pointer !important;
+        }
+
         .dropdown-menu-wrapper {
-            display: none; /* Ẩn menu mặc định */
-            position: absolute; /* Định vị menu thả xuống */
-            top: 100%; /* Hiển thị ngay bên dưới icon */
-            right: 0; /* Căn lề phải để tránh tràn */
-            background-color: white; /* Nền trắng */
-            border: 1px solid #ccc; /* Viền bảng */
-            border-radius: 4px; /* Bo góc */
-            z-index: 1000; /* Đảm bảo menu nằm trên cùng */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
-            overflow-y: auto;
-            width: max-content; /* Kích thước vừa với nội dung */
+            display: none !important;
+            position: absolute !important;
+            top: 100% !important;
+            right: 0 !important;
+            background-color: white !important;
+            border: 1px solid #ccc !important;
+            border-radius: 4px !important;
+            z-index: 1000 !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+            overflow-y: auto !important;
+            width: max-content !important;
         }
 
         .dropdown:hover .dropdown-menu-wrapper {
-            display: block;
+            display: block !important;
         }
 
-
-        /* Table configuration */
         .table-configuration {
-            border-collapse: collapse;
-            width: 100%;
+            border-collapse: collapse !important;
+            width: 100% !important;
         }
 
         .table-configuration td {
-            padding: 10px;
-            text-align: left; /* Căn chữ sang trái */
-            cursor: pointer;
-            color: black;
+            padding: 10px !important;
+            text-align: left !important;
+            cursor: pointer !important;
+            color: black !important;
         }
 
-        /* Hiệu ứng hover trên từng dòng */
         .table-configuration tr:hover td {
-            background-color: #f0f0f0; /* Highlight row */
-        }
-        /* Thêm thanh cuộn cho checkbox */
-        .scrollable-checkboxes {
-            max-height: 100px; /* Chiều cao tối đa của danh sách checkbox */
-            overflow-y: auto; /* Thêm thanh cuộn dọc */
-            border: 1px solid #ccc; /* Đường viền để phân biệt danh sách */
-            padding: 10px; /* Khoảng cách bên trong */
+            background-color: #f0f0f0 !important;
         }
 
-        /* Căn chỉnh nút Lọc xuống dưới cùng */
+        .scrollable-checkboxes {
+            max-height: 100px !important;
+            overflow-y: auto !important;
+            border: 1px solid #ccc !important;
+            padding: 10px !important;
+        }
+
         .filter-button-container {
-            text-align: center; /* Căn nút Lọc vào giữa */
-            margin-top: 10px; /* Khoảng cách giữa danh sách và nút */
+            text-align: center !important;
+            margin-top: 10px !important;
         }
 
         .filter-button {
-            padding: 5px 15px; /* Kích thước nút */
-            background-color: #f5f5f5; /* Màu nền */
-            border: 1px solid #ccc; /* Đường viền */
-            cursor: pointer; /* Con trỏ chuột */
-            border-radius: 5px; /* Bo góc */
+            padding: 5px 15px !important;
+            background-color: #f5f5f5 !important;
+            border: 1px solid #ccc !important;
+            cursor: pointer !important;
+            border-radius: 5px !important;
         }
+
         .filter-button:hover {
-            background-color: #e0e0e0; /* Hiệu ứng khi hover */
+            background-color: #e0e0e0 !important;
         }
+
         a {
-            text-decoration: none;
+            text-decoration: none !important;
             pointer-events: auto !important;
         }
+
         .detail p {
-            white-space: pre-wrap;
+            white-space: pre-wrap !important;
         }
-        .example{
-            width: 100%;
-            border-collapse: collapse;
+
+        .example {
+            width: 100% !important;
+            border-collapse: collapse !important;
         }
-        table.example th{
-            height:30px;
-            text-align: left;
-            border: 1px solid black;
+
+        table.example th {
+            height: 30px !important;
+            text-align: left !important;
+            border: 1px solid black !important;
         }
-        table.example td{
-            text-align: left;
-            border: 1px solid black;
+
+        table.example td {
+            text-align: left !important;
+            border: 1px solid black !important;
         }
-        #fileInput{
-            display:none;
+
+        #fileInput {
+            display: none !important;
         }
+
+        p {
+            margin: 0px !important;
+        }
+
     </style>
 </head>
 <body>
@@ -289,7 +326,7 @@
 </c:if>
 </div>
         <p>Giới hạn bài tập: ${detail.time_limit}s</p>
-        <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p>
+        <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p> <br>
     <div>
         <form id="uploadForm" enctype="multipart/form-data">
             <div class="form-container">
@@ -304,7 +341,7 @@
                 <p class="inputFile_browser" onclick="upload()">Duyệt</p>
                 <input type="file" name="file" id="fileInput" accept=".c,.cpp,.java,.py"/>
             </div>
-            <button type="submit">Nộp bài</button> <br> <br>
+            <button type="submit" style="margin-top:18px;">Nộp bài</button> <br> <br>
         </form>
         <div>
             <h2>Lịch sử</h2>

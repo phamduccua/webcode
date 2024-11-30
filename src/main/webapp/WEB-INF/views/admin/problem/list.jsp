@@ -14,6 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bài tập</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="main">
@@ -166,36 +167,43 @@
 
 <style>
     .head {
-        width: 100%;
-        height: 60px;
-        box-sizing: border-box;
-        background-color: #8B1A1A;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 60px !important;
+        box-sizing: border-box !important;
+        background-color: #8B1A1A !important;
     }
     .button {
-        color: white;
-        position: absolute;
-        top:18px;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
+        color: white !important;
+        position: absolute !important;
+        top: 18px !important;
+        border: none !important;
+        padding: 10px 20px !important;
+        text-align: center !important;
     }
     .button-exam {
-        left: 120px;
+        top:7px !important;
+        left: 120px !important;
     }
     .button-status {
-        left: 200px;
+        top:7px !important;
+        left: 200px !important;
     }
     .button-history {
-        left: 300px;
+        top:7px !important;
+        left: 300px !important;
     }
     .button-rank {
-        left: 380px;
+        top:7px !important;
+        left: 380px !important;
     }
-    .button-configuration{
-        left: 510px;
+    .button-configuration {
+        top:7px !important;
+        left: 510px !important;
     }
     .button-gui {
-        left: 620px;
+        top:7px !important;
+        left: 620px !important;
     }
     .avatar {
         background-color: white;

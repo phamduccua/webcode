@@ -2,21 +2,20 @@ package com.project1.controller.admin;
 
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
-import com.project1.entity.enums.language;
 import com.project1.model.dto.ProblemDTO;
+import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.request.ProblemSearchRequest;
 import com.project1.model.response.ProblemSearchReponse;
 import com.project1.service.*;
 
-import com.project1.utils.LanguegeUtils;
+import com.project1.utils.LanguageUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +31,8 @@ public class ProblemController {
     private TestCaseService testCaseService;
     @Autowired
     private FindProblemService findProblemService;
+    @Autowired
+    private GetSubmission getSubmission;
     @GetMapping("admin/list")
     public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
@@ -47,6 +48,8 @@ public class ProblemController {
     @GetMapping("/admin/history")
     public ModelAndView problemHistory(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/history");
+        List<SubmissionDTO> listSub = getSubmission.getSub();
+        mav.addObject("listSub", listSub);
         return mav;
     }
     @GetMapping("admin/add")
@@ -89,7 +92,7 @@ public class ProblemController {
         List<String> program = problemDTO.getProgramingLanguage();
         mav.addObject("detail", problemDTO);
         mav.addObject("listTest", listTest);
-        mav.addObject("listLanguage", LanguegeUtils.language(program));
+        mav.addObject("listLanguage", LanguageUtils.listLanguage(program));
         return mav;
     }
 }
