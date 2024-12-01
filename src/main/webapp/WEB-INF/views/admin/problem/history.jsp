@@ -54,9 +54,16 @@
                         <td></td>
                     </c:if>
                     <c:if test="${item.status != 0}">
-                        <td>${item.status}</td>
-                        <td>${item.executionTime}</td>
-                        <td>${item.memoryUsed}</td>
+                        <c:if test="${item.status == 1}">
+                            <td style="color: #19BE6B;">AC</td>
+                            <td>${item.executionTime}</td>
+                            <td>${item.memoryUsed}</td>
+                        </c:if>
+                        <c:if test="${item.status != 1}">
+                            <td style="color: #FF0000;">WA</td>
+                            <td>${item.executionTime}</td>
+                            <td>${item.memoryUsed}</td>
+                        </c:if>
                     </c:if>
                     <td>${item.language}</td>
                 </tr>

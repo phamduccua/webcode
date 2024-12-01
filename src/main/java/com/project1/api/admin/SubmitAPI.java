@@ -1,15 +1,11 @@
 package com.project1.api.admin;
 
 import com.project1.converter.SubmissionEntityConverter;
-import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
-import com.project1.entity.TestCaseEntity;
-import com.project1.entity.enums.language;
 import com.project1.model.request.SubmitRequest;
 import com.project1.repository.AddOrUpdateSubRepository;
-import com.project1.repository.TestCaseRepository;
+import com.project1.service.CreateListRequest;
 import com.project1.service.SubmitService;
-import com.project1.utils.CompareOuput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +29,10 @@ public class SubmitAPI {
     private AddOrUpdateSubRepository addOrUpdateSubRepository;
     @Autowired
     private SubmitService submitService;
+    @Autowired
+    private CreateListRequest createListRequest;
+    @Autowired
+    private SubmitService submitServices;
     private final String UPLOAD_DIR = "D:/webcode/uploads/";
 
     @PostMapping("/file")
@@ -60,6 +60,7 @@ public class SubmitAPI {
             SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId);
             addOrUpdateSubRepository.addOrUpdateSub(submission);
             submitService.submit(submission);
+
             return ResponseEntity.ok("File uploaded successfully: /uploads/" + file.getOriginalFilename());
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());

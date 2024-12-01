@@ -5,7 +5,7 @@ import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.TestCaseEntity;
 import com.project1.model.request.SubmitRequest;
-import com.project1.model.response.OuputResponse;
+import com.project1.model.response.OutputResponse;
 import com.project1.repository.AddOrUpdateSubRepository;
 import com.project1.repository.TestCaseRepository;
 import com.project1.service.SubmitService;
@@ -35,17 +35,23 @@ public class SubmitServiceImpl implements SubmitService {
         List<TestCaseEntity> testCaseEntites = problem.getTestCases();
         int tongTest = testCaseEntites.size();
         int countTest = 0;
+        double time = 0;
+        Long memory = 0L;
         for(TestCaseEntity testCase : testCaseEntites) {
             SubmitRequest submitRequest = new SubmitRequest();
             submitRequest.setScript(submission.getSubmitted());
             submitRequest.setLanguage(submission.getLanguage());
             submitRequest.setStdin(testCase.getInput());
             RunCode runCode = new RunCode();
-            runCode.runCode(submitRequest);
-//            if(output.getCompilationStatus() == null){
-//                if(CompareOuput.compareOutput(output.getOutput(),testCase.getExpected_output()) == false) return false;
-//                countTest++;
-//            }
+            OutputResponse outputrunCode = runCode.runCode(submitRequest);
+            if(outputrunCode.getCompilationStatus().equals("null")){
+                time = Math.max(time,Double.parseDouble(outputrunCode.getCpuTime()));
+                memory = Math.max(memory,Long.parseLong(outputrunCode.getMemory()));
+                submission.setExecutionTime(time);
+                submission.setMemoryUsed(memory);
+                if(CompareOuput.compareOutput(outputrunCode.getOutput(),testCase.getExpected_output()) == false) return false;
+                countTest++;
+            }else return false;
         }
         return true;
     }
