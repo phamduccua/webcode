@@ -1,4 +1,4 @@
-<%--
+<%@ page import="static org.hibernate.type.SqlTypes.JSON" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 26/11/2024
@@ -247,9 +247,9 @@
             pointer-events: auto !important;
         }
 
-        .detail p {
-            white-space: pre-wrap !important;
-        }
+        /*.detail p {*/
+        /*    white-space: pre-wrap !important;*/
+        /*}*/
 
         .example {
             width: 100% !important;
@@ -282,12 +282,10 @@
     <label style=" font-size: 17px; color: #bb2019;"><strong>${detail.title}</strong></label>
     <label style="float: right; font-size: 17px; color: #bb2019;"><strong>Bài làm tốt nhất</strong></label>
         <div class="detail">
-            <div>
-                <p>${detail.description}</p>
+            <div id="description">
+
             </div>
-            <div>
-                <label><strong>Input</strong></label>
-                <p>${detail.inputFormat}</p>
+            <div id="input">
             </div>
             <c:if test="${not empty detail.constraints}" >
                 <div>
@@ -295,9 +293,7 @@
                     <p>${detail.constraints}</p>
                 </div>
             </c:if>
-            <div>
-                <label><strong>Output</strong></label>
-                <p>${detail.outputFormat}</p>
+            <div id="output">
             </div>
             <c:if test="${not empty listTest and listTest.size() > 0}">
     <div>
@@ -309,17 +305,8 @@
                     <th>Output</th>
                 </tr>
             </thead>
-            <tbody>
-                <c:forEach var="item" items="${listTest}">
-                    <tr>
-                        <td>
-                            <p>${item.input}</p>
-                        </td>
-                        <td>
-                            <p>${item.expected_output}</p>
-                        </td>
-                    </tr>
-                </c:forEach>
+            <tbody id="test_case">
+
             </tbody>
         </table>
     </div>
@@ -389,34 +376,115 @@
     $(document).ready(function() {
         $('#uploadForm').on('submit', function(e) {
             e.preventDefault();
-
             var formData = new FormData();
             var fileInput = $('#fileInput')[0].files[0];
             var language = $('#selectPogram').val();
             var id = $('#id').val();
-            formData.append('file', fileInput);
-            formData.append('language',language);
-            formData.append('id', id);
-            $.ajax({
-                url: '/uploads/file',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    console.log("Thành công");
-                    window.location.href = '/admin/history';
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Lỗi!',
-                        text: "File không hợp lệ !!! Vui lòng kiểm tra lại !!!",
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            });
+            var fileName = $('#fileInput').val().split('\\').pop();
+            if(fileName.split('.').pop() !== 'c' && fileName.split('.').pop() !== 'cpp' && fileName.split('.').pop() !== 'java' && fileName.split('.').pop() !== 'py'){
+                Swal.fire({
+                    title: 'Lỗi!',
+                    html: "File không hợp lệ !!! <br> Vui lòng kiểm tra lại !!!",
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload(); // Tải lại trang
+                    }
+                });
+
+            }
+            else{
+                formData.append('file', fileInput);
+                formData.append('language',language);
+                formData.append('id', id);
+                $.ajax({
+                    url: '/uploads/file',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log("Thành công");
+                        window.location.href = '/admin/history';
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Lỗi!',
+                            text: 'Đã xảy ra lỗi !!!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
         });
+    });
+
+</script>
+<script>
+    var description = document.getElementById('description');
+    var line_description = `${detail.description}`.split("\n");
+    description.innerHTML = "";
+    line_description.forEach(item => {
+        const p = document.createElement("p");
+        p.textContent = item;
+        description.appendChild(p);
+    });
+</script>
+<script>
+    var input = document.getElementById('input');
+    var line_input = `${detail.inputFormat}`.split("\n");
+    input.innerHTML = "<label><strong>Input</strong></label>";
+    line_input.forEach(item => {
+        const p = document.createElement("p");
+        p.textContent = item;
+        input.appendChild(p);
+    });
+</script>
+<script>
+    var output = document.getElementById('output');
+    var line_output = `${detail.outputFormat}`.split("\n");
+    output.innerHTML = "<label><strong>Output</strong></label>";
+    line_output.forEach(item => {
+        const p = document.createElement("p");
+        p.textContent = item;
+        output.appendChild(p);
+    });
+</script>
+<script>
+    const listTest = [
+        <c:forEach var="item" items="${listTest}">
+        {
+            input: `${item.input}`,
+            expected_output: `${item.expected_output}`
+        },
+        </c:forEach>
+    ];
+    var test_case = document.getElementById('test_case');
+    test_case.innerHTML = ""; // Xóa nội dung hiện tại
+
+    listTest.forEach(item => {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        const line_input = item.input.split("\n");
+        line_input.forEach(line => {
+            const p = document.createElement("p");
+            p.textContent = line;
+            td1.appendChild(p);
+        });
+        tr.appendChild(td1);
+
+        // Tạo cột cho output
+        const td2 = document.createElement("td");
+        const line_output = item.expected_output.split("\n");
+        line_output.forEach(line => {
+            const p = document.createElement("p");
+            p.textContent = line;
+            td2.appendChild(p);
+        });
+        tr.appendChild(td2);
+        test_case.appendChild(tr);
     });
 
 </script>
