@@ -1,5 +1,7 @@
 package com.project1.controller.admin;
 
+import com.project1.converter.SubmissionDTOConverter;
+import com.project1.entity.SubmissionEntity;
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
 import com.project1.model.dto.ProblemDTO;
@@ -7,6 +9,7 @@ import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.request.ProblemSearchRequest;
 import com.project1.model.response.ProblemSearchReponse;
+import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
 
 import com.project1.utils.LanguageUtils;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +37,10 @@ public class ProblemController {
     private FindProblemService findProblemService;
     @Autowired
     private GetSubmission getSubmission;
+    @Autowired
+    private SubmissionRepository submissionRepository;
+    @Autowired
+    private SubmissionDTOConverter submissionDTOConverter;
     @GetMapping("admin/list")
     public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
@@ -90,6 +98,12 @@ public class ProblemController {
         ProblemDTO problemDTO = findProblemService.findByCode(code);
         List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
         List<String> program = problemDTO.getProgramingLanguage();
+        List<SubmissionEntity> list = submissionRepository.findByProblem_id(problemDTO.getId());
+        List<SubmissionDTO> listSub = new ArrayList<>();
+        for(SubmissionEntity submissionEntity : list){
+            listSub.add(submissionDTOConverter.toSubmissionDTO(submissionEntity));
+        }
+        mav.addObject("listSub", listSub);
         mav.addObject("detail", problemDTO);
         mav.addObject("listTest", listTest);
         mav.addObject("listLanguage", LanguageUtils.listLanguage(program));

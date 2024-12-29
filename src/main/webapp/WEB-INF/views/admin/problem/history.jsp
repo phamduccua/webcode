@@ -33,7 +33,7 @@
                 <th class="mid">Trình biên dịch</th>
             </tr>
             </thead>
-            <tbody class="table-body">
+            <tbody class="table-body" id="listSubmission">
             <c:forEach var="item" items="${listSub}" >
                 <tr>
                     <td>${item.id}</td>
@@ -59,10 +59,15 @@
                             <td>${item.executionTime}</td>
                             <td>${item.memoryUsed}</td>
                         </c:if>
-                        <c:if test="${item.status != 1}">
+                        <c:if test="${item.status == 2}">
                             <td style="color: #FF0000;">WA</td>
                             <td>${item.executionTime}</td>
                             <td>${item.memoryUsed}</td>
+                        </c:if>
+                        <c:if test="${item.status == 3}">
+                            <td style="color: rgb(0, 0, 0)">CE</td>
+                            <td></td>
+                            <td></td>
                         </c:if>
                     </c:if>
                     <td>${item.language}</td>
@@ -76,49 +81,20 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    var submittedAt = "2024-11-30T14:30:00";
-    var dateTime = new Date(submittedAt);
-
-    var date = dateTime.toISOString().split('T')[0];
-    var time = dateTime.toTimeString().split(' ')[0];
-
-    document.getElementById("date-time").innerHTML = "<span>" + date + "</span><br><span>" + time + "</span>";
-</script>
-<script>
-    function  updateStatus(){
-        var ids = [];
-        $("tr").each(function(){
-            var status  = $(this).find("td:nth-child(4)").text();
-            if(status == "0"){
-                var id = $(this).find("td:nth-child(1)").text();
-                ids.push(id);
+    function updateStatus() {
+        var count = 0;
+        $("tbody tr").each(function () {
+            var status = $(this).find("td:nth-child(4)").text().trim();
+            if (status !== ""  && status !== "AC" && status !== "WA" && status !== "RTE" && status !== "TLE" && status !== "CE"　&& status !== "MLE") {
+                count++;
             }
         });
-        if(ids.length > 0){
-            $ajax({
-                type : "POST",
-                url : "/admin/update-status",
-                contentType : "application/json",
-                data : JSON.stringify({ids : ids}),
-                success: function(response) {
-                    response.forEach(function(item){
-                        $("tr").each(function(){
-                            var subId = $(this).find("td:nth-child(1)").text();
-                            if(subId == item.id){
-                                $(this).find("td:nth-child(4)").text(item.status);
-                                $(this).find("td:nth-child(5)").text(item.executionTime);
-                                $(this).find("td:nth-child(6)").text(item.memoryUsed);
-                            }
-                        });
-                    });
-                },
-                error: function(error) {
-                    console.error('Cập nhật thất bại', error);
-                }
-            });
+        if (count > 0) {
+            location.reload();
         }
     }
     setTimeout(updateStatus, 3000);
+
 </script>
 
 <style>

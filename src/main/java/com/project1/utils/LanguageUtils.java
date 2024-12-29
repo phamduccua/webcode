@@ -22,9 +22,9 @@ public class LanguageUtils {
     public static String unLanguage(String language){
         return switch (language) {
             case "c" -> "C";
-            case "cpp17" -> "C/C++";
+            case "cpp" -> "C/C++";
             case "java" -> "Java";
-            case "python3" -> "Python3";
+            case "py" -> "Python3";
             default -> null;
         };
     }
@@ -32,9 +32,9 @@ public class LanguageUtils {
     public static String language(String language){
         return switch (language) {
             case "C" -> "c";
-            case "C/C++" -> "cpp17";
+            case "C/C++" -> "cpp";
             case "Java" -> "java";
-            case "Python3" -> "python3";
+            case "Python3" -> "py";
             default -> null;
         };
     }

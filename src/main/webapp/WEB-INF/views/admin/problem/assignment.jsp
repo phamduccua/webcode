@@ -333,29 +333,62 @@
         <div>
             <h2>Lịch sử</h2>
             <div>
-                <table class="table">
-                    <thead>
-                    <th>ID</th>
-                    <th>Thời gian</th>
-                    <th>Bài tập</th>
-                    <th>Kết quả</th>
-                    <th>Thời gian</th>
-                    <th>Bộ nhớ</th>
-                    <th>Trình biên dịch</th>
-                    </thead>
-                    <tbody>
-                    <td>9568444</td>
+                <table id="tableList" class="table table-fixed">
+            <thead class="table-head">
+            <tr>
+                <th class="text-middle">ID</th>
+                <th>Thời gian</th>
+                <th>Bài tập</th>
+                <th>Kết quả</th>
+                <th>Thời gian</th>
+                <th class="mid">Bộ nhớ</th>
+                <th class="mid">Trình biên dịch</th>
+            </tr>
+            </thead>
+            <tbody class="table-body" id="listSubmission">
+            <c:forEach var="item" items="${listSub}" >
+                <tr>
+                    <td>${item.id}</td>
                     <td>
-                        <p>2024-08-12</p>
-                        <p>11:58:05</p>
+                        <p>${item.formattedDate}</p>
+                        <p>${item.formattedTime}</p>
                     </td>
-                    <td style="color: #bb2019;">Hello World</td>
-                    <td>AC</td>
-                    <td>0.01s</td>
-                    <td>1528Kb</td>
-                    <td>C/C++</td>
-                    </tbody>
-                </table>
+                    <td>
+                    <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
+                    </td>
+                    <c:if test="${item.status == 0}">
+                        <td class="spinner">
+                            <div class="spinner-border text-primary small-spinner" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </c:if>
+                    <c:if test="${item.status != 0}">
+                        <c:if test="${item.status == 1}">
+                            <td style="color: #19BE6B;">AC</td>
+                            <td>${item.executionTime}</td>
+                            <td>${item.memoryUsed}</td>
+                        </c:if>
+                        <c:if test="${item.status == 2}">
+                            <td style="color: #FF0000;">WA</td>
+                            <td>${item.executionTime}</td>
+                            <td>${item.memoryUsed}</td>
+                        </c:if>
+                        <c:if test="${item.status == 3}">
+                            <td style="color: rgb(0, 0, 0)">CE</td>
+                            <td></td>
+                            <td></td>
+                        </c:if>
+                    </c:if>
+                    <td>${item.language}</td>
+                </tr>
+            </c:forEach>
+
+
+            </tbody>
+        </table>
             </div>
         </div>
     </div>
@@ -363,6 +396,22 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function updateStatus() {
+        var count = 0;
+        $("tbody tr").each(function () {
+            var status = $(this).find("td:nth-child(4)").text().trim();
+            if (status !== ""  && status !== "AC" && status !== "WA" && status !== "RTE" && status !== "TLE" && status !== "CE"　&& status !== "MLE") {
+                count++;
+            }
+        });
+        if (count > 0) {
+            location.reload();
+        }
+    }
+    setTimeout(updateStatus, 3000);
+
+</script>
 <script>
     function upload(){
         $('#fileInput').click();
@@ -462,7 +511,7 @@
         </c:forEach>
     ];
     var test_case = document.getElementById('test_case');
-    test_case.innerHTML = ""; // Xóa nội dung hiện tại
+    test_case.innerHTML = "";
 
     listTest.forEach(item => {
         const tr = document.createElement("tr");
@@ -474,8 +523,6 @@
             td1.appendChild(p);
         });
         tr.appendChild(td1);
-
-        // Tạo cột cho output
         const td2 = document.createElement("td");
         const line_output = item.expected_output.split("\n");
         line_output.forEach(line => {

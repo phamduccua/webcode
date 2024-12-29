@@ -20,4 +20,4 @@ RUN apk add python3 py3-pip \
 && apk add --upgrade bash
 
 RUN chmod +x ./run.sh
-ENTRYPOINT ./run.sh
+ENTRYPOINT ["./run.sh"]

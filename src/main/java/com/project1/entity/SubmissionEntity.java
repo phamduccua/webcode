@@ -32,6 +32,12 @@ public class SubmissionEntity {
     @Column(name="submitted_at")
     private Date submittedAt;
 
+    @Column(name="code")
+    private String code;
+
+    @Column(name="error")
+    private String error;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="problem_id")
     private ProblemEntity problem;
