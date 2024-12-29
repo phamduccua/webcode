@@ -60,7 +60,7 @@ public class ProblemEntity {
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
 
-    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, cascade  = {CascadeType.PERSIST,CascadeType.MERGE} ,orphanRemoval = true)
     private List<ProgramingLanguageEntity> programingLanguages = new ArrayList<>();
 
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)

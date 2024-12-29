@@ -13,6 +13,7 @@ import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
 
 import com.project1.utils.LanguageUtils;
+import com.project1.utils.ReverseList;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,7 @@ public class ProblemController {
     public ModelAndView problemHistory(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/history");
         List<SubmissionDTO> listSub = getSubmission.getSub();
-        mav.addObject("listSub", listSub);
+        mav.addObject("listSub", ReverseList.reverse(listSub));
         return mav;
     }
     @GetMapping("admin/add")
@@ -103,7 +104,7 @@ public class ProblemController {
         for(SubmissionEntity submissionEntity : list){
             listSub.add(submissionDTOConverter.toSubmissionDTO(submissionEntity));
         }
-        mav.addObject("listSub", listSub);
+        mav.addObject("listSub", ReverseList.reverse(listSub));
         mav.addObject("detail", problemDTO);
         mav.addObject("listTest", listTest);
         mav.addObject("listLanguage", LanguageUtils.listLanguage(program));

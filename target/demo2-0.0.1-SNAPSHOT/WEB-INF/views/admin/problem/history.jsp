@@ -60,7 +60,7 @@
                             <td>${item.memoryUsed}</td>
                         </c:if>
                         <c:if test="${item.status == 2}">
-                            <td style="color: #FF0000;">WA</td>
+                            <td style="color: #FF0000;">${item.code}</td>
                             <td>${item.executionTime}</td>
                             <td>${item.memoryUsed}</td>
                         </c:if>

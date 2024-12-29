@@ -46,10 +46,11 @@ if [ "$CE" -ne 0 ]; then
 fi
 
 if [ "$RTE" -ne 0 ]; then
-    echo "RUNTIME ERROR" >> "$2"
+    echo -e "RUNTIME ERROR" >> "$2"
 fi
 
 if [ "$CE" -eq 0 ] && [ "$RTE" -eq 0 ]; then
+    # shellcheck disable=SC2207
     arr=($(<"$3"))
     if [ "${arr[0]}" = "Command" ]; then
         arr=("${arr[2]}" "${arr[3]}")

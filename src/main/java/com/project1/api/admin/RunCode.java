@@ -3,6 +3,7 @@ package com.project1.api.admin;
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.TestCaseEntity;
+import com.project1.utils.SusscessUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -82,63 +83,17 @@ public class RunCode {
                 String expectedOutput = testCase.getExpected_output().trim();
                 String actualOutput = Files.readString(Paths.get(outputFileName)).trim();
                 String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
-                String[] arrOut = actualOutput.split("\n");
-                if(arrOut[arrOut.length - 1].equals("COMPILATION ERROR")){
-                    StringBuilder error = new StringBuilder();
-                    for(int i = 0;i< arrOut.length - 1;i++) {
-                        error.append(arrOut[i]).append("\n");
-                    }
+                SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
+                if(sub.getStatus() != 0){
                     ok = false;
-                    submission.setError(error.toString());
-                    submission.setStatus(3);
-                    submission.setCode("CE");
-                    entityManager.merge(submission);
                     break;
                 }
-                else{
-                    String[] arr = timeMemoryOutput.split(" ");
-                    double time = Double.parseDouble(arr[arr.length - 2]);
-                    long memory = Long.parseLong(arr[arr.length - 1]);
-                    submission.setExecutionTime(max(submission.getExecutionTime(), time));
-                    if(submission.getMemoryUsed() == null){
-                        submission.setMemoryUsed(memory);
-                    }
-                    else{
-                        submission.setMemoryUsed(max(submission.getMemoryUsed(), memory));
-                    }
-                    if (actualOutput.equals("MLE")) {
-                        ok = false;
-                        submission.setStatus(2);
-                        submission.setCode("MLE");
-                        entityManager.merge(submission);
-                        break;
-                    } else if (actualOutput.equals("TLE")) {
-                        ok = false;
-                        submission.setStatus(2);
-                        submission.setCode("TLE");
-                        entityManager.merge(submission);
-                        break;
-                    } else if (actualOutput.equals("RUNTIME ERROR")) {
-                        ok = false;
-                        submission.setStatus(2);
-                        submission.setCode("RTE");
-                        entityManager.merge(submission);
-                        break;
-                    } else if (!actualOutput.equals(expectedOutput)) {
-                        ok = false;
-                        submission.setStatus(2);
-                        submission.setCode("WA");
-                        entityManager.merge(submission);
-                        break;
-                    }
-                }
-
             }
             if (ok) {
                 submission.setStatus(1);
                 submission.setCode("AC");
-                entityManager.merge(submission);
             }
+            entityManager.merge(submission);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {

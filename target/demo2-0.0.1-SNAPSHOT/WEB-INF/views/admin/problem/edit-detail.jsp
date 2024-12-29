@@ -159,6 +159,14 @@
                 <form:options items="${listGroup}" />
             </form:select>
         </div>
+        <div>
+            <label for="code" class="label">Giới hạn thời gian</label>
+            <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn thời gian" path="time_limit"/>
+        </div>
+        <div>
+            <label for="code" class="label">Giới hạn bộ nhớ</label>
+            <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn bộ nhớ" path="memory_limit"/>
+        </div>
         <form:hidden path="id" id="problemId"/>
         <button class="button" id="updateProblem">Cập nhật</button>
     </form:form>
