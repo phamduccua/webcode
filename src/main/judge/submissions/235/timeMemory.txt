@@ -1,5 +1,0 @@
-Command terminated by signal 8
-0.01 2500
-
-
-
