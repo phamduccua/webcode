@@ -12,7 +12,7 @@ public class SubmissionDTO {
     private Long id;
     private String problemName;
     private int status;
-    private double executionTime;
+    private String time;
     private Long memoryUsed;
     private String language;
     private Date submittedAt;

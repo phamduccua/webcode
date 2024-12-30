@@ -19,7 +19,7 @@ public class ProblemDTO extends AbstractDTO{
     private String color;
     private float time_limit;
     private Long memory_limit;
-    private List<String> programingLanguage;
+    private List<String> language;
 
     public String getCode() {
         return code;
@@ -133,11 +133,11 @@ public class ProblemDTO extends AbstractDTO{
         this.memory_limit = memory_limit;
     }
 
-    public List<String> getProgramingLanguage() {
-        return programingLanguage;
+    public List<String> getLanguage() {
+        return language;
     }
 
-    public void setProgramingLanguage(List<String> programingLanguage) {
-        this.programingLanguage = programingLanguage;
+    public void setLanguage(List<String> language) {
+        this.language = language;
     }
 }

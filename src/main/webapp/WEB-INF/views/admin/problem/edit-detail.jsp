@@ -110,6 +110,12 @@
         body {
             font-family: "Times New Roman", Times, serif !important;
         }
+        .checkbox-item {
+            align-items: center;
+            margin-bottom: 10px;
+            margin-right: 5px;
+            margin-left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -160,6 +166,10 @@
             </form:select>
         </div>
         <div>
+            <label class="label">Ngôn ngữ</label>
+            <form:checkboxes items="${listLanguages}" path="language" cssClass="checkbox-item"/>
+        </div>
+        <div>
             <label for="code" class="label">Giới hạn thời gian</label>
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn thời gian" path="time_limit"/>
         </div>
@@ -181,15 +191,22 @@
     $('#updateProblem').click(function(e){
         e.preventDefault();
         var data = {};
+        var language  = [];
         var formData = $('#listForm').serializeArray();
 
         $.each(formData, function(i, v){
-            data[v.name] = v.value;
+            if(v.name !== 'language'){
+                data[v.name] = v.value;
+            }
+            else{
+                language.push(v.value);
+            }
         });
+        data['language'] = language;
 
         $.ajax({
             type:"POST",
-            url: "/admin/problem/",
+            url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {

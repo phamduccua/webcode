@@ -4,6 +4,7 @@ import com.project1.converter.SubmissionDTOConverter;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
+import com.project1.entity.enums.language;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
@@ -67,6 +68,7 @@ public class ProblemController {
         mav.addObject("problemAdd", problemDTO);
         mav.addObject("listGroup", group.type());
         mav.addObject("listDifficulty", difficulty.type());
+        mav.addObject("listLanguages", language.type());
         return mav;
     }
 
@@ -79,6 +81,7 @@ public class ProblemController {
         mav.addObject("problemEdit", problemDTO);
         mav.addObject("listGroup", group.type());
         mav.addObject("listDifficulty", difficulty.type());
+        mav.addObject("listLanguages", language.type());
         return mav;
     }
 
@@ -98,7 +101,7 @@ public class ProblemController {
         ModelAndView mav = new ModelAndView("admin/problem/assignment");
         ProblemDTO problemDTO = findProblemService.findByCode(code);
         List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
-        List<String> program = problemDTO.getProgramingLanguage();
+        List<String> program = problemDTO.getLanguage();
         List<SubmissionEntity> list = submissionRepository.findByProblem_id(problemDTO.getId());
         List<SubmissionDTO> listSub = new ArrayList<>();
         for(SubmissionEntity submissionEntity : list){

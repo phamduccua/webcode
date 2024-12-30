@@ -3,13 +3,13 @@ package com.project1.entity.enums;
 import java.util.TreeMap;
 
 public enum language {
-    C("C"),
-    CPP("C/C++"),
-    Java("Java"),
-    Python3("Python3");
+    c("C"),
+    cpp("C/C++"),
+    java("Java"),
+    py("Python3");
 
     private final String name;
-    private language(String name) {
+    language(String name) {
         this.name = name;
     }
 

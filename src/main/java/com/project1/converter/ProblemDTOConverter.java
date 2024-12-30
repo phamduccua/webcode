@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Component
 public class ProblemDTOConverter {
@@ -18,13 +19,13 @@ public class ProblemDTOConverter {
     public ProblemDTO toProblemDTO(ProblemEntity item){
         ProblemDTO problemDTO = modelMapper.map(item,ProblemDTO.class);
         problemDTO.setGroup(ClassIdUtils.toClassId(item.getClassId()));
-        List<String> result = new ArrayList<>();
-        List<ProgramingLanguageEntity> tmp = new ArrayList<>();
-        for(ProgramingLanguageEntity programingLanguageEntity : item.getProgramingLanguages()){
-            String it = programingLanguageEntity.getName();
-            result.add(it);
+        List<String> arr = new ArrayList<>();
+        StringTokenizer str = new StringTokenizer(item.getLanguage(), ",");
+        while(str.hasMoreTokens()){
+            String language = str.nextToken();
+            arr.add(language);
         }
-        problemDTO.setProgramingLanguage(result);
+        problemDTO.setLanguage(arr);
         return problemDTO;
     }
 }

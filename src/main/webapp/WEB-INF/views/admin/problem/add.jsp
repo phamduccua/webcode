@@ -83,6 +83,14 @@
         select{
             height:25px;
         }
+        .checkbox-item {
+            align-items: center;
+            margin-bottom: 10px;
+            margin-right: 5px;
+            margin-left: 20px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -134,6 +142,10 @@
             </form:select>
         </div>
         <div>
+            <label class="label">Ngôn ngữ</label>
+            <form:checkboxes items="${listLanguages}" path="language" cssClass="checkbox-item"/>
+        </div>
+        <div>
             <label for="code" class="label">Giới hạn thời gian</label>
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn thời gian" path="time_limit"/>
         </div>
@@ -150,15 +162,21 @@
     $('#addProblem').click(function(e){
         e.preventDefault();
         var data = {};
+        var language = [];
         var formData = $('#listForm').serializeArray();
 
         $.each(formData, function(i, v){
-            data[v.name] = v.value;
+            if(v.name !== 'language'){
+                data[v.name] = v.value;
+            }
+            else{
+                language.push(v.value);
+            }
         });
-
+        data['language'] = language;
         $.ajax({
             type:"POST",
-            url: "/admin/problem/",
+            url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",
@@ -173,7 +191,7 @@
                 });
             },
             error: function (xhr) {
-                let errorMessage = "Đã xảy ra lỗi không xác định.";
+                let errorMessage = "Mã bài tập đã có trước đó. Vui lòng chọn mã khác !";
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }

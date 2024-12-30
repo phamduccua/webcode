@@ -56,13 +56,13 @@
                     <c:if test="${item.status != 0}">
                         <c:if test="${item.status == 1}">
                             <td style="color: #19BE6B;">AC</td>
-                            <td>${item.executionTime}</td>
-                            <td>${item.memoryUsed}</td>
+                            <td>${item.time}s</td>
+                            <td>${item.memoryUsed}Kb</td>
                         </c:if>
                         <c:if test="${item.status == 2}">
                             <td style="color: #FF0000;">${item.code}</td>
-                            <td>${item.executionTime}</td>
-                            <td>${item.memoryUsed}</td>
+                            <td>${item.time}s</td>
+                            <td>${item.memoryUsed}Kb</td>
                         </c:if>
                         <c:if test="${item.status == 3}">
                             <td style="color: rgb(0, 0, 0)">CE</td>

@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 
 public class ProblemEntityConverter {
@@ -15,6 +17,12 @@ public class ProblemEntityConverter {
     public ProblemEntity toProblemEntity(ProblemDTO problemDTO){
         ProblemEntity problemEntity = modelMapper.map(problemDTO, ProblemEntity.class);
         problemEntity.setClassId(ClassIdUtils.toClassId(problemDTO.getGroup()));
+        List<String> langs = problemDTO.getLanguage();
+        StringBuilder langua = new StringBuilder();
+        for(String lang : langs){
+            langua.append(lang).append(",");
+        }
+        problemEntity.setLanguage(langua.toString());
         return problemEntity;
     }
 }

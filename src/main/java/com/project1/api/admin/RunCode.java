@@ -46,7 +46,7 @@ public class RunCode {
                 outputFileName,
                 timeMemoryfileName,
                 language,
-                problem.getTime_limit(),
+                problem.getTime_limit() + 0.01,
                 problem.getMemory_limit()
         );
     }

@@ -19,6 +19,7 @@ public class SubmissionDTOConverter {
         submissionDTO.setLanguage(LanguageUtils.unLanguage(submissionEntity.getLanguage()));
         submissionDTO.setProblemName(problemEntity.getTitle());
         submissionDTO.setProblemCode(problemEntity.getCode());
+        submissionDTO.setTime(String.format("%.2f",submissionEntity.getExecutionTime()));
         return submissionDTO;
     }
 }

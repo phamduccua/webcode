@@ -57,11 +57,11 @@ public class ProblemEntity {
     @Column(name="memory_limit")
     private Long memory_limit;
 
+    @Column(name="language")
+    private String language;
+
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
-
-    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, cascade  = {CascadeType.PERSIST,CascadeType.MERGE} ,orphanRemoval = true)
-    private List<ProgramingLanguageEntity> programingLanguages = new ArrayList<>();
 
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<SubmissionEntity> submissions = new ArrayList<>();
