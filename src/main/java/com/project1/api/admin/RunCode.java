@@ -72,28 +72,30 @@ public class RunCode {
             Files.writeString(Paths.get(fileName), code);
 
             boolean ok = true;
-            for (TestCaseEntity testCase : allTestCases) {
-                Files.writeString(Paths.get(testFileName), testCase.getInput());
-                ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", execute(submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
-                System.out.println(execute(submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
-                pb.directory(new File(path_init));
-                Process process = pb.start();
-                process.waitFor();
+            if(submission.getStatus() == 0){
+                for (TestCaseEntity testCase : allTestCases) {
+                    Files.writeString(Paths.get(testFileName), testCase.getInput());
+                    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", execute(submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
+                    System.out.println(execute(submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
+                    pb.directory(new File(path_init));
+                    Process process = pb.start();
+                    process.waitFor();
 
-                String expectedOutput = testCase.getExpected_output().trim();
-                String actualOutput = Files.readString(Paths.get(outputFileName)).trim();
-                String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
-                SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
-                if(sub.getStatus() != 0){
-                    ok = false;
-                    break;
+                    String expectedOutput = testCase.getExpected_output().trim();
+                    String actualOutput = Files.readString(Paths.get(outputFileName)).trim();
+                    String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
+                    SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
+                    if(sub.getStatus() != 0){
+                        ok = false;
+                        break;
+                    }
                 }
+                if (ok) {
+                    submission.setStatus(1);
+                    submission.setCode("AC");
+                }
+                entityManager.merge(submission);
             }
-            if (ok) {
-                submission.setStatus(1);
-                submission.setCode("AC");
-            }
-            entityManager.merge(submission);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {

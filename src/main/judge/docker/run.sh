@@ -48,27 +48,7 @@ fi
 if [ "$RTE" -ne 0 ]; then
     echo -e "RUNTIME ERROR" >> "$2"
 fi
-
-if [ "$CE" -eq 0 ] && [ "$RTE" -eq 0 ]; then
-    # shellcheck disable=SC2207
-    arr=($(<"$3"))
-    if [ "${arr[0]}" = "Command" ]; then
-        arr=("${arr[2]}" "${arr[3]}")
-    fi
-
-    time=$((arr[0] * 1000))
-    memory=$((arr[1] - initMem))
-
-    timeDiff=$((4 * 1000 - time))
-    if [ "$timeDiff" -le 0 ]; then
-        echo "TLE" >> "$2"
-    fi
-
-    memDiff=$((5 * 1000 - memory))
-    if [ "$memDiff" -le 0 ]; then
-        echo "MLE" >> "$2"
-    fi
-fi
-
+# shellcheck disable=SC2154
 echo -e "\n$time" >> "$3"
+# shellcheck disable=SC2154
 echo "$memory" >> "$3"

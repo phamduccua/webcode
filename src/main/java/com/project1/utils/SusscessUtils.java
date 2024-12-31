@@ -28,14 +28,14 @@ public class SusscessUtils {
             else{
                 submission.setMemoryUsed(max(submission.getMemoryUsed(), memory));
             }
-            if (outPut.equals("MLE")) {
-                submission.setStatus(2);
-                submission.setCode("MLE");
-            } else if (time > problem.getTime_limit()) {
+            if (time > problem.getTime_limit()) {
                 submission.setExecutionTime(problem.getTime_limit());
                 submission.setStatus(2);
                 submission.setCode("TLE");
-            } else if (outPut.contains("RUNTIME ERROR")) {
+            } else if (memory > problem.getMemory_limit()) {
+                submission.setStatus(2);
+                submission.setCode("MLE");
+            }else if (outPut.contains("RUNTIME ERROR")) {
                 submission.setStatus(2);
                 submission.setCode("RTE");
             } else if (!outPut.equals(output_ex)) {

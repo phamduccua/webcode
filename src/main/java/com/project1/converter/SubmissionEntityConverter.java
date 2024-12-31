@@ -14,8 +14,18 @@ import java.time.LocalDateTime;
 public class SubmissionEntityConverter {
     @Autowired
     private ProblemRepository problemRepository;
-    public SubmissionEntity toSubmissonEntity(String submitted, String language, Long problemId){
+    public SubmissionEntity toSubmissonEntity(String submitted, String language, Long problemId,String fileName){
         SubmissionEntity submissionEntity = new SubmissionEntity();
+        if(language.equals("Java")){
+            if(submitted.contains("public class")){
+                submitted = submitted.replace("public class " + fileName,"public class solution ");
+            }
+            else{
+                submissionEntity.setStatus(3);
+                submissionEntity.setCode("CE");
+                submissionEntity.setError("No public class: your main class must be declared as a \"public class\"");
+            }
+        }
         submissionEntity.setSubmitted(submitted);
         submissionEntity.setLanguage(LanguageUtils.language(language));
         ProblemEntity problemEntity = problemRepository.findById(problemId).get();

@@ -63,11 +63,11 @@
         }
 
         select {
-            width: 80px !important;
+            width: 90px !important;
             height: 35px !important;
             padding: 5px !important;
             border-radius: 4px !important;
-            margin-right: 250px !important;
+            margin-right: 240px !important;
             text-align: center !important;
         }
 

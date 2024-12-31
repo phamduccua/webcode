@@ -37,12 +37,15 @@ public class SubmitAPI {
                                          @RequestParam("language") String language,
                                          @RequestParam("id") Long problemId) {
         String fileContent;
+        String fileName;
         try {
+            fileName = file.getOriginalFilename();
+            fileName = fileName.substring(0, fileName.lastIndexOf('.'));
             fileContent = readFileContent(file);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
         }
-        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId);
+        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId, fileName);
         addOrUpdateSubRepository.addOrUpdateSub(submission);
 
         try {
