@@ -16,7 +16,9 @@ import com.project1.service.*;
 import com.project1.utils.LanguageUtils;
 import com.project1.utils.ReverseList;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,11 +46,30 @@ public class ProblemController {
     @Autowired
     private SubmissionDTOConverter submissionDTOConverter;
     @GetMapping("admin/list")
-    public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request) {
+    public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
-        mav.addObject("modelSearch", problemSearchRequest);
-        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest);
+        String groups = request.getParameter("group");
+        if (groups != null && !groups.isEmpty()) {
+            session.setAttribute("group", groups);
+            problemSearchRequest.setGroup(groups);
+        } else {
+             groups = (String) session.getAttribute("group");
+            if (groups != null) {
+                problemSearchRequest.setGroup(groups);
+            }
+
+        }
+        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
         List<String> listTopic = topicService.findTopic();
+        problemSearchRequest.setListResult(list);
+        problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));
+        if(problemSearchRequest.getTotalItems() % problemSearchRequest.getMaxPageItems() == 0){
+            problemSearchRequest.setTotalPage(problemSearchRequest.getTotalItems() / problemSearchRequest.getMaxPageItems());
+        }
+        else{
+            problemSearchRequest.setTotalPage(problemSearchRequest.getTotalItems() / problemSearchRequest.getMaxPageItems() + 1);
+        }
+        mav.addObject("modelSearch", problemSearchRequest);
         mav.addObject("problemList", list);
         mav.addObject("listGroup", group.type());
         mav.addObject("listTopic", listTopic);

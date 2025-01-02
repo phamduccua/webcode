@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ProblemRepository extends JpaRepository<ProblemEntity,Long>, ProblemRepositoryCustom {
-    List<ProblemEntity> findAll(ProblemSearchBuilder problemSearchBuilder);
     ProblemEntity findById(long id);
     ProblemEntity findByCode(String code);
 }

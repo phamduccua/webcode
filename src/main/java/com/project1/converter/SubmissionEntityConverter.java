@@ -25,6 +25,9 @@ public class SubmissionEntityConverter {
                 submissionEntity.setCode("CE");
                 submissionEntity.setError("No public class: your main class must be declared as a \"public class\"");
             }
+            if(submitted.contains("package")){
+                submitted = submitted.replaceAll("^package\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*;\\s*", "");
+            }
         }
         submissionEntity.setSubmitted(submitted);
         submissionEntity.setLanguage(LanguageUtils.language(language));

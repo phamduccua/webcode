@@ -2,6 +2,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="home.jsp" %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function saveSelection() {
+        const selectValue = document.getElementById("group").value;
+        sessionStorage.setItem("groupSelect", selectValue);
+    }
+    window.onload = function () {
+        const saveValue = sessionStorage.getItem("groupSelect");
+        if (saveValue) {
+            document.getElementById("group").value = saveValue;
+        }
+    };
+
+</script>
 <%--
   Created by IntelliJ IDEA.
   User: DELL
@@ -22,7 +37,7 @@
     <form:form id="listForm" modelAttribute="modelSearch" method="GET">
         <label><strong>Bài tập</strong></label>
         <form:input id="search" type="search" placeholder="Tìm theo mã, tiêu đề" path="codeOrtitle"/> <br><br>
-        <form:select id="group" path="group" onchange="listGroup()">
+        <form:select id="group" path="group" onchange="listGroup();saveSelection()">
             <form:options items="${listGroup}" />
         </form:select><br><br>
         <table id="tableList" class="table table-fixed">
@@ -102,13 +117,54 @@
             </c:forEach>
             </tbody>
         </table>
+        <form:input type="hidden" id="inPage" path="page" />
+        <div class="listPage" id="page">
+        </div>
     </form:form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var item = document.getElementById('page');
+    item.innerHTML = "";
+    var totalPage = ${modelSearch.totalPages};
+    var page = ${modelSearch.page};
+    var tmp = '';
+    if(totalPage <= 3){
+        for(var i = 1; i <= totalPage; i++){
+            if(i === page){
+                tmp += '<div class="itemPage pageChoose">' + i +'</div>'+ '\n';
+            }
+            else{
+                tmp += '<div class="itemPage" onclick=choosePage(' + i + ')' + '>' + i + '</div>' + '\n';
+            }
+        }
+    }
+    else{
+        var begin = 1;
+        if(page > 3) begin = page - 2;
+        var end = 3;
+        if(page > 3) end = page;
+        if(page > 1) tmp += '<div class="itemPage" onclick=choosePage(page-1)>«</div>' + '\n';
+        for(var i = begin; i <= end; i++){
+            if(i === page){
+                tmp += '<div class="itemPage pageChoose">' + i +'</div>'+ '\n';
+            }
+            else{
+                tmp += '<div class="itemPage" onclick=choosePage(' + i + ')' + '>' + i + '</div>' + '\n';
+            }
+        }
+        if(page < totalPage) tmp += '<div class="itemPage" onclick=choosePage(page+1)>»</div>' + '\n';
+    }
+
+    item.innerHTML = tmp;
+</script>
 <script>
     function listGroup(){
         document.getElementById("listForm").submit();
+    }
+    function choosePage(chPage){
+        const valuePage =  document.getElementById("inPage");
+        valuePage.value = chPage;
+        listGroup();
     }
     function confirmDelete(itemId) {
         Swal.fire({
@@ -394,8 +450,21 @@
     .filter-button:hover {
         background-color: #e0e0e0; /* Hiệu ứng khi hover */
     }
-
-
+    .listPage{
+        color : red;
+        display: flex;
+        justify-content: center;
+    }
+    .itemPage {
+        display : inline-flex;
+        border : 1px solid black;
+        padding-left: 8px;
+        padding-right : 8px;
+    }
+    .pageChoose{
+        background-color: #bb2019;
+        color : #FFFFFF;
+    }
 </style>
 </body>
 </html>

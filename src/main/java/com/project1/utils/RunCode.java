@@ -1,9 +1,8 @@
-package com.project1.api.admin;
+package com.project1.utils;
 
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.TestCaseEntity;
-import com.project1.utils.SusscessUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
