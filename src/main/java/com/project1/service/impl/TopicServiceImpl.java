@@ -12,8 +12,8 @@ public class TopicServiceImpl implements TopicService {
     @Autowired
     private TopicRepository topicRepository;
     @Override
-    public List<String> findTopic() {
-        List<String> result = topicRepository.findTopic();
+    public List<String> findTopic(long classId) {
+        List<String> result = topicRepository.findTopic(classId);
         return result;
     }
 }

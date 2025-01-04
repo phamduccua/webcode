@@ -52,16 +52,35 @@
                         <span class="dropdown-btn">Chủ đề con</span>
                         <div class="dropdown-menu-wrapper">
                             <table class="table-configuration">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Chủ đề</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="scrollable-checkboxes">
-                                            <form:checkboxes path="topic" items="${listTopic}" delimiter="<br/>"/>
+                                        <td>
+                                            <form:checkbox path="topic" value=" "/>
+                                        </td>
+                                        <td>
+                                            Tất cả
                                         </td>
                                     </tr>
+                                    <c:forEach var="item" items="${listTopic}">
+                                        <tr>
+                                            <td>
+                                                <form:checkbox path="topic" value="${item}" />
+                                            </td>
+                                            <td>
+                                                ${item}
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                                 </table>
                                 <div class="filter-button-container">
-                                    <button class="filter-button">Lọc</button>
+                                    <button class="filter-button" id="filter">Lọc</button>
                                 </div>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
@@ -161,6 +180,10 @@
     function listGroup(){
         document.getElementById("listForm").submit();
     }
+    ('#filter').click(function(e){
+        e.preventDefault();
+        listGroup();
+    });
     function choosePage(chPage){
         const valuePage =  document.getElementById("inPage");
         valuePage.value = chPage;
@@ -411,11 +434,17 @@
 
     /* Table configuration */
     .table-configuration {
+        border : 1px solid black;
         border-collapse: collapse;
         width: 100%;
     }
-
+    .table-configuration th{
+        border : 1px solid black;
+        background-color: #FFFFFF;
+        color : black;
+    }
     .table-configuration td {
+        border : 1px solid black;
         padding: 10px;
         text-align: left; /* Căn chữ sang trái */
         cursor: pointer;
@@ -441,11 +470,11 @@
     }
 
     .filter-button {
-        padding: 5px 15px; /* Kích thước nút */
-        background-color: #f5f5f5; /* Màu nền */
-        border: 1px solid #ccc; /* Đường viền */
-        cursor: pointer; /* Con trỏ chuột */
-        border-radius: 5px; /* Bo góc */
+        border : 1px solid black;
+        background-color : forestgreen;
+        padding: 5px 15px;
+        cursor: pointer;
+        border-radius: 5px;
     }
     .filter-button:hover {
         background-color: #e0e0e0; /* Hiệu ứng khi hover */

@@ -13,6 +13,7 @@ import com.project1.model.response.ProblemSearchReponse;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
 
+import com.project1.utils.ClassIdUtils;
 import com.project1.utils.LanguageUtils;
 import com.project1.utils.ReverseList;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,10 +58,27 @@ public class ProblemController {
             if (groups != null) {
                 problemSearchRequest.setGroup(groups);
             }
-
+        }
+        if((problemSearchRequest.getTopic() != null &&
+                !problemSearchRequest.getTopic().isEmpty()) &&
+                (problemSearchRequest.getTopic().get(0).equals(" ") ||
+                        problemSearchRequest.getTopic().get(0).equals(""))){
+            problemSearchRequest.setTopic(null);
+            session.setAttribute("topic", null);
+        }
+        List<String> topics = problemSearchRequest.getTopic();
+        if(topics != null && !topics.isEmpty()) {
+            session.setAttribute("topic", topics);
+            problemSearchRequest.setTopic(topics);
+        }
+        else{
+            topics = (List<String>) session.getAttribute("topic");
+            if(topics != null && !topics.isEmpty()) {
+                problemSearchRequest.setTopic(topics);
+            }
         }
         List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
-        List<String> listTopic = topicService.findTopic();
+        List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
         problemSearchRequest.setListResult(list);
         problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));
         if(problemSearchRequest.getTotalItems() % problemSearchRequest.getMaxPageItems() == 0){
