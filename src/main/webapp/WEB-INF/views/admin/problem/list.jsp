@@ -70,7 +70,9 @@
                                     <c:forEach var="item" items="${listTopic}">
                                         <tr>
                                             <td>
-                                                <form:checkbox path="topic" value="${item}" />
+                                                <c:if test="${item != null}">
+                                                    <form:checkbox path="topic" value="${item}" />
+                                                </c:if>
                                             </td>
                                             <td>
                                                 ${item}
