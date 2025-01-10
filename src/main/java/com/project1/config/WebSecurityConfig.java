@@ -22,8 +22,9 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/favicon.ico","/WEB-INF/views/*").permitAll()
+                        .requestMatchers("/login","/WEB-INF/views/*").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/api").hasAnyRole("ADMIN","USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

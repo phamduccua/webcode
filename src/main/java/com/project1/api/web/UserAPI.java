@@ -3,7 +3,9 @@ package com.project1.api.web;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.dto.UserLoginDTO;
+import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.response.LoginResponse;
+import com.project1.repository.UserRepository;
 import com.project1.service.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,15 @@ public class UserAPI {
         try{
             userService.resetPassword(userDTO);
             return ResponseEntity.ok(userDTO);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @PutMapping("api/update_password")
+    public ResponseEntity<?> updatePassword(@Valid @RequestBody UserupdatePassword userupdate){
+        try{
+            userService.updatePassword(userupdate);
+            return ResponseEntity.ok(userupdate);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

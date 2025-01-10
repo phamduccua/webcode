@@ -29,14 +29,15 @@ public class UserController {
     public ModelAndView accountManager(@ModelAttribute UserSearchRequest userSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/user/account_manager");
         mav.addObject("userSearchRequest", userSearchRequest);
-        List<UserSearchResponse> list = userService.findAll(userSearchRequest, PageRequest.of(userSearchRequest.getPage() - 1,userSearchRequest.getMaxPageItems()));
-        userSearchRequest.setListResult(list);
         userSearchRequest.setTotalItems(userService.coutTotalItems(userSearchRequest));
         if (userSearchRequest.getTotalItems() % userSearchRequest.getMaxPageItems() == 0) {
             userSearchRequest.setTotalPage(userSearchRequest.getTotalItems() / userSearchRequest.getMaxPageItems());
         } else {
             userSearchRequest.setTotalPage(userSearchRequest.getTotalItems() / userSearchRequest.getMaxPageItems() + 1);
         }
+        if(userSearchRequest.getPage() > userSearchRequest.getTotalPage()) userSearchRequest.setPage(1);
+        List<UserSearchResponse> list = userService.findAll(userSearchRequest, PageRequest.of(userSearchRequest.getPage() - 1,userSearchRequest.getMaxPageItems()));
+        userSearchRequest.setListResult(list);
         mav.addObject("roles", role.getRole());
         mav.addObject("list", list);
         return mav;
@@ -59,6 +60,13 @@ public class UserController {
         mav.addObject("accountEdit", userDTO);
         mav.addObject("roles", role.getRole());
         mav.addObject("listGroup", group.type());
+        return mav;
+    }
+    @GetMapping("api/update_password-{id}")
+    public ModelAndView updatePassword(@PathVariable("id") Long id, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/user/updatePassword");
+        UserDTO userDTO = userService.findById(id);
+        mav.addObject("user", userDTO);
         return mav;
     }
 }

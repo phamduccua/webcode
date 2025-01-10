@@ -8,10 +8,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/views/admin/problem/home.jsp" %>
 <html>
 <head>
   <meta charset="UTF-8" />
   <title>Chỉnh sửa tài khoản</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="main">
@@ -45,8 +47,11 @@
       <label>Lớp tham gia:</label>
       <table class="class">
         <thead>
-        <th><input type="checkbox" /></th>
-        <th>Lớp</th>
+        <tr>
+          <th></th>
+          <th>Lớp</th>
+        </tr>
+
         </thead>
         <tbody>
         <c:forEach var="item" items="${listGroup}">
@@ -134,7 +139,7 @@
       error: function(response) {
         Swal.fire({
           text: 'Đã xảy ra lỗi. Cập nhật tài khoản thất bại',
-          icon: 'info',
+          icon: 'error',
           confirmButtonText: 'OK'
         });
       }
@@ -173,6 +178,7 @@
     border: 1px solid black;
   }
   .title{
+    margin-top: 30px;
     text-align: center;
   }
   .name label, .phone label, .role label, .table label{
@@ -186,7 +192,7 @@
     border-radius: 5px;
     margin-bottom: 20px;
     width: 300px;
-    height: 25px;
+    height: 30px;
   }
   select{
     height: 30px;

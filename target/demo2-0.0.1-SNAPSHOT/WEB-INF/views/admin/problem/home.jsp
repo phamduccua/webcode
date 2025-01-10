@@ -8,9 +8,9 @@
   <div class="logo">
     <img souce="logo.webp" alt>
   </div>
-  <a class="button button-exam" href="list">Bài tập</a>
+  <a class="button button-exam" href="/admin/list">Bài tập</a>
   <a class="button button-status" href="https://www.youtube.com/">Trạng thái</a>
-  <a class="button button-history" href="history">Lịch sử</a>
+  <a class="button button-history" href="/admin/history">Lịch sử</a>
   <a class="button button-rank" href="#">Bảng xếp hạng</a>
   <a class="button button-configuration">
     <div style="display: flex; align-items: center; gap: 8px; position: relative;">
@@ -43,6 +43,7 @@
           <p>22/12/1999</p>
         </li>
         <li onclick="account_management()">Quản lí tài khoản</li>
+        <li onclick="update_password()">Thay đổi mật khẩu</li>
         <li>Đăng xuất</li>
       </ul>
     </div>
@@ -62,7 +63,10 @@
 </script>
 <script>
   function account_management(){
-    window.location.href = "list-account";
+    window.location.href = "/admin/list-account";
+  }
+  function update_password(){
+    window.location.href = "/api/update_password-12";
   }
 </script>
 <style>

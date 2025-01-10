@@ -37,7 +37,6 @@
                 <thead>
                 <tr>
                     <th>
-                        <input type="checkbox">
                         STT
                     </th>
                     <th>Tên đăng nhập</th>
@@ -107,14 +106,14 @@
             begin = page - 2;
             end = page;
         }
-        if(page > 1) tmp += '<li onclick=doiPage(page-1)>«</li>' + '\n';
+        if(page > 1) tmp += '<li onclick=doipage(page-1)>«</li>' + '\n';
         for(var i = begin; i <= end ;i++){
             if(page === i){
                 tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
             }
             else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
         }
-        if(page < totalPage) tmp += '<li onclick=doiPage(page+1)>»</li>' + '\n';
+        if(page < totalPage) tmp += '<li onclick=doipage(page+1)>»</li>' + '\n';
     }
     tmp += '</ul>';
     item.innerHTML = tmp;
@@ -185,7 +184,6 @@
 
 <style>
     .main{
-        width: 100%;
         border: 1px solid black;
     }
     .title{

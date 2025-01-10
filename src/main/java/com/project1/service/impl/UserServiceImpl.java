@@ -5,6 +5,7 @@ import com.project1.converter.UserConverter;
 import com.project1.customExceptions.DataNotFoundException;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.UserDTO;
+import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.request.UserSearchRequest;
 import com.project1.model.response.UserSearchResponse;
 import com.project1.repository.UserRepository;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -142,5 +144,18 @@ public class UserServiceImpl implements IUserService {
             list = userRepository.findByUsernameContainingOrFullnameContainingAndRoleAndStatus(request.getName(), request.getName(), request.getRole(), 1);
         }
         return list.size();
+    }
+
+    @Override
+    public void updatePassword(UserupdatePassword userupdatePassword) {
+        UserEntity user = userRepository.findById(userupdatePassword.getId());
+        if(!passwordEncoder.matches(userupdatePassword.getPassword(),user.getPassword())) {
+            throw new BadCredentialsException("Mật khẩu hiện tại bạn nhập không chính xác !!");
+        }
+        if(!userupdatePassword.getNewPassword().equals(userupdatePassword.getRentPassword())){
+            throw new BadCredentialsException("Mật khẩu mới và mật khẩu xác nhận không khớp !!");
+        }
+        user.setPassword(passwordEncoder.encode(userupdatePassword.getNewPassword()));
+        userRepository.save(user);
     }
 }
