@@ -38,6 +38,12 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name="status")
     private Integer status;
 
+    @Column(name="classId")
+    private String classId;
+
+    @Column(name="phone_number")
+    private String phone_number;
+
     public UserEntity() {
 
     }

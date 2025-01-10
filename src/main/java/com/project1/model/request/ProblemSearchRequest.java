@@ -33,4 +33,8 @@ public class ProblemSearchRequest extends AbstractDTO {
     public void setGroup(String group) {
         this.group = group;
     }
+
+    ProblemSearchRequest(){
+        this.setMaxPageItems(10);
+    }
 }

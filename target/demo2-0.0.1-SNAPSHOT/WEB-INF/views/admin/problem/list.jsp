@@ -241,86 +241,7 @@
 </script>
 
 
-
-
-
-
-
 <style>
-    .head {
-        justify-content: center !important;
-        width: 100% !important;
-        height: 60px !important;
-        box-sizing: border-box !important;
-        background-color: #8B1A1A !important;
-    }
-    .button {
-        color: white !important;
-        position: absolute !important;
-        top: 18px !important;
-        border: none !important;
-        padding: 10px 20px !important;
-        text-align: center !important;
-    }
-    .button-exam {
-        top:7px !important;
-        left: 120px !important;
-    }
-    .button-status {
-        top:7px !important;
-        left: 200px !important;
-    }
-    .button-history {
-        top:7px !important;
-        left: 300px !important;
-    }
-    .button-rank {
-        top:7px !important;
-        left: 380px !important;
-    }
-    .button-configuration {
-        top:7px !important;
-        left: 510px !important;
-    }
-    .button-gui {
-        top:7px !important;
-        left: 620px !important;
-    }
-    .avatar {
-        background-color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        position: absolute;
-        top: 15px;
-        right: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .img {
-        width: 70%;
-        height: 70%;
-    }
-
-    .logo {
-        /*background-image: url("logo.webp");*/
-        background-size: cover;
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        top: 12px;
-        left: 50px;
-    }
-    .open{
-        color:red;
-    }
-    a {
-        text-decoration: none;
-        pointer-events: auto !important;
-    }
     .main {
         width: 1177.6px;
         margin: 30.39px auto 0;
@@ -349,16 +270,15 @@
     .table {
         border-spacing: 0;
         border-radius: 4px;
-        /*overflow: hidden;*/
         width: 100%;
         border: 1px solid #ccc;
     }
     .dropdown-header {
-        display: flex; /* Sử dụng Flexbox */
-        justify-content: center; /* Căn giữa theo chiều ngang */
-        align-items: center; /* Căn giữa theo chiều dọc */
-        gap: 5px; /* Khoảng cách giữa chữ và biểu tượng */
-        height: 100%; /* Chiều cao bằng với thẻ <th> */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        height: 100%;
     }
 
     .table-head {
@@ -369,14 +289,14 @@
     }
 
     .table-head th {
-        text-align: left; /* Căn chữ vào giữa theo chiều ngang */
-        vertical-align: middle; /* Căn chữ vào giữa theo chiều dọc */
-        height: 50px; /* Tăng chiều cao của thẻ <th> */
-        padding: 10px; /* Khoảng cách bên trong */
-        font-size: 16px; /* Kích thước chữ */
-        font-weight: bold; /* Đậm chữ */
-        color: #FFFFFF; /* Màu chữ */
-        background-color: #8A1111; /* Màu nền */
+        text-align: left;
+        vertical-align: middle;
+        height: 50px;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #FFFFFF;
+        background-color: #8A1111;
     }
     .table-head .mid{
         text-align: center;
@@ -384,93 +304,50 @@
     .table-body td {
         text-align: left;
         padding: 10px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid black;
     }
     .table-body .mid{
         text-align: center;
     }
-    /* Giảm kích thước ô STT */
     .text-middle {
-        width: 40px; /* Hoặc tùy chỉnh kích thước nhỏ hơn nếu cần */
+        width: 40px;
         min-width: 40px;
         padding: 0;
         text-align: center;
     }
-    /* Dropdown container */
     .dropdown {
-        position: relative; /* Định vị tương đối */
+        position: relative;
         display: inline-block;
         overflow: visible;
     }
-
-    /* Nút "Cấu hình" */
     .dropdown-btn {
-        cursor: pointer; /* Biểu tượng trỏ chuột khi hover */
-        color: white; /* Màu chữ */
+        cursor: pointer;
+        color: white;
         font-weight: bold;
     }
     .dropdown-icon {
-        cursor: pointer; /* Trỏ chuột khi hover vào icon */
+        cursor: pointer;
     }
-
-    /* Ẩn menu mặc định */
-    /* Định vị lại menu để không bị che khuất */
     .dropdown-menu-wrapper {
-        display: none; /* Ẩn menu mặc định */
-        position: absolute; /* Định vị menu thả xuống */
-        top: 100%; /* Hiển thị ngay bên dưới icon */
-        right: 0; /* Căn lề phải để tránh tràn */
-        background-color: white; /* Nền trắng */
-        border: 1px solid #ccc; /* Viền bảng */
-        border-radius: 4px; /* Bo góc */
-        z-index: 1000; /* Đảm bảo menu nằm trên cùng */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         overflow-y: auto;
-        width: max-content; /* Kích thước vừa với nội dung */
+        width: max-content;
     }
-
     .dropdown:hover .dropdown-menu-wrapper {
         display: block;
     }
-
-
-    /* Table configuration */
-    .table-configuration {
-        border : 1px solid black;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    .table-configuration th{
-        border : 1px solid black;
-        background-color: #FFFFFF;
-        color : black;
-    }
-    .table-configuration td {
-        border : 1px solid black;
-        padding: 10px;
-        text-align: left; /* Căn chữ sang trái */
-        cursor: pointer;
-        color: black;
-    }
-
-    /* Hiệu ứng hover trên từng dòng */
-    .table-configuration tr:hover td {
-        background-color: #f0f0f0; /* Highlight row */
-    }
-    /* Thêm thanh cuộn cho checkbox */
-    .scrollable-checkboxes {
-        max-height: 100px; /* Chiều cao tối đa của danh sách checkbox */
-        overflow-y: auto; /* Thêm thanh cuộn dọc */
-        border: 1px solid #ccc; /* Đường viền để phân biệt danh sách */
-        padding: 10px; /* Khoảng cách bên trong */
-    }
-
-    /* Căn chỉnh nút Lọc xuống dưới cùng */
     .filter-button-container {
-        text-align: center; /* Căn nút Lọc vào giữa */
-        margin-top: 10px; /* Khoảng cách giữa danh sách và nút */
+        text-align: center;
+        margin-top: 10px;
     }
-
     .filter-button {
         border : 1px solid black;
         background-color : forestgreen;
@@ -479,7 +356,7 @@
         border-radius: 5px;
     }
     .filter-button:hover {
-        background-color: #e0e0e0; /* Hiệu ứng khi hover */
+        background-color: #e0e0e0;
     }
     .listPage{
         color : red;

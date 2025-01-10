@@ -54,31 +54,27 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .button {
-            background-color:rgb(0, 255, 238); /* Màu nền */
-            color: white; /* Màu chữ */
-            font-size: 16px; /* Kích thước chữ */
-            font-weight: bold; /* In đậm chữ */
-            padding: 10px 20px; /* Khoảng cách bên trong nút */
-            border: none; /* Loại bỏ viền mặc định */
-            border-radius: 8px; /* Bo tròn góc nút */
-            cursor: pointer; /* Hiển thị biểu tượng tay khi hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-            transition: all 0.3s ease; /* Hiệu ứng mượt khi thay đổi */
+        .buttonadd {
+            background-color:rgb(0, 255, 238);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-
-        /* Hiệu ứng khi di chuột qua nút */
-        .button:hover {
-            background-color: limegreen; /* Đổi màu nền khi hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Tăng đổ bóng */
-            transform: translateY(-2px); /* Dịch lên nhẹ */
+        .buttonadd:hover {
+            background-color: limegreen;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
-
-        /* Hiệu ứng khi nhấn nút */
-        .button:active {
-            background-color: forestgreen; /* Màu tối hơn khi nhấn */
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng lõm */
-            transform: translateY(1px); /* Dịch xuống nhẹ */
+        .buttonadd:active {
+            background-color: forestgreen;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
         }
         select{
             height:25px;
@@ -89,8 +85,6 @@
             margin-right: 5px;
             margin-left: 20px;
         }
-
-
     </style>
 </head>
 <body>
@@ -153,7 +147,7 @@
             <label for="code" class="label">Giới hạn bộ nhớ</label>
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn bộ nhớ" path="memory_limit"/>
         </div>
-        <button class="button" id="addProblem">Tạo bài tập</button>
+        <button class="buttonadd" id="addProblem">Tạo bài tập</button>
     </form:form>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

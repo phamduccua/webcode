@@ -94,7 +94,7 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("/admin/history")
+    @GetMapping("admin/history")
     public ModelAndView problemHistory(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/history");
         List<SubmissionDTO> listSub = getSubmission.getSub();
@@ -124,7 +124,7 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("/admin/list-testcase-{id}")
+    @GetMapping("admin/list-testcase-{id}")
     public ModelAndView problemAddTest(@PathVariable("id") Long id , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/edit-testcase");
         mav.addObject("id",id);
@@ -135,7 +135,7 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("/admin/assignment-{code}")
+    @GetMapping("admin/assignment-{code}")
     public ModelAndView assignment(@PathVariable("code") String code , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/assignment");
         ProblemDTO problemDTO = findProblemService.findByCode(code);

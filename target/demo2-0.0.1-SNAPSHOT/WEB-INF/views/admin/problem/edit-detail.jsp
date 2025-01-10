@@ -14,45 +14,6 @@
     <title>Test Case</title>
     <meta charset="UTF-8">
     <style>
-        #home {
-            background-color: #8A1111;
-        }
-
-        .main {
-            width: 1178px; /* Làm tròn giá trị */
-            margin: 30px auto 0;
-            padding: 26px 39px;
-            border-radius: 4px;
-            border: 1.6px solid #e1e4e8;
-            text-align: left;
-        }
-
-        .labelTitle {
-            color: white;
-            font-size: 30px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .menu {
-            background-color: white;
-            width: 800px;
-            border-radius: 4px;
-            border: 1.6px solid #e1e4e8;
-            text-align: left;
-        }
-
-        .chose {
-            background-color: aquamarine;
-            color: black;
-            border: 1px solid #ccc;
-            text-decoration: none;
-            margin: 10px;
-            display: inline-block;
-            border-radius: 4px;
-            padding: 2px;
-        }
-
         .form-group > div {
             margin-bottom: 20px;
             display: flex;
@@ -80,7 +41,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .button {
+        .buttonadd {
             background-color:rgb(0, 255, 238); /* Màu nền */
             color: white; /* Màu chữ */
             font-size: 16px; /* Kích thước chữ */
@@ -93,19 +54,16 @@
             transition: all 0.3s ease; /* Hiệu ứng mượt khi thay đổi */
             margin: 20px;
         }
-
-        /* Hiệu ứng khi di chuột qua nút */
-        .button:hover {
-            background-color: limegreen; /* Đổi màu nền khi hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Tăng đổ bóng */
-            transform: translateY(-2px); /* Dịch lên nhẹ */
+        .buttonadd:hover {
+            background-color: limegreen;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
-        /* Hiệu ứng khi nhấn nút */
-        .button:active {
-            background-color: forestgreen; /* Màu tối hơn khi nhấn */
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng lõm */
-            transform: translateY(1px); /* Dịch xuống nhẹ */
+        .buttonadd:active {
+            background-color: forestgreen;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
         }
         body {
             font-family: "Times New Roman", Times, serif !important;
@@ -178,7 +136,7 @@
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn bộ nhớ" path="memory_limit"/>
         </div>
         <form:hidden path="id" id="problemId"/>
-        <button class="button" id="updateProblem">Cập nhật</button>
+        <button class="buttonadd" id="updateProblem">Cập nhật</button>
     </form:form>
 </div>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">

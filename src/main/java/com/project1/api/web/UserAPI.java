@@ -18,7 +18,7 @@ import java.util.List;
 public class UserAPI {
     @Autowired
     private IUserService userService;
-    @PostMapping("register")
+    @PostMapping("admin/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
                                         BindingResult result) {
         try{
@@ -35,6 +35,24 @@ public class UserAPI {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @PutMapping("admin/update")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserDTO userDTO){
+        try{
+            userService.update(userDTO);
+            return ResponseEntity.ok(userDTO);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @PutMapping("admin/reset")
+    public ResponseEntity<?> resetUser(@Valid @RequestBody UserDTO userDTO){
+        try{
+            userService.resetPassword(userDTO);
+            return ResponseEntity.ok(userDTO);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
     @PostMapping("login")
     public ResponseEntity<?> login(
             @Valid @RequestBody UserLoginDTO userLoginDTO) {
@@ -47,5 +65,10 @@ public class UserAPI {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    @DeleteMapping("admin/delete/{ids}")
+    public ResponseEntity<Void> deleteUsers(@PathVariable List<Long> ids){
+        userService.delete(ids);
+        return ResponseEntity.ok().build();
     }
 }

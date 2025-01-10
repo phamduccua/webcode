@@ -102,72 +102,6 @@
             text-align: center !important;
             background-color: #F1ECEC !important;
         }
-
-        .head {
-            justify-content: center !important;
-            width: 100% !important;
-            height: 60px !important;
-            box-sizing: border-box !important;
-            background-color: #8B1A1A !important;
-        }
-
-        .button {
-            color: white !important;
-            position: absolute !important;
-            top: 18px !important;
-            border: none !important;
-            padding: 10px 20px !important;
-            text-align: center !important;
-        }
-
-        .button-exam {
-            top: 7px !important;
-            left: 120px !important;
-        }
-
-        .button-status {
-            top: 7px !important;
-            left: 200px !important;
-        }
-
-        .button-history {
-            top: 7px !important;
-            left: 300px !important;
-        }
-
-        .button-rank {
-            top: 7px !important;
-            left: 380px !important;
-        }
-
-        .button-configuration {
-            top: 7px !important;
-            left: 510px !important;
-        }
-
-        .button-gui {
-            top: 7px !important;
-            left: 620px !important;
-        }
-
-        .avatar {
-            background-color: white !important;
-            width: 40px !important;
-            height: 40px !important;
-            border-radius: 50% !important;
-            position: absolute !important;
-            top: 15px !important;
-            right: 40px !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-        }
-
-        .img {
-            width: 70% !important;
-            height: 70% !important;
-        }
-
         .dropdown {
             position: relative !important;
             display: inline-block !important;
@@ -197,60 +131,10 @@
             overflow-y: auto !important;
             width: max-content !important;
         }
-
-        .dropdown:hover .dropdown-menu-wrapper {
-            display: block !important;
-        }
-
-        .table-configuration {
-            border-collapse: collapse !important;
-            width: 100% !important;
-        }
-
-        .table-configuration td {
-            padding: 10px !important;
-            text-align: left !important;
-            cursor: pointer !important;
-            color: black !important;
-        }
-
-        .table-configuration tr:hover td {
-            background-color: #f0f0f0 !important;
-        }
-
-        .scrollable-checkboxes {
-            max-height: 100px !important;
-            overflow-y: auto !important;
-            border: 1px solid #ccc !important;
-            padding: 10px !important;
-        }
-
-        .filter-button-container {
-            text-align: center !important;
-            margin-top: 10px !important;
-        }
-
-        .filter-button {
-            padding: 5px 15px !important;
-            background-color: #f5f5f5 !important;
-            border: 1px solid #ccc !important;
-            cursor: pointer !important;
-            border-radius: 5px !important;
-        }
-
-        .filter-button:hover {
-            background-color: #e0e0e0 !important;
-        }
-
         a {
             text-decoration: none !important;
             pointer-events: auto !important;
         }
-
-        /*.detail p {*/
-        /*    white-space: pre-wrap !important;*/
-        /*}*/
-
         .example {
             width: 100% !important;
             border-collapse: collapse !important;

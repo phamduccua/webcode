@@ -36,7 +36,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 return;
             }
             String authHeader = extractToken(request);
-//            final String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
                 return;
@@ -46,7 +45,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserEntity userDetails = (UserEntity) userDetailsService.loadUserByUsername(username);
                 if(jwtTokenUtil.validateToken(token, userDetails)) {
-                    boolean tmp = jwtTokenUtil.validateToken(token, userDetails);
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null,
                                     userDetails.getAuthorities());
@@ -60,8 +58,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
     }
     private boolean isBypassToken(@NonNull  HttpServletRequest request) {
-        System.out.println(request.getServletPath());
-        System.out.println(request.getMethod());
         final List<Pair<String, String>> bypassTokens = Arrays.asList(
                 Pair.of("/login", "GET"),
                 Pair.of("/login", "POST")

@@ -98,104 +98,12 @@
 </script>
 
 <style>
-    .head {
-        justify-content: center !important;
-        width: 100% !important;
-        height: 60px !important;
-        box-sizing: border-box !important;
-        background-color: #8B1A1A !important;
-    }
-    .button {
-        color: white !important;
-        position: absolute !important;
-        top: 18px !important;
-        border: none !important;
-        padding: 10px 20px !important;
-        text-align: center !important;
-    }
-    .button-exam {
-        top:7px !important;
-        left: 120px !important;
-    }
-    .button-status {
-        top:7px !important;
-        left: 200px !important;
-    }
-    .button-history {
-        top:7px !important;
-        left: 300px !important;
-    }
-    .button-rank {
-        top:7px !important;
-        left: 380px !important;
-    }
-    .button-configuration {
-        top:7px !important;
-        left: 510px !important;
-    }
-    .button-gui {
-        top:7px !important;
-        left: 620px !important;
-    }
-    .avatar {
-        background-color: white !important;
-        width: 40px !important;
-        height: 40px !important;
-        border-radius: 50% !important;
-        position: absolute !important;
-        top: 15px !important;
-        right: 40px !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-    }
-
-    .img {
-        width: 70% !important;
-        height: 70% !important;
-    }
-
-    .logo {
-        /*background-image: url("logo.webp");*/
-        background-size: cover !important;
-        position: absolute !important;
-        width: 50px !important;
-        height: 50px !important;
-        border-radius: 50% !important;
-        top: 12px !important;
-        left: 50px !important;
-    }
-    .open {
-        color: red !important;
-    }
-    a {
-        text-decoration: none !important;
-        pointer-events: auto !important;
-    }
     .main {
-        width: 1177.6px !important;
-        margin: 30.39px auto 0 !important;
-        padding: 25.6px 39.19px !important;
-        border-radius: 4px !important;
-        border: solid 1.6px #e1e4e8 !important;
-    }
-    #search {
-        float: right !important;
-        border-radius: 4px !important;
-        border: solid 1.6px #e1e4e8 !important;
-        background-color: #FAEDED !important;
-        width: 273.6px !important;
-        height: 28px !important;
-        padding-left: 8.8px !important;
-    }
-    #group {
-        float: right !important;
-        border-radius: 4px !important;
-        border: solid 1.6px #e1e4e8 !important;
-        background-color: white !important;
-        width: 373.6px !important;
-        height: 28px !important;
-        padding-left: 8.8px !important;
+        width: 1177.6px;
+        margin: 30.39px auto 0;
+        padding: 25.6px 39.19px;
+        border-radius: 4px;
+        border: solid 1.6px #e1e4e8;
     }
     .table {
         border-spacing: 0 !important;
@@ -205,11 +113,11 @@
         margin-top: 30px !important;
     }
     .dropdown-header {
-        display: flex !important; /* Sử dụng Flexbox */
-        justify-content: center !important; /* Căn giữa theo chiều ngang */
-        align-items: center !important; /* Căn giữa theo chiều dọc */
-        gap: 5px !important; /* Khoảng cách giữa chữ và biểu tượng */
-        height: 100% !important; /* Chiều cao bằng với thẻ <th> */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 5px !important;
+        height: 100% !important;
     }
 
     .table-head {
@@ -235,51 +143,43 @@
         padding: 10px !important;
         border-bottom: 1px solid #ccc !important;
     }
-    /* Giảm kích thước ô STT */
     .text-middle {
-        width: 40px !important; /* Hoặc tùy chỉnh kích thước nhỏ hơn nếu cần */
+        width: 40px !important;
         min-width: 40px !important;
         padding: 0 !important;
         text-align: center !important;
     }
-    /* Dropdown container */
     .dropdown {
-        position: relative !important; /* Định vị tương đối */
+        position: relative !important;
         display: inline-block !important;
         overflow: visible !important;
     }
 
-    /* Nút "Cấu hình" */
     .dropdown-btn {
-        cursor: pointer !important; /* Biểu tượng trỏ chuột khi hover */
-        color: white !important; /* Màu chữ */
+        cursor: pointer !important;
+        color: white !important;
         font-weight: bold !important;
     }
     .dropdown-icon {
-        cursor: pointer !important; /* Trỏ chuột khi hover vào icon */
+        cursor: pointer !important;
     }
-
-    /* Ẩn menu mặc định */
-    /* Định vị lại menu để không bị che khuất */
     .dropdown-menu-wrapper {
-        display: none !important; /* Ẩn menu mặc định */
-        position: absolute !important; /* Định vị menu thả xuống */
-        top: 100% !important; /* Hiển thị ngay bên dưới icon */
-        right: 0 !important; /* Căn lề phải để tránh tràn */
-        background-color: white !important; /* Nền trắng */
-        border: 1px solid #ccc !important; /* Viền bảng */
-        border-radius: 4px !important; /* Bo góc */
-        z-index: 1000 !important; /* Đảm bảo menu nằm trên cùng */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Đổ bóng */
+        display: none !important;
+        position: absolute !important;
+        top: 100% !important;
+        right: 0 !important;
+        background-color: white !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+        z-index: 1000 !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
         overflow-y: auto !important;
-        width: max-content !important; /* Kích thước vừa với nội dung */
+        width: max-content !important;
     }
 
     .dropdown:hover .dropdown-menu-wrapper {
         display: block !important;
     }
-
-    /* Table configuration */
     .table-configuration {
         border-collapse: collapse !important;
         width: 100% !important;
@@ -287,39 +187,36 @@
 
     .table-configuration td {
         padding: 10px !important;
-        text-align: left !important; /* Căn chữ sang trái */
+        text-align: left !important;
         cursor: pointer !important;
         color: black !important;
     }
 
-    /* Hiệu ứng hover trên từng dòng */
     .table-configuration tr:hover td {
-        background-color: #f0f0f0 !important; /* Highlight row */
+        background-color: #f0f0f0 !important;
     }
 
-    /* Thêm thanh cuộn cho checkbox */
     .scrollable-checkboxes {
-        max-height: 100px !important; /* Chiều cao tối đa của danh sách checkbox */
-        overflow-y: auto !important; /* Thêm thanh cuộn dọc */
-        border: 1px solid #ccc !important; /* Đường viền để phân biệt danh sách */
-        padding: 10px !important; /* Khoảng cách bên trong */
+        max-height: 100px !important;
+        overflow-y: auto !important;
+        border: 1px solid #ccc !important;
+        padding: 10px !important;
     }
 
-    /* Căn chỉnh nút Lọc xuống dưới cùng */
     .filter-button-container {
-        text-align: center !important; /* Căn nút Lọc vào giữa */
-        margin-top: 10px !important; /* Khoảng cách giữa danh sách và nút */
+        text-align: center !important;
+        margin-top: 10px !important;
     }
 
     .filter-button {
-        padding: 5px 15px !important; /* Kích thước nút */
-        background-color: #f5f5f5 !important; /* Màu nền */
-        border: 1px solid #ccc !important; /* Đường viền */
-        cursor: pointer !important; /* Con trỏ chuột */
-        border-radius: 5px !important; /* Bo góc */
+        padding: 5px 15px !important;
+        background-color: #f5f5f5 !important;
+        border: 1px solid #ccc !important;
+        cursor: pointer !important;
+        border-radius: 5px !important;
     }
     .filter-button:hover {
-        background-color: #e0e0e0 !important; /* Hiệu ứng khi hover */
+        background-color: #e0e0e0 !important;
     }
     p {
         margin: 0px !important;
