@@ -20,9 +20,9 @@ public class ProblemRepositoryImpl implements ProblemRepositoryCustom {
     private EntityManager entityManager;
     @Override
     public List<ProblemEntity> findAll(ProblemSearchBuilder problemSearchBuilder) {
-        StringBuilder sql = new StringBuilder("SELECT p.id, p.title, p.description, p.difficulty, p.input_format, p.output_format, p.code, p.type, p.example, p.topic, p.class_id, p.constraints, p.color, p.time_limit, p.memory_limit, p.language \n");
+        StringBuilder sql = new StringBuilder("SELECT p.id, p.title, p.description, p.difficulty, p.input_format, p.output_format, p.code, p.type , p.topic, p.class_id, p.constraints, p.time_limit, p.memory_limit, p.language \n");
         sql.append("FROM problem p \n");
-        sql.append("WHERE 1=1 \n");
+        sql.append("WHERE p.topic NOT LIKE '%CONTEST%' \n");
         queryNormal(sql, problemSearchBuilder);
         querySpecial(sql, problemSearchBuilder);
         sql.append(" ORDER BY p.difficulty, p.code ");

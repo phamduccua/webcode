@@ -18,6 +18,7 @@ public class ClassIdUtils {
             else if(item.equals("NGON_NGU_LAP_TRINH_PYTHON") == true){
                 return 5L;
             }
+            else if(item.equals("CONTEST")) return 0L;
             else return 0L;
         }
         return 0L;
@@ -39,8 +40,10 @@ public class ClassIdUtils {
             else if(classId == 5L){
                 return "NGON_NGU_LAP_TRINH_PYTHON";
             }
-            else return null;
+            else if(classId == 0L)
+                return "CONTEST";
+            else return "";
         }
-        return null;
+        return "";
     }
 }

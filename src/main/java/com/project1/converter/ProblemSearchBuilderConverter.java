@@ -17,6 +17,8 @@ public class ProblemSearchBuilderConverter {
             else if(request.getGroup().equals("CAU_TRUC_DU_LIEU_VA_GIAI_THUAT")) group = 3L;
             else if(request.getGroup().equals("NGON_NGU_LAP_TRINH_JAVA")) group = 4L;
             else if(request.getGroup().equals("NGON_NGU_LAP_TRINH_PYTHON")) group = 5L;
+            else if(request.getGroup().equals("CONTEST")) group = 0L;
+            else group = -1L;
         }
         ProblemSearchBuilder problemSearchBuilder = new ProblemSearchBuilder.Builder()
                 .setCode(MapUtils.getObject(request.getCodeOrtitle(),String.class))

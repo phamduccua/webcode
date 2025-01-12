@@ -203,14 +203,6 @@
                 confirmButtonText: 'OK'
             });
         }
-        else if(startTime < now){
-            Swal.fire({
-                title: 'Lỗi!',
-                text: 'Thời gian bắt đầu phải là thời gian trong tương lai !!',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
         else if(endTime < now){
             Swal.fire({
                 title: 'Lỗi!',

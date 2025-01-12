@@ -42,16 +42,16 @@
             border-radius: 4px;
         }
         .buttonadd {
-            background-color:rgb(0, 255, 238); /* Màu nền */
-            color: white; /* Màu chữ */
-            font-size: 16px; /* Kích thước chữ */
-            font-weight: bold; /* In đậm chữ */
-            padding: 10px 20px; /* Khoảng cách bên trong nút */
-            border: none; /* Loại bỏ viền mặc định */
-            border-radius: 8px; /* Bo tròn góc nút */
-            cursor: pointer; /* Hiển thị biểu tượng tay khi hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-            transition: all 0.3s ease; /* Hiệu ứng mượt khi thay đổi */
+            background-color:rgb(0, 255, 238);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
             margin: 20px;
         }
         .buttonadd:hover {

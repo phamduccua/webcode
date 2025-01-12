@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: DELL
-  Date: 24/11/2024
-  Time: 1:02 CH
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -31,7 +24,7 @@
       display: block;
     }
 
-    .menu {
+    .menu_edit {
       background-color: white;
       width: 800px;
       border-radius: 4px;
@@ -53,13 +46,11 @@
 </head>
 <body>
 <div id="home" class="main">
-  <label class="labelTitle">${nameProblem}</label>
-  <div class="menu">
-    <a class="chose detail" href="detail-${id}">Chi tiết</a>
-    <a class="chose testcase" href="list-testcase-${id}">Test Case</a>
-    <a class="chose languages" href="languages">Ngôn ngữ</a>
+  <label class="labelTitle">${problemDTO.title}</label>
+  <div class="menu_edit">
+    <a class="chose detail" href="problem_contest-edit-${problemDTO.id}">Chi tiết</a>
+    <a class="chose testcase" href="list-testcase-${problemDTO.id}">Test Case</a>
     <a class="chose install" href="install">Cài đặt</a>
-    <a class="chose install" href="list">Quay về trang chủ</a>
   </div>
 </div>
 </body>

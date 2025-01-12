@@ -3,6 +3,7 @@ package com.project1.api.admin;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.ContestCreate;
 import com.project1.model.dto.ContestDTO;
+import com.project1.model.dto.ProblemContestDTO;
 import com.project1.service.ContestService;
 import com.project1.utils.SecurityUtils;
 import jakarta.servlet.http.Cookie;
@@ -54,6 +55,25 @@ public class ContestAPI {
             contestService.deleteContest(id);
             return ResponseEntity.ok().build();
         } catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("admin/contest-create_problem")
+    public ResponseEntity<?> createProblem(@RequestBody ProblemContestDTO problemContestDTO){
+        try{
+            contestService.addProblemContest(problemContestDTO);
+            return ResponseEntity.ok().build();
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("admin/update_problem-contest")
+    public ResponseEntity<?> updateProblemContest(@RequestBody ProblemContestDTO problemContestDTO){
+        try{
+            contestService.updateProblemContest(problemContestDTO);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

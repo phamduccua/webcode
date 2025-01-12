@@ -12,6 +12,7 @@
   <style>
     #home {
       background-color: #8A1111;
+      color: #fff;
     }
 
     .main {

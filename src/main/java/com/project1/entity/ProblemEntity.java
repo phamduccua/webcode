@@ -36,9 +36,6 @@ public class ProblemEntity {
     @Column(name="type")
     private String type;
 
-    @Column(name="example")
-    private String example;
-
     @Column(name="topic")
     private String topic;
 
@@ -47,9 +44,6 @@ public class ProblemEntity {
 
     @Column(name="constraints")
     private String constraints;
-
-    @Column(name="color")
-    private String color;
 
     @Column(name="time_limit")
     private float time_limit;

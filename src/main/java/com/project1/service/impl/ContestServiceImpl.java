@@ -1,10 +1,16 @@
 package com.project1.service.impl;
 
 import com.project1.converter.ContestConverter;
+import com.project1.converter.ProblemAddConverter;
+import com.project1.converter.ProblemDTOConverter;
 import com.project1.entity.ContestEntity;
+import com.project1.entity.ProblemEntity;
 import com.project1.model.dto.ContestCreate;
 import com.project1.model.dto.ContestDTO;
+import com.project1.model.dto.ProblemContestDTO;
+import com.project1.model.dto.ProblemDTO;
 import com.project1.repository.ContestRepository;
+import com.project1.repository.ProblemRepository;
 import com.project1.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +25,12 @@ public class ContestServiceImpl implements ContestService {
     private ContestRepository contestRepository;
     @Autowired
     private ContestConverter contestConverter;
+    @Autowired
+    private ProblemAddConverter problemAddConverter;
+    @Autowired
+    private ProblemRepository problemRepository;
+    @Autowired
+    private ProblemDTOConverter problemDTOConverter;
     @Override
     public List<ContestDTO> findAll() {
         List<ContestDTO> result = new ArrayList<>();
@@ -55,10 +67,40 @@ public class ContestServiceImpl implements ContestService {
         }
         contestRepository.save(contest);
     }
-
     @Override
     public void deleteContest(Long id) {
-        ContestEntity contest = contestRepository.findContestById(id);
+        ContestEntity contest = contestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contest not found"));
+        contest.getProblemEntities().forEach(problem -> problem.getContestEntites().remove(contest));
         contestRepository.delete(contest);
+    }
+
+    @Override
+    public void addProblemContest(ProblemContestDTO problemContestDTO) {
+        ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemContestDTO);
+        ContestEntity contest = contestRepository.findContestById(problemContestDTO.getId_contest());
+        problemEntity.getContestEntites().add(contest);
+        contest.getProblemEntities().add(problemEntity);
+        problemRepository.save(problemEntity);
+        contestRepository.save(contest);
+    }
+
+    @Override
+    public List<ProblemDTO> findProblem(Long id) {
+        ContestEntity contest = contestRepository.findContestById(id);
+        List<ProblemEntity> list = contest.getProblemEntities();
+        List<ProblemDTO> result = new ArrayList<>();
+        for(ProblemEntity problemEntity : list){
+            problemDTOConverter.toProblemDTO(problemEntity);
+            result.add(problemDTOConverter.toProblemDTO(problemEntity));
+        }
+        return result;
+    }
+
+    @Override
+    public void updateProblemContest(ProblemContestDTO problemContestDTO) {
+        ProblemEntity prolemEntity = problemRepository.findById(problemContestDTO.getId()).get();
+        prolemEntity = problemAddConverter.toProblemEntity(problemContestDTO);
+        problemRepository.save(prolemEntity);
     }
 }

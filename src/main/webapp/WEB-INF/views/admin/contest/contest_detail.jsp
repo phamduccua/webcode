@@ -8,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/admin/problem/home.jsp" %>
+<%@ include file="contest_menu.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -15,15 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="main">
-    <h1>Test</h1>
-    <div class="menu_contest">
-        <div class="item">Chi tiết</div>
-        <div class="item">Bài tập</div>
-        <div class="item">Bảng xếp hạng</div>
-        <div class="item">Quản lí thành viên</div>
-    </div>
-    <div >
+    <div class="main_detail">
         <form:form id="formData" modelAttribute="contestDTO" method="GET">
             <div class="detail">
                 <div class="detail_item">
@@ -44,7 +37,6 @@
                 </div>
             </div>
         </form:form>
-    </div>
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -63,14 +55,6 @@
             Swal.fire({
                 title: 'Lỗi!',
                 text: 'Thời gian bắt đầu và kết thúc cuộc thi không được để trống !!',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-        else if(startTime < now){
-            Swal.fire({
-                title: 'Lỗi!',
-                text: 'Thời gian bắt đầu phải là thời gian trong tương lai !!',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -122,33 +106,13 @@
     }
 </script>
 <style>
-    .main{
+    .main_detail{
         width: 1177.6px;
         margin: 30.39px auto 0;
         border: 1px solid black;
     }
-    h1{
-        margin-top: 40px;
-        margin-left: 150px;
-    }
-    .menu_contest{
-        border-radius: 5px;
-        margin-left: 150px;
-        width: 600px;
-        height: 40px;
-        border: 1px solid black;
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-        background-color: #bb2019;
-    }
-    .item{
-        font-size: 17px;
-        margin-left: 40px;
-        margin-right: 20px;
-        color: #fff;
-    }
     .detail{
+        margin-top: 30px;
         background-color:#FFFFFF;
         border-radius: 5px;
         padding: 30px;
