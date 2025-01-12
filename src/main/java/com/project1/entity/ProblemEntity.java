@@ -65,4 +65,7 @@ public class ProblemEntity {
 
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<SubmissionEntity> submissions = new ArrayList<>();
+
+    @ManyToMany(mappedBy="problemEntities", fetch = FetchType.LAZY)
+    private List<ContestEntity> contestEntites = new ArrayList<>();
 }

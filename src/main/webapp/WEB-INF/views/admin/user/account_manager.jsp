@@ -58,7 +58,7 @@
                         <td>${item.phone_number}</td>
                         <td>${item.role}</td>
                         <td class="midd">
-                            <div class="box" onmouseenter="displayCofig(this)" onmouseleave="undisplayConfig(this)">
+                            <div class="box" onclick="configdisplay(this)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
                                 </svg>
@@ -126,14 +126,30 @@
         document.getElementById("listAccount").submit();
     }
 
-    function displayCofig(element) {
-        const menu = element.querySelector(".config");
-        menu.style.display = "flex";
-    }
-
-    function undisplayConfig(element) {
-        const menu = element.querySelector(".config");
-        menu.style.display = "none";
+    function configdisplay(element) {
+        const allMenus = document.querySelectorAll(".config");
+        allMenus.forEach(menu => {
+            if (menu !== element.querySelector(".config")) {
+                menu.style.display = "none";
+            }
+        });
+        const configMenu = element.querySelector(".config");
+        if (configMenu.style.display === "flex") {
+            configMenu.style.display = "none";
+        } else {
+            configMenu.style.display = "flex";
+        }
+        configMenu.addEventListener("click", function (event) {
+            event.stopPropagation(); // Ngăn lan sự kiện ra ngoài
+        });
+        document.addEventListener("click", function hideMenus(event) {
+            if (!element.contains(event.target)) {
+                allMenus.forEach(menu => {
+                    menu.style.display = "none";
+                });
+                document.removeEventListener("click", hideMenus);
+            }
+        });
     }
     function doi_trang(id){
         window.location.href = "edit-account-" + id;
@@ -185,6 +201,8 @@
 <style>
     .main{
         border: 1px solid black;
+        width: 1177.6px;
+        margin: 30.39px auto 0;
     }
     .title{
         margin-top: 30px;
@@ -271,7 +289,7 @@
         z-index: 1000;
     }
     .config ul{
-        width: 120px;
+        width: 140px;
         margin: 0 !important;
         padding: 0 !important;
         list-style: none;
@@ -279,8 +297,9 @@
     }
     .config li{
         padding: 5px;
-        border-bottom: 1px solid black;
+        border: 1px solid black;
         margin: -1px;
+        height: 40px;
     }
     .page{
         display: flex;

@@ -1,16 +1,22 @@
 package com.project1.controller.web;
+import com.project1.entity.UserEntity;
 import com.project1.entity.enums.group;
 import com.project1.entity.enums.role;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.request.UserSearchRequest;
 import com.project1.model.response.UserSearchResponse;
 import com.project1.service.IUserService;
+import com.project1.utils.SecurityUtils;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.List;
 
@@ -19,7 +25,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private IUserService userService;
-
+    @Autowired
+    private SecurityUtils securityUtils;
     @GetMapping("login")
     public String login() {
         return "index";

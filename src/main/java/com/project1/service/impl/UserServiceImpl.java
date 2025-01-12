@@ -4,6 +4,7 @@ import com.project1.component.JwtTokenUtil;
 import com.project1.converter.UserConverter;
 import com.project1.customExceptions.DataNotFoundException;
 import com.project1.entity.UserEntity;
+import com.project1.model.dto.LoadUserDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.request.UserSearchRequest;
@@ -157,5 +158,14 @@ public class UserServiceImpl implements IUserService {
         }
         user.setPassword(passwordEncoder.encode(userupdatePassword.getNewPassword()));
         userRepository.save(user);
+    }
+
+    @Override
+    public LoadUserDTO loadUser(Long id) {
+        UserEntity user = userRepository.findById(id);
+        LoadUserDTO loadUserDTO = new LoadUserDTO();
+        loadUserDTO.setFullname(user.getFullname());
+        loadUserDTO.setUsername(user.getUsername());
+        return loadUserDTO;
     }
 }

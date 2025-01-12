@@ -1,12 +1,16 @@
 package com.project1.api.web;
 
 import com.project1.entity.UserEntity;
+import com.project1.model.dto.LoadUserDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.dto.UserLoginDTO;
 import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.response.LoginResponse;
 import com.project1.repository.UserRepository;
 import com.project1.service.IUserService;
+import com.project1.utils.SecurityUtils;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,8 @@ import java.util.List;
 public class UserAPI {
     @Autowired
     private IUserService userService;
+    @Autowired
+    private SecurityUtils securityUtils;
     @PostMapping("admin/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
                                         BindingResult result) {
@@ -81,5 +87,30 @@ public class UserAPI {
     public ResponseEntity<Void> deleteUsers(@PathVariable List<Long> ids){
         userService.delete(ids);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("api/loader")
+    public ResponseEntity<?> loadUser(@Valid @RequestBody Long id){
+        LoadUserDTO loadUser = userService.loadUser(id);
+        return ResponseEntity.ok(loadUser);
+    }
+
+    @PostMapping("api/home")
+    public ResponseEntity<?> homeAccount(HttpServletRequest request){
+        try{
+            String token = "";
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if ("token".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+            UserEntity user = securityUtils.getUser(token);
+            return ResponseEntity.ok(user.getId());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 }

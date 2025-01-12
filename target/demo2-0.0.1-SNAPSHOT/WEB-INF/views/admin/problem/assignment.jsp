@@ -322,7 +322,7 @@
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        location.reload(); // Tải lại trang
+                        location.reload();
                     }
                 });
 

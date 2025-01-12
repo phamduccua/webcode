@@ -93,6 +93,8 @@
 <style>
     .main{
         border: 1px solid black;
+        width: 1177.6px;
+        margin: 30.39px auto 0;
     }
     .title{
         margin-top: 30px;

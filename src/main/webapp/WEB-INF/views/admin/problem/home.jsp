@@ -20,7 +20,7 @@
           <table class="table-configuration">
             <tbody>
             <tr><td><a href="add" />Thêm bài tập</td></tr>
-            <tr><td>Thêm cuộc thi</td></tr>
+            <tr><td><a href="/admin/list_contest" />Danh sách cuộc thi</td></tr>
             </tbody>
           </table>
         </div>
@@ -32,16 +32,16 @@
     </div>
   </a>
   <a class="button button-gui" href="#">Hướng dẫn</a>
-  <div class="avatar" onmouseenter="display()" onmouseleave="undisplay()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+  <div class="avatar" onclick="displayAvatar(event)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-person" viewBox="0 0 16 16">
       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
     </svg>
+    <input type="hidden" id="idUser" value="${idUser}" />
     <div class="menu" id="menu">
       <ul>
-        <li>
-          <p><strong>Nguyễn Văn A</strong></p>
-          <p>22/12/1999</p>
-        </li>
+          <li id="profile">
+
+          </li>
         <li onclick="account_management()">Quản lí tài khoản</li>
         <li onclick="update_password()">Thay đổi mật khẩu</li>
         <li>Đăng xuất</li>
@@ -52,14 +52,25 @@
 </body>
 </html>
 <script>
-  function display(){
-    const menu = document.getElementById("menu");
-    menu.style.display = "flex";
+  function displayAvatar(event) {
+    const avatar = event.currentTarget;
+    const menu = avatar.querySelector(".menu");
+    if (menu.style.display === "flex") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "flex";
+    }
+    event.stopPropagation();
   }
-  function undisplay(){
-    const menu = document.getElementById("menu");
-    menu.style.display = "none";
-  }
+
+  document.addEventListener("click", function () {
+    const menus = document.querySelectorAll(".menu");
+    menus.forEach(menu => {
+      menu.style.display = "none";
+    });
+  });
+
+
 </script>
 <script>
   function account_management(){
@@ -69,6 +80,54 @@
     window.location.href = "/api/update_password-12";
   }
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<input type="hidden" id="idUser"/>
+<div id="profile"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function loadUser() {
+    $.ajax({
+      type: "POST",
+      url: "/api/home",
+      contentType: "application/json",
+      dataType: "JSON",
+      success: function (id) {
+        console.log("ID người dùng:", id);
+        $.ajax({
+          type: "POST",
+          url: "/api/loader",
+          data: JSON.stringify(id),
+          contentType: "application/json",
+          dataType: "JSON",
+          success: function (response) {
+            console.log(response);
+
+            var item = document.getElementById('profile');
+            if (item) {
+              item.innerHTML = "";
+              var tmp = "";
+              tmp += '<p><strong>' + response.fullname + '</strong></p>' + '\n';
+              tmp += '<p>' + response.username + '</p>' + '\n';
+              item.innerHTML = tmp;
+            } else {
+              console.error("Không tìm thấy phần tử #profile");
+            }
+          },
+          error: function (e) {
+            console.error("Lỗi khi gọi API loadUser:", e);
+          }
+        });
+      },
+      error: function (e) {
+        console.error("Lỗi khi gọi API home:", e.responseText);
+      }
+    });
+  }
+  $(document).ready(function () {
+    loadUser();
+  });
+</script>
+
 <style>
   .head {
     justify-content: center !important;
@@ -204,7 +263,7 @@
     background-color: rgb(255, 255, 255) !important;
   }
   .menu ul li{
-    color: #5e6c84 !important;
+    color: black;
     border-bottom: 1px solid black;
     padding: 7.68px;
   }

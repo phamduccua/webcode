@@ -19,8 +19,13 @@ public class ProblemEntityConverter {
         problemEntity.setClassId(ClassIdUtils.toClassId(problemDTO.getGroup()));
         List<String> langs = problemDTO.getLanguage();
         StringBuilder langua = new StringBuilder();
-        for(String lang : langs){
-            langua.append(lang).append(",");
+        if(langs != null){
+            for(int i = 0;i<langs.size();i++){
+                if(i != langs.size()-1){
+                    langua.append(langs.get(i)).append(",");
+                }
+                else langua.append(langs.get(i));
+            }
         }
         problemEntity.setLanguage(langua.toString());
         return problemEntity;

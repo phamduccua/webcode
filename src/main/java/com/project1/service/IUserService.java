@@ -1,6 +1,7 @@
 package com.project1.service;
 
 import com.project1.entity.UserEntity;
+import com.project1.model.dto.LoadUserDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.request.UserSearchRequest;
@@ -20,4 +21,5 @@ public interface IUserService {
     void resetPassword(UserDTO userDTO);
     int coutTotalItems(UserSearchRequest request);
     void updatePassword(UserupdatePassword userupdatePassword);
+    LoadUserDTO loadUser(Long id);
 }
