@@ -96,7 +96,7 @@
                                 </svg>
                                 <div class="config" >
                                     <ul>
-                                        <li onclick="doi_trang(${item.id})">Chỉnh sửa</li>
+                                        <li onclick="doi_trang('${item.code}')">Chỉnh sửa</li>
                                         <li onclick="deleateUser(${item.id})">Xóa</li>
                                     </ul>
                                 </div>
@@ -139,8 +139,8 @@
             }
         });
     }
-    function doi_trang(id){
-        window.location.href = "/admin/problem_contest-edit-" + id;
+    function doi_trang(code){
+        window.location.href = "/admin/problem_contest-edit-" + code;
     }
 </script>
 </body>

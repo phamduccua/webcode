@@ -1,8 +1,10 @@
 package com.project1.controller.admin;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemDTO;
+import com.project1.model.dto.TestCaseDTO;
 import com.project1.service.ContestService;
 import com.project1.service.EditProblemService;
+import com.project1.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,8 @@ public class ContestController {
     private ContestService contestService;
     @Autowired
     private EditProblemService editProblemService;
+    @Autowired
+    private TestCaseService testCaseService;
     @GetMapping("admin/list_contest")
     public ModelAndView createContest(){
         ModelAndView mav = new ModelAndView("admin/contest/list_contest");
@@ -53,11 +57,24 @@ public class ContestController {
 
         return mav;
     }
-    @GetMapping("/admin/problem_contest-edit-{id}")
-    public ModelAndView editProblemContest(@PathVariable Long id){
+    @GetMapping("/admin/problem_contest-edit-{code}")
+    public ModelAndView editProblemContest(@PathVariable String code){
         ModelAndView mav = new ModelAndView("admin/contest/problem_contest_edit");
-        ProblemDTO problemDTO = editProblemService.findById(id);
+        ProblemDTO problemDTO = editProblemService.findByCode(code);
+        mav.addObject("nameProblem", problemDTO.getTitle());
         mav.addObject("problemDTO",problemDTO);
+        return mav;
+    }
+
+    @GetMapping("/admin/list_testcase_contest-problem-{code}")
+    public ModelAndView listTestcaseContestProblem(@PathVariable String code){
+        ModelAndView mav = new ModelAndView("admin/contest/list-testcase");
+        mav.addObject("code",code);
+        ProblemDTO problemDTO = editProblemService.findByCode(code);
+        List<TestCaseDTO> testCaseDTO = testCaseService.findByProblemId(problemDTO.getId());
+        mav.addObject("problemCode",problemDTO.getCode());
+        mav.addObject("nameProblem", problemDTO.getTitle());
+        mav.addObject("listTest",testCaseDTO);
         return mav;
     }
 }

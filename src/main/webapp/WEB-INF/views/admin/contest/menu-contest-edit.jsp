@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/views/admin/problem/home.jsp" %>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -46,10 +47,10 @@
 </head>
 <body>
 <div id="home" class="main">
-  <label class="labelTitle">${problemDTO.title}</label>
+  <label class="labelTitle">${nameProblem}</label>
   <div class="menu_edit">
-    <a class="chose detail" href="problem_contest-edit-${problemDTO.id}">Chi tiết</a>
-    <a class="chose testcase" href="list-testcase-${problemDTO.id}">Test Case</a>
+    <a class="chose detail" href="problem_contest-edit-${code}">Chi tiết</a>
+    <a class="chose testcase" href="list_testcase_contest-problem-${code}">Test Case</a>
     <a class="chose install" href="install">Cài đặt</a>
   </div>
 </div>

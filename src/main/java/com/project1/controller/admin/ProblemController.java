@@ -111,11 +111,11 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("admin/detail-{id}")
-    public ModelAndView problemEit(@PathVariable("id") Long id , HttpServletRequest request) {
+    @GetMapping("admin/detail-{code}")
+    public ModelAndView problemEit(@PathVariable("code") String code , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/edit-detail");
-        mav.addObject("id",id);
-        ProblemDTO problemDTO = editProblemService.findById(id);
+        mav.addObject("code",code);
+        ProblemDTO problemDTO = editProblemService.findByCode(code);
         mav.addObject("nameProblem", problemDTO.getTitle());
         mav.addObject("problemEdit", problemDTO);
         mav.addObject("listGroup", group.type());
@@ -124,12 +124,13 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("admin/list-testcase-{id}")
-    public ModelAndView problemAddTest(@PathVariable("id") Long id , HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("admin/problem/edit-testcase");
-        mav.addObject("id",id);
-        ProblemDTO problemDTO = editProblemService.findById(id);
-        List<TestCaseDTO> testCaseDTO = testCaseService.findByProblemId(id);
+    @GetMapping("admin/list-testcase-{code}")
+    public ModelAndView problemAddTest(@PathVariable("code") String code , HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/list-testcase");
+        mav.addObject("code",code);
+        ProblemDTO problemDTO = editProblemService.findByCode(code);
+        List<TestCaseDTO> testCaseDTO = testCaseService.findByProblemId(problemDTO.getId());
+        mav.addObject("problemCode",problemDTO.getCode());
         mav.addObject("nameProblem", problemDTO.getTitle());
         mav.addObject("listTest",testCaseDTO);
         return mav;

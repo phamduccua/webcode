@@ -37,4 +37,10 @@ public class TestCaseServiceImpl implements TestCaseService {
         }
         return result;
     }
+
+    @Override
+    public TestCaseDTO findById(Long id) {
+        TestCaseDTO testCaseDTO = testCaseDTOConverter.toTesstCaseDTO(testCaseRepository.findById(id).get());
+        return testCaseDTO;
+    }
 }

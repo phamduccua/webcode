@@ -168,16 +168,30 @@
       background-color: #8A1111;
       color: #FFFFFF;
     }
-    body {
-      font-family: "Times New Roman", Times, serif !important;
+    .config{
+      position: absolute;
+      display: none;
+      z-index: 1000;
     }
-
+    .config ul{
+      width: 140px;
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none;
+      background-color: #FFFFFF;
+    }
+    .config li{
+      padding: 5px;
+      border: 1px solid black;
+      margin: -1px;
+      height: 40px;
+    }
   </style>
 </head>
 <body>
 
 <div class="main">
-  <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="button">Thêm Test Case mới</button>
+  <button class="button" id="btnadd">Thêm Test Case mới</button>
   <form:form id="listTestCase" modelAttribute="listTest" method="GET">
     <table class="table table-fixed">
       <thead class="table-head">
@@ -200,213 +214,120 @@
         <td>output${status.count}</td>
         <td>
             <input class="exam-checkbox" type="checkbox" value="${item.example}"
-                   ${item.example != "" ? 'checked' : ''}
-                   onchange="edit(${item.id},this.checked)" />
+                   ${item.example != null ? 'checked' : null}
+                   onchange="example(${item.id},this.checked)" />
         </td>
-
-        <td>
-          <div class="dropdown">
+        <td class="midd">
+          <div class="box" onclick="configdisplay(this)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
             </svg>
-            <div class="dropdown-menu-wrapper">
-              <table class="table-configuration">
-                <tbody>
-                <tr>
-                  <td>
-                    <div
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      data-id="${item.id}"
-                      data-input="${item.input}"
-                      data-output="${item.expected_output}"
-                      data-checkbox="${item.example != '' ? 'check' : ''}">
-                      Chỉnh sửa
-                    </div>
-                  </td>
-                </tr>
-                <tr><td onclick="confirmDelete(${item.id})" >Xóa</td></tr>
-                </tbody>
-              </table>
+            <div class="config" >
+              <ul>
+                <li onclick="doi_trang(${item.id})">Chỉnh sửa</li>
+                <li onclick="deleteTest(${item.id})">Xóa</li>
+              </ul>
             </div>
           </div>
         </td>
       </tr>
-      <input id="testInput-${item.id}" type="hidden" value="${item.input}" />
-      <input id="testOuput-${item.id}" type="hidden" value="${item.expected_output}" />
       </c:forEach>
-
       </tbody>
     </table>
 </div>
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</form:form>
 
-<!-- Bootstrap JS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Test Case</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="testCase">
-            <div class="mb-3">
-              <label for="inputContent" class="form-label">Input</label>
-              <textarea name="input" class="form-control" id="inputContent" rows="6" placeholder="Enter Input"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="outputContent" class="form-label">Output</label>
-              <textarea name="expected_output" class="form-control" id="outputContent" rows="6" placeholder="Enter Output"></textarea>
-            </div>
-            <input name="id" type="hidden" id="itemId" value=""/>
-            <input name="problemId" type="hidden" id="problemId" value="${id}" />
-            <input name="example" type="hidden" id="checkboxValue" value=""/>
-            <div id="actionButton">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</form:form>
 <script>
-  const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-  function api(data) {
-      $.ajax({
-        type: "POST",
-        url: "/admin/testcase/",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function () {
-          Swal.fire({
-            title: 'Thành công!',
-            text: 'Yêu cầu của bạn đã được xử lý.',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          }).then(() => {
-            location.reload();
-          });
-        },
-        error: function () {
-          Swal.fire({
-            title: 'Lỗi!',
-            text: 'Đã xảy ra lỗi khi xử lý yêu cầu, vui lòng thử lại.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-        }
-      });
-    }
-  $(document).on('click', '#edit', function (e) {
-    e.preventDefault();
-    var data = {};
-    data.id = $('#itemId').val();
-    data.input = $('#inputContent').val();
-    data.expected_output = $('#outputContent').val();
-    data.problemId = $('#problemId').val();
-    var tmp = $('#checkboxValue').val();
-    data.example = (tmp != null ? tmp : "");
-    api(data);
-  });
-  function edit(id,example){
-    var data = {};
-    data.id = id;
-    data.input = $('#testInput-' + id).val();
-    data.expected_output = $('#testOuput-' + id).val();
-    data.problemId = ${id};
-    data.example = (example === true ? "check" : '');
-    api(data);
-  }
-  $(document).on('click', '#add', function (e) {
-    e.preventDefault();
-    var data = {};
-    data.id = $('#itemId').val();
-    data.input = $('#inputContent').val();
-    data.expected_output = $('#outputContent').val();
-    data.problemId = $('#problemId').val();
-    var tmp = $('#checkboxValue').val();
-    data.example = (tmp != null ? tmp : "");
-    api(data);
-  });
-
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var div = $(event.relatedTarget);
-    var itemId = div.data('id');
-    var input = div.data('input');
-    var output = div.data('output');
-    var checkboxValue = div.data('checkbox');
-    $('#itemId').val(itemId);
-    $('#inputContent').val(input);
-    $('#outputContent').val(output);
-    $('#checkboxValue').val(checkboxValue);
-    var actionButtonDiv = document.getElementById('actionButton');
-    if (itemId === undefined) {
-      actionButtonDiv.innerHTML = `
-                  <button id="add" type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm</button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở lại</button>
-                `;
+  function configdisplay(element) {
+    const allMenus = document.querySelectorAll(".config");
+    allMenus.forEach(menu => {
+      if (menu !== element.querySelector(".config")) {
+        menu.style.display = "none";
+      }
+    });
+    const configMenu = element.querySelector(".config");
+    if (configMenu.style.display === "flex") {
+      configMenu.style.display = "none";
     } else {
-      actionButtonDiv.innerHTML = `
-                    <button id="edit" type="button" class="btn btn-primary" data-bs-dismiss="modal">Sửa</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở lại</button>
-                  `;
+      configMenu.style.display = "flex";
     }
-  });
-
-</script>
-
-<script>
-  function confirmDelete(itemId) {
-    Swal.fire({
-      title: 'Bạn có chắc chắn?',
-      text: 'Nếu không muốn xóa hãy nhấn hủy!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteItem(itemId);
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire({
-          title: 'Đã hủy!',
-          text: 'Không có thay đổi nào được thực hiện.',
-          icon: 'info',
-          confirmButtonText: 'OK'
+    configMenu.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+    document.addEventListener("click", function hideMenus(event) {
+      if (!element.contains(event.target)) {
+        allMenus.forEach(menu => {
+          menu.style.display = "none";
         });
+        document.removeEventListener("click", hideMenus);
       }
     });
   }
-
-  function deleteItem(itemId) {
+</script>
+<script>
+  $('#btnadd').click(function(e){
+    e.preventDefault();
+    window.location.href = "/admin/add_testcase-problem-${problemCode}";
+  });
+  function doi_trang(id) {
+    window.location.href = "/admin/edit_testcase-" + id;
+  }
+</script>
+<script>
+  function example(id,check){
+    let data = {};
+    data['id'] = id;
+    data['example'] = check !== false ? 'check' : null;
     $.ajax({
-      type: "DELETE",
-      url: "/admin/testcase/delete-item/" + itemId,
-      success: function () {
+      type: "PUT",
+      url: "/admin/testcase/edit_example",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success(){
         Swal.fire({
-          title: 'Đã xóa!',
-          text: 'Mục đã được xóa thành công.',
+          text: 'Đã thay đổi thành công',
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
           location.reload();
         });
       },
-      error: function () {
+      error(e){
         Swal.fire({
           title: 'Lỗi!',
-          text: 'Không thể xóa mục này. Vui lòng thử lại.',
+          text: 'Thay đổi không thành công. Vui lòng thử lại.',
           icon: 'error',
           confirmButtonText: 'OK'
         });
       }
-    });
+    })
+  }
+  function deleteTest(id){
+    $.ajax({
+      type: "DELETE",
+      url: "/admin/testcase/delete/" + id,
+      success(){
+        Swal.fire({
+          text: 'Đã xóa Test Case thành công',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          location.reload();
+        });
+      },
+      error(e){
+        Swal.fire({
+          title: 'Lỗi!',
+          text: 'Xóa Test Case không thành công. Vui lòng thử lại.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    })
   }
 </script>
 </body>

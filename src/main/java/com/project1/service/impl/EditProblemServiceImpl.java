@@ -21,8 +21,8 @@ public class EditProblemServiceImpl implements EditProblemService {
     @Autowired
     private EditProblemRepository editProblemRepository;
     @Override
-    public ProblemDTO findById(Long id) {
-        ProblemEntity problemEntity = problemRepository.findById(id).get();
+    public ProblemDTO findByCode(String code) {
+        ProblemEntity problemEntity = problemRepository.findByCode(code);
         ProblemDTO problemDTO = problemDTOConverter.toProblemDTO(problemEntity);
         return problemDTO;
     }

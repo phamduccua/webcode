@@ -65,9 +65,6 @@
             box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
             transform: translateY(1px);
         }
-        body {
-            font-family: "Times New Roman", Times, serif !important;
-        }
         .checkbox-item {
             align-items: center;
             margin-bottom: 10px;

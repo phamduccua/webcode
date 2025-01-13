@@ -159,6 +159,10 @@
             margin: 0px !important;
         }
 
+        table td.td_output {
+            border-top: none !important;
+            border-bottom: none !important;
+        }
     </style>
 </head>
 <body>
@@ -182,17 +186,62 @@
             <c:if test="${not empty listTest and listTest.size() > 0}">
     <div>
         <p><strong>Ví dụ</strong></p>
+        <div id="example">
+        <c:forEach var="item" items="${listTest}">
+    <c:if test="${item.type == 'std'}">
         <table class="example">
             <thead>
-                <tr>
-                    <th>Input</th>
-                    <th>Output</th>
-                </tr>
+            <tr>
+                <th>Input</th>
+                <th>Output</th>
+            </tr>
             </thead>
             <tbody id="test_case">
-
+                <tr>
+                    <td data-content="${item.inputs.get(0).contentFile}"></td>
+                    <td data-content="${item.output.contentFile}"></td>
+                </tr>
             </tbody>
         </table>
+    </c:if>
+    <c:if test="${item.type == 'file'}">
+        <table class="example">
+            <tbody>
+                <c:forEach var="it" items="${item.inputs}" varStatus="status">
+                    <c:if test="${status.count == 1}">
+                        <tr>
+                            <td data-content="${it.fileName}"></td>
+                            <c:if test="${item.output.fileName == 'std'}">
+                                <td>Output</td>
+                            </c:if>
+                            <c:if test="${item.output.fileName != 'std'}">
+                                <td data-content="${item.output.fileName}"></td>
+                            </c:if>
+                        </tr>
+                        <tr>
+                            <td data-content="${it.contentFile}"></td>
+                            <td data-content="${item.output.contentFile}"></td>
+                        </tr>
+                    </c:if>
+                    <c:if test="${status.count > 1}">
+                        <tr>
+                            <td data-content="${it.fileName}"></td>
+                            <td class="td_output"></td>
+                        </tr>
+                        <tr>
+                            <td data-content="${it.contentFile}"></td>
+                            <td class="td_output"></td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+</c:forEach>
+
+
+        </div>
+
     </div>
 </c:if>
 </div><br>
@@ -386,36 +435,19 @@
     });
 </script>
 <script>
-    const listTest = [
-        <c:forEach var="item" items="${listTest}">
-        {
-            input: `${item.input}`,
-            expected_output: `${item.expected_output}`
-        },
-        </c:forEach>
-    ];
-    var test_case = document.getElementById('test_case');
-    test_case.innerHTML = "";
-
-    listTest.forEach(item => {
-        const tr = document.createElement("tr");
-        const td1 = document.createElement("td");
-        const line_input = item.input.split("\n");
-        line_input.forEach(line => {
-            const p = document.createElement("p");
-            p.textContent = line;
-            td1.appendChild(p);
+    function cut(value){
+        var tmp = value.split('\n');
+        var rows = '';
+        for(let i of tmp){
+            rows += '<p>' + i + '</p>';
+        }
+        return rows;
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('td[data-content]').forEach(td => {
+            const content = td.getAttribute('data-content');
+            td.innerHTML = cut(content);
         });
-        tr.appendChild(td1);
-        const td2 = document.createElement("td");
-        const line_output = item.expected_output.split("\n");
-        line_output.forEach(line => {
-            const p = document.createElement("p");
-            p.textContent = line;
-            td2.appendChild(p);
-        });
-        tr.appendChild(td2);
-        test_case.appendChild(tr);
     });
 
 </script>

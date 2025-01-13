@@ -4,6 +4,7 @@ import com.project1.entity.UserEntity;
 import com.project1.model.dto.ContestCreate;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemContestDTO;
+import com.project1.model.dto.TestCaseDTO;
 import com.project1.service.ContestService;
 import com.project1.utils.SecurityUtils;
 import jakarta.servlet.http.Cookie;
@@ -76,5 +77,11 @@ public class ContestAPI {
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PostMapping("admin/add_testCase")
+    public void addTestCase(@RequestBody TestCaseDTO testCaseDTO){
+        System.out.println(testCaseDTO);
+
     }
 }

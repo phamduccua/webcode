@@ -125,7 +125,7 @@
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <a href="detail-${item.id}">Chỉnh sửa</a>
+                                            <a href="detail-${item.code}">Chỉnh sửa</a>
                                         </td>
                                     </tr>
                                     <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
