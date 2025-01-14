@@ -104,6 +104,8 @@
         $.each(formData, function(i, v){
             data[v.name] = v.value;
         });
+        data['id'] = ${problemDTO.id};
+        data['code'] = '${problemDTO.code}';
         $.ajax({
             type:"PUT",
             url: "/admin/update_problem-contest",

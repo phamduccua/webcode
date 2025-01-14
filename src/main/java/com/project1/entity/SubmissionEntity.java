@@ -41,4 +41,8 @@ public class SubmissionEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="problem_id")
     private ProblemEntity problem;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private UserEntity user;
 }

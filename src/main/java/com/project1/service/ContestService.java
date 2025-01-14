@@ -1,10 +1,10 @@
 package com.project1.service;
 
-import com.project1.entity.ContestEntity;
 import com.project1.model.dto.ContestCreate;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemContestDTO;
 import com.project1.model.dto.ProblemDTO;
+import com.project1.model.response.LeaderBoardResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +19,5 @@ public interface ContestService {
     List<ProblemDTO> findProblem(Long id);
     void updateProblemContest(ProblemContestDTO problemContestDTO);
     void editMember(Map<String,String> map);
+    LeaderBoardResponse leaderBoard(ContestDTO contestDTO);
 }

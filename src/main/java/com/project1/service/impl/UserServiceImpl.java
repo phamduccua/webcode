@@ -176,8 +176,9 @@ public class UserServiceImpl implements IUserService {
         return loadUserDTO;
     }
     @Override
-    public List<UserResponse> findByRole(String role, Long contestId) {
-        List<UserEntity> list = userRepository.findByRoleAndStatus(role,1);
+    public List<UserResponse> findByRole(String role, Long contestId,String fullname) {
+        if(fullname == null) fullname = "";
+        List<UserEntity> list = userRepository.findByRoleAndStatusAndFullnameContaining(role,1,fullname);
         List<UserResponse> result = new ArrayList<>();
         for(UserEntity userEntity : list) {
             UserResponse user = userResponseConverter.toUserResponse(userEntity);

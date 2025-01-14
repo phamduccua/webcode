@@ -36,7 +36,9 @@ public class ProblemAddConverter {
     }
     public ProblemEntity toProblemEntity(ProblemContestDTO problemContestDTO){
         ProblemEntity problemEntity = modelMapper.map(problemContestDTO, ProblemEntity.class);
-        problemEntity.setCode(randdomCodeProblem.generateUniqueCode());
+        if(problemContestDTO.getCode() == null) {
+            problemEntity.setCode(randdomCodeProblem.generateUniqueCode());
+        }
         return problemEntity;
     }
 }

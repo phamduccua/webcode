@@ -97,12 +97,12 @@
             </thead>
             <tbody>
             <c:forEach var="item" items="${problemList}" varStatus="status">
-                <tr class="table-body" style="background-color: ${item.color}">
-                    <td>
+                <tr class="table-body col-24" style="background-color: ${item.color}">
+                    <td class="col-0.5">
                         <input type="checkbox" value="${item.id}"/>
                         ${status.count}
                     </td>
-                    <td>
+                    <td class="col-1">
                         <a class="open" href="assignment-${item.code}">
                             ${item.code}
                         </a>
@@ -112,10 +112,10 @@
                             ${item.title}
                         </a>
                     </td>
-                    <td>${item.type}</td>
-                    <td>${item.topic}</td>
+                    <td class="col-2">${item.type}</td>
+                    <td class="col-2">${item.topic}</td>
                     <td class="mid">${item.difficul}</td>
-                    <td class="mid">
+                    <td class="mid col-1">
                         <div class="dropdown">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
@@ -305,6 +305,7 @@
         text-align: center;
     }
     .table-body td {
+        align-content: center;
         text-align: left;
         padding: 10px;
         border-bottom: 1px solid black;

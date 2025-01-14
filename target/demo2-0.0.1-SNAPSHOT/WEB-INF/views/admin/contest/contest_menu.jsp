@@ -16,7 +16,7 @@
         <div class="menu_contest">
             <div class="item" onclick="contest_detail()">Chi tiết</div>
             <div class="item" onclick="contest_problem()">Bài tập</div>
-            <div class="item">Bảng xếp hạng</div>
+            <div class="item" onclick="contest_leaderboard()">Bảng xếp hạng</div>
             <div class="item" onclick="contest_member()">Quản lí thành viên</div>
         </div>
     </div>
@@ -30,6 +30,9 @@
     }
     function contest_member(){
         window.location.href = "/admin/list-member-${contestDTO.id}"
+    }
+    function contest_leaderboard(){
+        window.location.href = "/admin/leader_board-${contestDTO.id}"
     }
 </script>
 <style>

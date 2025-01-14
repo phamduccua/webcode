@@ -16,9 +16,6 @@ import java.util.List;
 @Table(name="user")
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-
 
 public class UserEntity extends BaseEntity implements UserDetails {
     @Id
@@ -45,10 +42,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name="phone_number")
     private String phone_number;
 
-    public UserEntity() {
-
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -56,4 +49,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @ManyToMany(mappedBy="userEntities", fetch = FetchType.LAZY)
     private List<ContestEntity> contestEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<SubmissionEntity> submissions = new ArrayList<>();
 }

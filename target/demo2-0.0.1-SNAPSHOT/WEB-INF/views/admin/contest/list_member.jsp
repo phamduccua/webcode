@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: DELL
@@ -63,7 +64,9 @@
         <h2>Quản lí thành viên</h2>
     </div>
     <div>
-        <input type="text" placeholder="Tìm kiếm theo tên" class="search" />
+        <form:form id="listForm" modelAttribute="modelSearch" method="GET">
+            <form:input type="text" placeholder="Tìm kiếm theo tên" class="search" path="name" onchange="listForm()"/>
+        </form:form>
         <form class="table">
             <table>
                 <thead>
@@ -73,12 +76,12 @@
                 </thead>
                 <tbody>
                 <c:forEach var="item" items="${list_member}">
-                    <tr>
-                        <td>
+                    <tr class="12">
+                        <td class="col-2">
                             <input type="checkbox" ${item.checked == 'checked' ? 'checked' : null} onchange="editmem(${item.id},${id},this.checked)"/>
                         </td>
-                        <td>${item.fullname}</td>
-                        <td>${item.username}</td>
+                        <td class="col-6">${item.fullname}</td>
+                        <td class="col-4">${item.username}</td>
                     </tr>
                 </c:forEach>
 
@@ -119,6 +122,11 @@
                 });
             }
         })
+    }
+</script>
+<script>
+    function listForm(){
+        document.getElementById("listForm").submit();
     }
 </script>
 </html>

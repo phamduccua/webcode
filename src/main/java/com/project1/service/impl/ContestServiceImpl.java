@@ -10,8 +10,11 @@ import com.project1.model.dto.ContestCreate;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemContestDTO;
 import com.project1.model.dto.ProblemDTO;
+import com.project1.model.response.LeaderBoardResponse;
+import com.project1.model.response.UserLeaderBoeard;
 import com.project1.repository.ContestRepository;
 import com.project1.repository.ProblemRepository;
+import com.project1.repository.SubmissionRepository;
 import com.project1.repository.UserRepository;
 import com.project1.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +40,8 @@ public class ContestServiceImpl implements ContestService {
     private ProblemDTOConverter problemDTOConverter;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SubmissionRepository submissionRepository;
     @Override
     public List<ContestDTO> findAll() {
         List<ContestDTO> result = new ArrayList<>();
@@ -127,5 +133,42 @@ public class ContestServiceImpl implements ContestService {
             contestRepository.save(contest);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public LeaderBoardResponse leaderBoard(ContestDTO contestDTO) {
+        LeaderBoardResponse result = new LeaderBoardResponse();
+
+        ContestEntity contest = contestRepository.findContestById(contestDTO.getId());
+        int size = contest.getProblemEntities().size();
+        List<String> nameProblem = new ArrayList<>(Collections.nCopies(size, ""));
+        result.setName_problem(nameProblem);
+        List<UserLeaderBoeard> listUser = new ArrayList<>();
+        for(UserEntity userEntity : contest.getUserEntities()){
+            UserLeaderBoeard userLeaderBoeard = new UserLeaderBoeard();
+            userLeaderBoeard.setFullname(userEntity.getFullname());
+            List<String> status = new ArrayList<>();
+            for(ProblemEntity problemEntity : contest.getProblemEntities()){
+               List<String> list = submissionRepository.findDistinctStatusesByUserIdAndProblemId(userEntity.getId(), problemEntity.getId());
+               if(list.size() == 0){
+                   status.add(null);
+               }
+               else{
+                   if(list.size() > 1){
+                       status.add("true");
+                   }
+                   else{
+                       if(list.get(0).equals("1")){
+                           status.add("true");
+                       }
+                       else status.add("false");
+                   }
+               }
+            }
+            userLeaderBoeard.setStatus(status);
+            listUser.add(userLeaderBoeard);
+        }
+        result.setUser(listUser);
+        return result;
     }
 }

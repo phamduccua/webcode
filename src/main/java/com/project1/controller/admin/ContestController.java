@@ -3,14 +3,18 @@ import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.dto.UserDTO;
+import com.project1.model.request.UserSearchRequest;
+import com.project1.model.response.LeaderBoardResponse;
 import com.project1.model.response.UserResponse;
 import com.project1.service.ContestService;
 import com.project1.service.EditProblemService;
 import com.project1.service.IUserService;
 import com.project1.service.TestCaseService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -84,11 +88,24 @@ public class ContestController {
     }
 
     @GetMapping("/admin/list-member-{id}")
-    public ModelAndView listMemberContest(@PathVariable Long id){
+    public ModelAndView listMemberContest(@PathVariable Long id, @ModelAttribute UserSearchRequest userSearchReques, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/contest/list_member");
-        List<UserResponse> list_member = userSerice.findByRole("USER",id);
+        mav.addObject("modelSearch",userSearchReques);
+        List<UserResponse> list_member = userSerice.findByRole("USER",id,userSearchReques.getName());
         mav.addObject("id",id);
         mav.addObject("list_member",list_member);
+        ContestDTO contestDTO =  contestService.findContestById(id);
+        mav.addObject("contestDTO",contestDTO);
+        return mav;
+    }
+
+    @GetMapping("/admin/leader_board-{id}")
+    public ModelAndView leaderBoardContest(@PathVariable Long id){
+        ModelAndView mav = new ModelAndView("admin/contest/leader_board");
+        ContestDTO contestDTO =  contestService.findContestById(id);
+        LeaderBoardResponse leaderboard = contestService.leaderBoard(contestDTO);
+        mav.addObject("contestDTO",contestDTO);
+        mav.addObject("leaderboard",leaderboard);
         return mav;
     }
 }

@@ -23,5 +23,5 @@ public interface IUserService {
     int coutTotalItems(UserSearchRequest request);
     void updatePassword(UserupdatePassword userupdatePassword);
     LoadUserDTO loadUser(Long id);
-    List<UserResponse> findByRole(String role,Long contestId);
+    List<UserResponse> findByRole(String role,Long contestId,String fullname);
 }

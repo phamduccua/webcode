@@ -32,19 +32,19 @@
             </thead>
             <tbody id="contest-list">
             <c:forEach var="item" items="${listContest}" varStatus="status">
-                <tr>
+                <tr class="col-12">
                     <input type="hidden" value="${item.end_time}" />
-                    <td>${status.count}</td>
+                    <td class="col-1">${status.count}</td>
                     <td>${item.name}</td>
-                    <td>
+                    <td class="col-2">
                         <p>${item.startDate}</p>
                         <p>${item.startTime}</p>
                     </td>
-                    <td>
+                    <td class="col-2">
                         <p>${item.endDate}</p>
                         <p>${item.endTime}</p>
                     </td>
-                    <td>
+                    <td class="col-2">
                         <input type="hidden" class="end-time" value="${item.end_time}" />
                         <span class="status">
                             <c:if test="${item.start_time > now}">
@@ -64,7 +64,7 @@
                             </c:if>
                         </span>
                     </td>
-                    <td>
+                    <td class="col-1">
                         <div onclick="configdisplay(this)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>

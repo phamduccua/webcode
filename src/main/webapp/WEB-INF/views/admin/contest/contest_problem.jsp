@@ -52,6 +52,12 @@
             border: 1px solid black;
             height: 30px;
         }
+        .listProblem table tbody tr td a{
+            padding-left: 50px;
+            padding-right: 20px;
+            display: flex;
+            text-align: left;
+        }
         .config{
             position: relative;
             display: none;
@@ -86,10 +92,10 @@
             </thead>
             <tbody>
             <c:forEach var="item" items="${listProblem}" varStatus="status">
-                <tr>
-                    <td>${status.count}</td>
-                    <td><a href="/admin/assignment-${item.code}" />${item.title}</td>
-                    <td>
+                <tr class="col-12">
+                    <td class="col-1">${status.count}</td>
+                    <td class="col-8"><a class="open" href="/admin/assignment-${item.code}" />${item.title}</td>
+                    <td class="col-2">
                         <div class="box" onclick="configdisplay(this)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
