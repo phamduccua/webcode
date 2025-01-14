@@ -7,26 +7,27 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/views/admin/problem/home.jsp" %>
+<%@ include file="contest_menu.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICPC Leaderboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Bảng xếp hạng</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f9fa;
         }
         header {
-            background-color: #bb2019;
-            color: white;
+            /*background-color: rgb(250, 237, 237);*/
+            color: black;
             padding: 1rem;
             text-align: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
         }
         .table-container {
             width: 90%;
@@ -45,32 +46,34 @@
             text-align: center;
         }
         th {
-            background-color: #343a40;
+            background-color: #8A1111;
             color: white;
             position: sticky;
             top: 0;
-            z-index: 999;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #d3d3d3;
+            height: 80px;
         }
         .solved {
-            color: #28a745;
+            background-color: #86C681;
+            color: black;
             font-weight: bold;
         }
         .unsolved {
-            color: #dc3545;
+            background-color: #FFA29E;
+            color: #fff;
+        }
+        .main{
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
-<header>
-    <h1>Bảng xếp hạng cuộc thi</h1>
-    <h2>Cuộc thi 1</h2>
-</header>
+<div class="main">
+    <header>
+        <h2>Bảng xếp hạng cuộc thi</h2>
+        <h3>Cuộc thi 1</h3>
+    </header>
 <div class="table-container">
     <table>
         <thead>
@@ -82,7 +85,7 @@
         <tbody>
         <c:forEach var="item" items="${leaderboard.user}">
             <tr>
-                <td>${item.fullname}</td>
+                <td class="col-3" style="background-color: grey; color: #fff;">${item.fullname}</td>
                 <c:forEach var="it" items="${item.status}">
                     <c:if test="${it == null}">
                         <td></td>
@@ -100,5 +103,7 @@
         </tbody>
     </table>
 </div>
+</div>
+
 </body>
 </html>

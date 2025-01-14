@@ -18,6 +18,7 @@
             <div class="item" onclick="contest_problem()">Bài tập</div>
             <div class="item" onclick="contest_leaderboard()">Bảng xếp hạng</div>
             <div class="item" onclick="contest_member()">Quản lí thành viên</div>
+            <div class="item" onclick="contest_install()">Cài đặt</div>
         </div>
     </div>
 </body>
@@ -29,10 +30,13 @@
         window.location.href = "/admin/contest-problem-${contestDTO.id}";
     }
     function contest_member(){
-        window.location.href = "/admin/list-member-${contestDTO.id}"
+        window.location.href = "/admin/list-member-${contestDTO.id}";
     }
     function contest_leaderboard(){
-        window.location.href = "/admin/leader_board-${contestDTO.id}"
+        window.location.href = "/admin/leader_board-${contestDTO.id}";
+    }
+    function contest_install(){
+        window.location.href = "/admin/install-contest-${contestDTO.id}";
     }
 </script>
 <style>
@@ -48,7 +52,7 @@
     .menu_contest{
         border-radius: 5px;
         margin-left: 150px;
-        width: 600px;
+        width: 800px;
         height: 40px;
         border: 1px solid black;
         display: flex;

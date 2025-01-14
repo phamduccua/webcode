@@ -6,10 +6,7 @@ import com.project1.converter.ProblemDTOConverter;
 import com.project1.entity.ContestEntity;
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.UserEntity;
-import com.project1.model.dto.ContestCreate;
-import com.project1.model.dto.ContestDTO;
-import com.project1.model.dto.ProblemContestDTO;
-import com.project1.model.dto.ProblemDTO;
+import com.project1.model.dto.*;
 import com.project1.model.response.LeaderBoardResponse;
 import com.project1.model.response.UserLeaderBoeard;
 import com.project1.repository.ContestRepository;
@@ -21,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ContestServiceImpl implements ContestService {
@@ -145,30 +139,75 @@ public class ContestServiceImpl implements ContestService {
         result.setName_problem(nameProblem);
         List<UserLeaderBoeard> listUser = new ArrayList<>();
         for(UserEntity userEntity : contest.getUserEntities()){
-            UserLeaderBoeard userLeaderBoeard = new UserLeaderBoeard();
-            userLeaderBoeard.setFullname(userEntity.getFullname());
-            List<String> status = new ArrayList<>();
-            for(ProblemEntity problemEntity : contest.getProblemEntities()){
-               List<String> list = submissionRepository.findDistinctStatusesByUserIdAndProblemId(userEntity.getId(), problemEntity.getId());
-               if(list.size() == 0){
-                   status.add(null);
-               }
-               else{
-                   if(list.size() > 1){
-                       status.add("true");
-                   }
-                   else{
-                       if(list.get(0).equals("1")){
-                           status.add("true");
-                       }
-                       else status.add("false");
-                   }
-               }
+            if(userEntity.getStatus() != 0){
+                UserLeaderBoeard userLeaderBoeard = new UserLeaderBoeard();
+                userLeaderBoeard.setFullname(userEntity.getFullname());
+                List<String> status = new ArrayList<>();
+                Integer cnt = 0;
+                for(ProblemEntity problemEntity : contest.getProblemEntities()){
+                    List<String> list = submissionRepository.findDistinctStatusesByUserIdAndProblemId(userEntity.getId(), problemEntity.getId());
+                    if(list.size() == 0){
+                        status.add(null);
+                    }
+                    else{
+                        if(list.size() > 1){
+                            status.add("true");
+                            cnt++;
+                        }
+                        else{
+                            if(list.get(0).equals("1")){
+                                status.add("true");
+                                cnt++;
+                            }
+                            else status.add("false");
+                        }
+                    }
+                }
+                userLeaderBoeard.setCount(cnt);
+                userLeaderBoeard.setStatus(status);
+                listUser.add(userLeaderBoeard);
             }
-            userLeaderBoeard.setStatus(status);
-            listUser.add(userLeaderBoeard);
         }
+        Collections.sort(listUser, new Comparator<UserLeaderBoeard>() {
+            @Override
+            public int compare(UserLeaderBoeard o1, UserLeaderBoeard o2) {
+                if(o1.getCount() != o2.getCount()){
+                    return o2.getCount() - o1.getCount();
+                }
+                else{
+                    String[] a = o1.getFullname().split(" ");
+                    String[] b = o2.getFullname().split(" ");
+                    if(!a[a.length - 1].equals(b[b.length - 1])){
+                        return a[a.length - 1].compareTo(b[b.length - 1]);
+                    }
+                    else if(!a[0].equals(b[0])){
+                        return a[0].compareTo(b[0]);
+                    }
+                    return o1.getFullname().compareTo(o2.getFullname());
+                }
+            }
+        });
         result.setUser(listUser);
         return result;
+    }
+
+    @Override
+    public void updateLanguage(ContestUpdateLanguageDTO contestUpdateLanguageDTO) {
+        StringBuilder language = new StringBuilder();
+        List<String> languages = contestUpdateLanguageDTO.getLanguages();
+        if(languages != null) {
+            for (int i = 0; i < languages.size(); i++) {
+                if (i != languages.size() - 1) {
+                    language.append(languages.get(i)).append(",");
+                } else language.append(languages.get(i));
+            }
+        }
+        ContestEntity contest = contestRepository.findContestById(contestUpdateLanguageDTO.getContestId());
+        contest.setLanguage(language.toString());
+        for(ProblemEntity problemEntity : contest.getProblemEntities()){
+            problemEntity.setLanguage(language.toString());
+            problemRepository.save(problemEntity);
+        }
+        contestRepository.save(contest);
     }
 }

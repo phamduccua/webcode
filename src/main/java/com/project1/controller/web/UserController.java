@@ -50,6 +50,24 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("admin/list-delete-account")
+    public ModelAndView listDeleteAccount(@ModelAttribute UserSearchRequest userSearchRequest, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/user/list_delete_account");
+        mav.addObject("userSearchRequest", userSearchRequest);
+        userSearchRequest.setTotalItems(userService.countTotalItemsDelete(userSearchRequest));
+        if (userSearchRequest.getTotalItems() % userSearchRequest.getMaxPageItems() == 0) {
+            userSearchRequest.setTotalPage(userSearchRequest.getTotalItems() / userSearchRequest.getMaxPageItems());
+        } else {
+            userSearchRequest.setTotalPage(userSearchRequest.getTotalItems() / userSearchRequest.getMaxPageItems() + 1);
+        }
+        if(userSearchRequest.getPage() > userSearchRequest.getTotalPage()) userSearchRequest.setPage(1);
+        List<UserSearchResponse> list = userService.findAllDelete(userSearchRequest, PageRequest.of(userSearchRequest.getPage() - 1,userSearchRequest.getMaxPageItems()));
+        userSearchRequest.setListResult(list);
+        mav.addObject("roles", role.getRole());
+        mav.addObject("list", list);
+        return mav;
+    }
+
 
     @GetMapping("admin/edit-account")
     public ModelAndView editAccount(@ModelAttribute("accountEdit") UserDTO userDTO, HttpServletRequest request) {

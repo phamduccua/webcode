@@ -19,7 +19,7 @@
         <div class="dropdown-menu-wrapper">
           <table class="table-configuration">
             <tbody>
-            <tr><td><a href="add" />Thêm bài tập</td></tr>
+            <tr><td><a href="/admin/add" />Thêm bài tập</td></tr>
             <tr><td><a href="/admin/list_contest" />Danh sách cuộc thi</td></tr>
             </tbody>
           </table>
@@ -44,6 +44,7 @@
           </li>
         <li onclick="account_management()">Quản lí tài khoản</li>
         <li onclick="update_password()">Thay đổi mật khẩu</li>
+        <li onclick="list_delete_account()">Danh sách tài khoản bị xóa</li>
         <li>Đăng xuất</li>
       </ul>
     </div>
@@ -78,6 +79,9 @@
   }
   function update_password(){
     window.location.href = "/api/update_password-12";
+  }
+  function list_delete_account(){
+    window.location.href = "/admin/list-delete-account";
   }
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

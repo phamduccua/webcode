@@ -19,8 +19,8 @@ public class SusscessUtils {
             String[] arr = timeAndMemo.split("\n");
             String timeAndMom = arr[arr.length-1];
             String[] array = timeAndMom.split(" ");
-            double time = Double.parseDouble(array[array.length - 2]);
-            long memory = Long.parseLong(array[array.length - 1]);
+            Double time = Double.parseDouble(array[array.length - 2]);
+            Long memory = Long.parseLong(array[array.length - 1]);
             submission.setExecutionTime(max(submission.getExecutionTime(), time));
             if(submission.getMemoryUsed() == null){
                 submission.setMemoryUsed(memory);

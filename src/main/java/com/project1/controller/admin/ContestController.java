@@ -1,8 +1,10 @@
 package com.project1.controller.admin;
+import com.project1.entity.enums.language;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.dto.UserDTO;
+import com.project1.model.request.ContestRequest;
 import com.project1.model.request.UserSearchRequest;
 import com.project1.model.response.LeaderBoardResponse;
 import com.project1.model.response.UserResponse;
@@ -106,6 +108,15 @@ public class ContestController {
         LeaderBoardResponse leaderboard = contestService.leaderBoard(contestDTO);
         mav.addObject("contestDTO",contestDTO);
         mav.addObject("leaderboard",leaderboard);
+        return mav;
+    }
+
+    @GetMapping("/admin/install-contest-{id}")
+    public ModelAndView installContest(@PathVariable Long id){
+        ModelAndView mav = new ModelAndView("admin/contest/install");
+        ContestDTO contestDTO =  contestService.findContestById(id);
+        mav.addObject("contestDTO",contestDTO);
+        mav.addObject("listLanguages", language.type());
         return mav;
     }
 }

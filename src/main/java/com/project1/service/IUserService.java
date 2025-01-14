@@ -16,12 +16,15 @@ public interface IUserService {
     UserEntity createUser(UserDTO userDTO);
     String login(String username, String password) throws Exception;
     List<UserSearchResponse> findAll(UserSearchRequest request, Pageable pageable);
+    List<UserSearchResponse> findAllDelete(UserSearchRequest request, Pageable pageable);
     UserDTO findById(Long id);
     void delete(List<Long> ids);
     void update(UserDTO userDTO);
     void resetPassword(UserDTO userDTO);
     int coutTotalItems(UserSearchRequest request);
+    int countTotalItemsDelete(UserSearchRequest request);
     void updatePassword(UserupdatePassword userupdatePassword);
     LoadUserDTO loadUser(Long id);
     List<UserResponse> findByRole(String role,Long contestId,String fullname);
+    void restoreUser(List<Long> ids);
 }

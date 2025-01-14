@@ -1,9 +1,6 @@
 package com.project1.service;
 
-import com.project1.model.dto.ContestCreate;
-import com.project1.model.dto.ContestDTO;
-import com.project1.model.dto.ProblemContestDTO;
-import com.project1.model.dto.ProblemDTO;
+import com.project1.model.dto.*;
 import com.project1.model.response.LeaderBoardResponse;
 
 import java.util.List;
@@ -20,4 +17,5 @@ public interface ContestService {
     void updateProblemContest(ProblemContestDTO problemContestDTO);
     void editMember(Map<String,String> map);
     LeaderBoardResponse leaderBoard(ContestDTO contestDTO);
+    void updateLanguage(ContestUpdateLanguageDTO contestUpdateLanguageDTO);
 }

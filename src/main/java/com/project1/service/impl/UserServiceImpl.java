@@ -104,6 +104,26 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<UserSearchResponse> findAllDelete(UserSearchRequest request, Pageable pageable) {
+        if(request.getName() == null) {
+            request.setRole("");
+        }
+        List<UserEntity> list = new ArrayList<>();
+        if(request.getName() == null || request.getName().isEmpty()) {
+            list = userRepository.findByRoleContainingAndStatus(request.getRole(),0,pageable);
+        }
+        else{
+            list = userRepository.findByUsernameContainingOrFullnameContainingAndRoleAndStatus(request.getName(),request.getName(),request.getRole(),1,pageable);
+        }
+        List<UserSearchResponse> responses = new ArrayList<>();
+        for(UserEntity userEntity : list) {
+            UserSearchResponse userSearchResponse = userConverter.toUserSearchResponse(userEntity);
+            responses.add(userSearchResponse);
+        }
+        return responses;
+    }
+
+    @Override
     public UserDTO findById(Long id) {
         UserEntity userEntity = userRepository.findById(id);
         return userConverter.toUserDTO(userEntity);
@@ -155,6 +175,20 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public int countTotalItemsDelete(UserSearchRequest request) {
+        if (request.getName() == null) {
+            request.setRole("");
+        }
+        List<UserEntity> list = new ArrayList<>();
+        if (request.getName() == null || request.getName().isEmpty()) {
+            list = userRepository.findByRoleContainingAndStatus(request.getRole(), 0);
+        } else {
+            list = userRepository.findByUsernameContainingOrFullnameContainingAndRoleAndStatus(request.getName(), request.getName(), request.getRole(), 1);
+        }
+        return list.size();
+    }
+
+    @Override
     public void updatePassword(UserupdatePassword userupdatePassword) {
         UserEntity user = userRepository.findById(userupdatePassword.getId());
         if(!passwordEncoder.matches(userupdatePassword.getPassword(),user.getPassword())) {
@@ -188,5 +222,14 @@ public class UserServiceImpl implements IUserService {
             result.add(user);
         }
         return result;
+    }
+
+    @Override
+    public void restoreUser(List<Long> ids) {
+        for(Long id : ids){
+            UserEntity userEntity = userRepository.findById(id);
+            userEntity.setStatus(1);
+            userRepository.save(userEntity);
+        }
     }
 }

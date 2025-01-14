@@ -46,7 +46,7 @@ public class ProblemEntity {
     private String constraints;
 
     @Column(name="time_limit")
-    private float time_limit;
+    private Double time_limit;
 
     @Column(name="memory_limit")
     private Long memory_limit;

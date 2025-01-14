@@ -1,10 +1,7 @@
 package com.project1.api.admin;
 
 import com.project1.entity.UserEntity;
-import com.project1.model.dto.ContestCreate;
-import com.project1.model.dto.ContestDTO;
-import com.project1.model.dto.ProblemContestDTO;
-import com.project1.model.dto.TestCaseDTO;
+import com.project1.model.dto.*;
 import com.project1.service.ContestService;
 import com.project1.utils.SecurityUtils;
 import jakarta.servlet.http.Cookie;
@@ -14,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/")
@@ -94,6 +92,16 @@ public class ContestAPI {
             return ResponseEntity.ok().build();
         }
         catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("admin/update_language_contest")
+    public ResponseEntity<?> updateLanguageContest(@RequestBody ContestUpdateLanguageDTO contestUpdateLanguageDTO){
+        try{
+            contestService.updateLanguage(contestUpdateLanguageDTO);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

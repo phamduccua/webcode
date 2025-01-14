@@ -316,7 +316,7 @@
         margin-bottom: 50px;
     }
     .table table thead th{
-        background-color: rgb(250, 237, 237);;
+        background-color: rgb(250, 237, 237);
         padding: 10px;
         border: 1px solid black;
         text-align: center;

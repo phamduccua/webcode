@@ -10,4 +10,5 @@ import java.util.List;
 public class UserLeaderBoeard {
     private String fullname;
     private List<String> status;
+    private Integer count;
 }

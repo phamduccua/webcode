@@ -21,10 +21,10 @@ public class SubmissionEntity {
     private String language;
 
     @Column(name="status")
-    private int status;
+    private Integer status;
 
     @Column(name="execution_time")
-    private double executionTime;
+    private Double executionTime;
 
     @Column(name="memory_used")
     private Long memoryUsed;

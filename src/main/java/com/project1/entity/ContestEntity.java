@@ -32,6 +32,9 @@ public class ContestEntity {
     @Column(name="status")
     private int status;
 
+    @Column(name="language")
+    private String language;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="contest_problem",
         joinColumns = @JoinColumn(name="contest_id",nullable=false),

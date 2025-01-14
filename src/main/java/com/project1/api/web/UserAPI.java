@@ -111,6 +111,16 @@ public class UserAPI {
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
 
+    @PutMapping("admin/restore/{ids}")
+    public ResponseEntity<?> restoreUser(@PathVariable List<Long> ids){
+        try{
+            userService.restoreUser(ids);
+            return ResponseEntity.ok().build();
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 @Component
 
@@ -27,6 +30,18 @@ public class ContestConverter {
         contestDTO.setStartTime(contestEntity.getStartTime().format(timeFormatter));
         contestDTO.setEndTime(contestEntity.getEndTime().format(timeFormatter));
         contestDTO.setStart_time(contestEntity.getStartTime());
+        List<String> arr = new ArrayList<>();
+        if(contestEntity.getLanguage() == null || contestEntity.getLanguage().equals("")) {
+            System.out.println("null");
+        }
+        else{
+            StringTokenizer str = new StringTokenizer(contestEntity.getLanguage(), ",");
+            while(str.hasMoreTokens()){
+                String language = str.nextToken();
+                arr.add(language);
+            }
+        }
+        contestDTO.setLanguage(arr);
         return contestDTO;
     }
     public ContestEntity toContestEntity(ContestCreate contestCreate) {
