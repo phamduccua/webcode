@@ -17,7 +17,7 @@
             <div class="item" onclick="contest_detail()">Chi tiết</div>
             <div class="item" onclick="contest_problem()">Bài tập</div>
             <div class="item">Bảng xếp hạng</div>
-            <div class="item">Quản lí thành viên</div>
+            <div class="item" onclick="contest_member()">Quản lí thành viên</div>
         </div>
     </div>
 </body>
@@ -27,6 +27,9 @@
     }
     function contest_problem(){
         window.location.href = "/admin/contest-problem-${contestDTO.id}";
+    }
+    function contest_member(){
+        window.location.href = "/admin/list-member-${contestDTO.id}"
     }
 </script>
 <style>

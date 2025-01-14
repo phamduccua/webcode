@@ -88,7 +88,7 @@
             <c:forEach var="item" items="${listProblem}" varStatus="status">
                 <tr>
                     <td>${status.count}</td>
-                    <td><a href="" />${item.title}</td>
+                    <td><a href="/admin/assignment-${item.code}" />${item.title}</td>
                     <td>
                         <div class="box" onclick="configdisplay(this)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -97,7 +97,7 @@
                                 <div class="config" >
                                     <ul>
                                         <li onclick="doi_trang('${item.code}')">Chỉnh sửa</li>
-                                        <li onclick="deleateUser(${item.id})">Xóa</li>
+                                        <li onclick="deleateProblem(${item.id})">Xóa</li>
                                     </ul>
                                 </div>
                         </div>
@@ -108,6 +108,8 @@
         </table>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function create_problem(){
         window.location.href = "/admin/contest-create_problem-${contestDTO.id}"
@@ -141,6 +143,33 @@
     }
     function doi_trang(code){
         window.location.href = "/admin/problem_contest-edit-" + code;
+    }
+</script>
+<script>
+    function deleateProblem(id){
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/problem/delete-item/" + id,
+            data: JSON.stringify(id),
+            success(){
+                Swal.fire({
+                    title: 'Thành công!',
+                    text: 'Xóa bài tập thành công.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload();
+                });
+            },
+            error(e){
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: e.errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
     }
 </script>
 </body>

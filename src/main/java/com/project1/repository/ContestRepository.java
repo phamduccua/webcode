@@ -10,4 +10,5 @@ import java.util.List;
 public interface ContestRepository extends JpaRepository<ContestEntity, Long> {
     List<ContestEntity> findAllByStatusAndEndTimeBefore(int status, LocalDateTime time);
     ContestEntity findContestById(Long id);
+    boolean existsByIdAndUserEntities_Id(Long contestId, Long userId);
 }

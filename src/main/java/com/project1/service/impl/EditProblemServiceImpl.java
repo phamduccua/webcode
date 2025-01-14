@@ -27,9 +27,8 @@ public class EditProblemServiceImpl implements EditProblemService {
         return problemDTO;
     }
     @Override
-    public Long updateProblem(ProblemDTO problemDTO) {
+    public void updateProblem(ProblemDTO problemDTO) {
         ProblemEntity problemEntity = problemEntityConverter.toProblemEntity(problemDTO);
         editProblemRepository.updateProblem(problemEntity);
-        return problemDTO.getId();
     }
 }

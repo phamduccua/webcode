@@ -37,4 +37,10 @@ public class ContestEntity {
         joinColumns = @JoinColumn(name="contest_id",nullable=false),
             inverseJoinColumns = @JoinColumn(name="problem_id", nullable=false))
     private List<ProblemEntity> problemEntities = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="user_contest",
+        joinColumns = @JoinColumn(name="contest_id", nullable=false),
+        inverseJoinColumns = @JoinColumn(name="user_id", nullable=false))
+    private List<UserEntity> userEntities = new ArrayList<>();
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequestMapping("/")
 @RestController
 public class ContestAPI {
@@ -83,5 +85,16 @@ public class ContestAPI {
     public void addTestCase(@RequestBody TestCaseDTO testCaseDTO){
         System.out.println(testCaseDTO);
 
+    }
+
+    @PutMapping("admin/edit-member")
+    public ResponseEntity<?> editMember(@RequestBody Map<String,String> map){
+        try{
+            contestService.editMember(map);
+            return ResponseEntity.ok().build();
+        }
+        catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

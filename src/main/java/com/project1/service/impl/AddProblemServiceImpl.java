@@ -15,9 +15,8 @@ public class AddProblemServiceImpl implements AddProblemService {
     @Autowired
     private AddProblemRepository addProblemRepository;
     @Override
-    public Long addProblem(ProblemDTO problemDTO) {
+    public void addProblem(ProblemDTO problemDTO) {
         ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemDTO);
-        Long problemId = addProblemRepository.addProblem(problemEntity);
-        return problemId;
+        addProblemRepository.addProblem(problemEntity);
     }
 }

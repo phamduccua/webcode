@@ -5,12 +5,14 @@ import com.project1.converter.ProblemAddConverter;
 import com.project1.converter.ProblemDTOConverter;
 import com.project1.entity.ContestEntity;
 import com.project1.entity.ProblemEntity;
+import com.project1.entity.UserEntity;
 import com.project1.model.dto.ContestCreate;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemContestDTO;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.repository.ContestRepository;
 import com.project1.repository.ProblemRepository;
+import com.project1.repository.UserRepository;
 import com.project1.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContestServiceImpl implements ContestService {
@@ -31,6 +34,8 @@ public class ContestServiceImpl implements ContestService {
     private ProblemRepository problemRepository;
     @Autowired
     private ProblemDTOConverter problemDTOConverter;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public List<ContestDTO> findAll() {
         List<ContestDTO> result = new ArrayList<>();
@@ -102,5 +107,25 @@ public class ContestServiceImpl implements ContestService {
         ProblemEntity prolemEntity = problemRepository.findById(problemContestDTO.getId()).get();
         prolemEntity = problemAddConverter.toProblemEntity(problemContestDTO);
         problemRepository.save(prolemEntity);
+    }
+
+    @Override
+    public void editMember(Map<String, String> map) {
+        Long contestId = Long.valueOf(map.get("contestId"));
+        Long userId = Long.valueOf(map.get("userId"));
+        ContestEntity contest = contestRepository.findContestById(contestId);
+        UserEntity user = userRepository.findById(userId);
+        if(map.get("checked").equals("true")){
+            contest.getUserEntities().add(user);
+            user.getContestEntities().add(contest);
+            contestRepository.save(contest);
+            userRepository.save(user);
+        }
+        else{
+            contest.getUserEntities().remove(user);
+            user.getContestEntities().remove(contest);
+            contestRepository.save(contest);
+            userRepository.save(user);
+        }
     }
 }

@@ -149,34 +149,37 @@
     var totalPage = ${modelSearch.totalPages};
     var page = ${modelSearch.page};
     var tmp = '';
-    if(totalPage <= 3){
-        for(var i = 1; i <= totalPage; i++){
-            if(i === page){
-                tmp += '<div class="itemPage pageChoose">' + i +'</div>'+ '\n';
-            }
-            else{
-                tmp += '<div class="itemPage" onclick=choosePage(' + i + ')' + '>' + i + '</div>' + '\n';
-            }
-        }
-    }
-    else{
-        var begin = 1;
-        if(page > 3) begin = page - 2;
-        var end = 3;
-        if(page > 3) end = page;
-        if(page > 1) tmp += '<div class="itemPage" onclick=choosePage(page-1)>«</div>' + '\n';
-        for(var i = begin; i <= end; i++){
-            if(i === page){
-                tmp += '<div class="itemPage pageChoose">' + i +'</div>'+ '\n';
-            }
-            else{
-                tmp += '<div class="itemPage" onclick=choosePage(' + i + ')' + '>' + i + '</div>' + '\n';
+    if(totalPage > 1){
+        if(totalPage <= 3){
+            for(var i = 1; i <= totalPage; i++){
+                if(i === page){
+                    tmp += '<div class="itemPage pageChoose">' + i +'</div>'+ '\n';
+                }
+                else{
+                    tmp += '<div class="itemPage" onclick=choosePage(' + i + ')' + '>' + i + '</div>' + '\n';
+                }
             }
         }
-        if(page < totalPage) tmp += '<div class="itemPage" onclick=choosePage(page+1)>»</div>' + '\n';
+        else{
+            var begin = 1;
+            if(page > 3) begin = page - 2;
+            var end = 3;
+            if(page > 3) end = page;
+            if(page > 1) tmp += '<div class="itemPage" onclick=choosePage(page-1)>«</div>' + '\n';
+            for(var i = begin; i <= end; i++){
+                if(i === page){
+                    tmp += '<div class="itemPage pageChoose">' + i +'</div>'+ '\n';
+                }
+                else{
+                    tmp += '<div class="itemPage" onclick=choosePage(' + i + ')' + '>' + i + '</div>' + '\n';
+                }
+            }
+            if(page < totalPage) tmp += '<div class="itemPage" onclick=choosePage(page+1)>»</div>' + '\n';
+        }
+
+        item.innerHTML = tmp;
     }
 
-    item.innerHTML = tmp;
 </script>
 <script>
     function listGroup(){

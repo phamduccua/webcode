@@ -101,6 +101,7 @@
         table.table td {
             text-align: center !important;
             background-color: #F1ECEC !important;
+            padding: 0 !important;
         }
         .dropdown {
             position: relative !important;
@@ -156,12 +157,10 @@
         }
 
         p {
-            margin: 0px !important;
-        }
-
-        table td.td_output {
-            border-top: none !important;
-            border-bottom: none !important;
+            margin-bottom: 5px !important;
+            margin-top: 0px !important;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
         }
     </style>
 </head>
@@ -210,27 +209,25 @@
                 <c:forEach var="it" items="${item.inputs}" varStatus="status">
                     <c:if test="${status.count == 1}">
                         <tr>
-                            <td data-content="${it.fileName}"></td>
+                            <td><strong>${it.fileName}</strong></td>
                             <c:if test="${item.output.fileName == 'std'}">
-                                <td>Output</td>
+                                <td><strong>Output</strong></td>
                             </c:if>
                             <c:if test="${item.output.fileName != 'std'}">
-                                <td data-content="${item.output.fileName}"></td>
+                                <td><strong>${item.output.fileName}</strong></td>
                             </c:if>
                         </tr>
                         <tr>
                             <td data-content="${it.contentFile}"></td>
-                            <td data-content="${item.output.contentFile}"></td>
+                            <td data-content="${item.output.contentFile}" rowspan="${item.inputs.size()*2 - 1}"></td>
                         </tr>
                     </c:if>
                     <c:if test="${status.count > 1}">
                         <tr>
-                            <td data-content="${it.fileName}"></td>
-                            <td class="td_output"></td>
+                            <td><strong>${it.fileName}</strong></td>
                         </tr>
                         <tr>
                             <td data-content="${it.contentFile}"></td>
-                            <td class="td_output"></td>
                         </tr>
                     </c:if>
                 </c:forEach>

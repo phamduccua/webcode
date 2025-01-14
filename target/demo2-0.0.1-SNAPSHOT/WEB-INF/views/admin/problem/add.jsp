@@ -170,20 +170,20 @@
             }
         });
         data['language'] = language;
+        var code = data['code'];
         $.ajax({
             type:"POST",
             url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
-            success: function (response) {
+            success: function () {
                 Swal.fire({
                     title: 'Thành công!',
                     text: 'Yêu cầu của bạn đã được xử lý.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    window.location.href = "/admin/detail-" + response;
+                    window.location.href = "/admin/detail-" + code;
                 });
             },
             error: function (xhr) {

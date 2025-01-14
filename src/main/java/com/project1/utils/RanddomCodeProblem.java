@@ -11,7 +11,7 @@ public class RanddomCodeProblem {
     public String generateUniqueCode() {
         String code;
         do {
-            code = generateRandomCode(18);
+            code = generateRandomCode(32);
         } while (generatedCodes.contains(code));
         generatedCodes.add(code);
         return code;

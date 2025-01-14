@@ -91,32 +91,35 @@
     console.log(totalPage);
     console.log(page);
     var tmp = '<ul>';
-    if(totalPage <= 3){
-        for(var i = 1;i <= totalPage;i++){
-            if(page === i){
-                tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
+    if(totalPage > 1){
+        if(totalPage <= 3){
+            for(var i = 1;i <= totalPage;i++){
+                if(page === i){
+                    tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
+                }
+                else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
             }
-            else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
         }
-    }
-    else{
-        let begin = 1;
-        let end = 3;
-        if(page > 3){
-            begin = page - 2;
-            end = page;
-        }
-        if(page > 1) tmp += '<li onclick=doipage(page-1)>«</li>' + '\n';
-        for(var i = begin; i <= end ;i++){
-            if(page === i){
-                tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
+        else{
+            let begin = 1;
+            let end = 3;
+            if(page > 3){
+                begin = page - 2;
+                end = page;
             }
-            else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
+            if(page > 1) tmp += '<li onclick=doipage(page-1)>«</li>' + '\n';
+            for(var i = begin; i <= end ;i++){
+                if(page === i){
+                    tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
+                }
+                else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
+            }
+            if(page < totalPage) tmp += '<li onclick=doipage(page+1)>»</li>' + '\n';
         }
-        if(page < totalPage) tmp += '<li onclick=doipage(page+1)>»</li>' + '\n';
+        tmp += '</ul>';
+        item.innerHTML = tmp;
     }
-    tmp += '</ul>';
-    item.innerHTML = tmp;
+
 </script>
 <script>
     function btnadd(){

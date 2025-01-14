@@ -2,8 +2,11 @@ package com.project1.controller.admin;
 import com.project1.model.dto.ContestDTO;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.TestCaseDTO;
+import com.project1.model.dto.UserDTO;
+import com.project1.model.response.UserResponse;
 import com.project1.service.ContestService;
 import com.project1.service.EditProblemService;
+import com.project1.service.IUserService;
 import com.project1.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,8 @@ public class ContestController {
     private EditProblemService editProblemService;
     @Autowired
     private TestCaseService testCaseService;
+    @Autowired
+    private IUserService userSerice;
     @GetMapping("admin/list_contest")
     public ModelAndView createContest(){
         ModelAndView mav = new ModelAndView("admin/contest/list_contest");
@@ -75,6 +80,15 @@ public class ContestController {
         mav.addObject("problemCode",problemDTO.getCode());
         mav.addObject("nameProblem", problemDTO.getTitle());
         mav.addObject("listTest",testCaseDTO);
+        return mav;
+    }
+
+    @GetMapping("/admin/list-member-{id}")
+    public ModelAndView listMemberContest(@PathVariable Long id){
+        ModelAndView mav = new ModelAndView("admin/contest/list_member");
+        List<UserResponse> list_member = userSerice.findByRole("USER",id);
+        mav.addObject("id",id);
+        mav.addObject("list_member",list_member);
         return mav;
     }
 }

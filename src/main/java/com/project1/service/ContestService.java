@@ -7,6 +7,7 @@ import com.project1.model.dto.ProblemContestDTO;
 import com.project1.model.dto.ProblemDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ContestService {
     List<ContestDTO> findAll();
@@ -17,4 +18,5 @@ public interface ContestService {
     void addProblemContest(ProblemContestDTO problemContestDTO);
     List<ProblemDTO> findProblem(Long id);
     void updateProblemContest(ProblemContestDTO problemContestDTO);
+    void editMember(Map<String,String> map);
 }

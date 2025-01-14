@@ -25,21 +25,14 @@ public class ProblemAPI {
     @PostMapping
     public ResponseEntity<?> addOrUpdateProblem(@RequestBody ProblemDTO problemDTO) {
         try {
-            Long problemId;
             if (problemDTO.getId() == null) {
-                problemId = addProblemService.addProblem(problemDTO);
+                addProblemService.addProblem(problemDTO);
             } else {
-                problemId = editProblemService.updateProblem(problemDTO);
+                editProblemService.updateProblem(problemDTO);
             }
-            return ResponseEntity.ok(problemId);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("message", "Mã bài tập " + problemDTO.getCode() + " đã tồn tại !!!!!!");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(errorResponse);
         }
     }
     @DeleteMapping("/delete-item/{id}")

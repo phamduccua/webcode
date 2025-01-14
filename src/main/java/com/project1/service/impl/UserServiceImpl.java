@@ -2,13 +2,16 @@ package com.project1.service.impl;
 
 import com.project1.component.JwtTokenUtil;
 import com.project1.converter.UserConverter;
+import com.project1.converter.UserResponseConverter;
 import com.project1.customExceptions.DataNotFoundException;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.LoadUserDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.request.UserSearchRequest;
+import com.project1.model.response.UserResponse;
 import com.project1.model.response.UserSearchResponse;
+import com.project1.repository.ContestRepository;
 import com.project1.repository.UserRepository;
 import com.project1.service.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,10 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private ContestRepository contestRepository;
+    @Autowired
+    private UserResponseConverter userResponseConverter;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
     private final PasswordEncoder passwordEncoder;
@@ -167,5 +174,18 @@ public class UserServiceImpl implements IUserService {
         loadUserDTO.setFullname(user.getFullname());
         loadUserDTO.setUsername(user.getUsername());
         return loadUserDTO;
+    }
+    @Override
+    public List<UserResponse> findByRole(String role, Long contestId) {
+        List<UserEntity> list = userRepository.findByRoleAndStatus(role,1);
+        List<UserResponse> result = new ArrayList<>();
+        for(UserEntity userEntity : list) {
+            UserResponse user = userResponseConverter.toUserResponse(userEntity);
+            if(contestRepository.existsByIdAndUserEntities_Id(contestId, userEntity.getId()) == true){
+                user.setChecked("checked");
+            }
+            result.add(user);
+        }
+        return result;
     }
 }

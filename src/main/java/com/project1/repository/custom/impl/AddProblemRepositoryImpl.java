@@ -17,12 +17,10 @@ public class AddProblemRepositoryImpl implements AddProblemRepository {
     @Autowired
     private ProblemRepository problemRepository;
     @Override
-    public Long addProblem(ProblemEntity problemEntity) {
+    public void addProblem(ProblemEntity problemEntity) {
         if (problemRepository.findByCode(problemEntity.getCode()) != null) {
             throw new IllegalArgumentException("Mã bài tập đã tồn tại: " + problemEntity.getCode());
         }
         entityManager.persist(problemEntity);
-        ProblemEntity problemEntityNews = problemRepository.findByCode(problemEntity.getCode());
-        return problemEntityNews.getId();
     }
 }
