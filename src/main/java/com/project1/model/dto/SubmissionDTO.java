@@ -11,7 +11,7 @@ import java.util.Date;
 public class SubmissionDTO {
     private Long id;
     private String problemName;
-    private int status;
+    private String status;
     private String time;
     private Long memoryUsed;
     private String language;

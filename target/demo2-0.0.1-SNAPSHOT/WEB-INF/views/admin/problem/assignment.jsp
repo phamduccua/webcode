@@ -139,6 +139,7 @@
         .example {
             width: 100% !important;
             border-collapse: collapse !important;
+            margin-bottom: 10px;
         }
 
         table.example th {
@@ -161,6 +162,10 @@
             margin-top: 0px !important;
             margin-left: 0px !important;
             margin-right: 0px !important;
+        }
+        img{
+            width: 300px;
+            height: 200px;
         }
     </style>
 </head>
@@ -187,60 +192,60 @@
         <p><strong>Ví dụ</strong></p>
         <div id="example">
         <c:forEach var="item" items="${listTest}">
-    <c:if test="${item.type == 'std'}">
-        <table class="example">
-            <thead>
-            <tr>
-                <th>Input</th>
-                <th>Output</th>
-            </tr>
-            </thead>
-            <tbody id="test_case">
-                <tr>
-                    <td data-content="${item.inputs.get(0).contentFile}"></td>
-                    <td data-content="${item.output.contentFile}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </c:if>
-    <c:if test="${item.type == 'file'}">
-        <table class="example">
-            <tbody>
-                <c:forEach var="it" items="${item.inputs}" varStatus="status">
-                    <c:if test="${status.count == 1}">
+            <c:if test="${item.type == 'std'}">
+                <table class="example">
+                    <thead>
                         <tr>
-                            <td><strong>${it.fileName}</strong></td>
-                            <c:if test="${item.output.fileName == 'std'}">
-                                <td><strong>Output</strong></td>
+                            <th>Input</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody id="test_case">
+                        <tr>
+                            <td data-content="${item.inputs.get(0).contentFile}"></td>
+                            <td data-content="${item.output.contentFile}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${item.type == 'file'}">
+                <table class="example">
+                    <tbody>
+                        <c:forEach var="it" items="${item.inputs}" varStatus="status">
+                            <c:if test="${status.count == 1}">
+                                <tr>
+                                    <td><strong>${it.fileName}</strong></td>
+                                    <c:if test="${item.output.fileName == 'std'}">
+                                        <td><strong>Output</strong></td>
+                                    </c:if>
+                                    <c:if test="${item.output.fileName != 'std'}">
+                                        <td><strong>${item.output.fileName}</strong></td>
+                                    </c:if>
+                                </tr>
+                                <tr>
+                                    <td data-content="${it.contentFile}"></td>
+                                    <td data-content="${item.output.contentFile}" rowspan="${item.inputs.size()*2 - 1}"></td>
+                                </tr>
                             </c:if>
-                            <c:if test="${item.output.fileName != 'std'}">
-                                <td><strong>${item.output.fileName}</strong></td>
+                            <c:if test="${status.count > 1}">
+                                <tr>
+                                    <td><strong>${it.fileName}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td data-content="${it.contentFile}"></td>
+                                </tr>
                             </c:if>
-                        </tr>
-                        <tr>
-                            <td data-content="${it.contentFile}"></td>
-                            <td data-content="${item.output.contentFile}" rowspan="${item.inputs.size()*2 - 1}"></td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${status.count > 1}">
-                        <tr>
-                            <td><strong>${it.fileName}</strong></td>
-                        </tr>
-                        <tr>
-                            <td data-content="${it.contentFile}"></td>
-                        </tr>
-                    </c:if>
-                </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
-</c:forEach>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </c:forEach>
 
 
-        </div>
+                </div>
 
-    </div>
-</c:if>
+            </div>
+        </c:if>
 </div><br>
         <p>Giới hạn bài tập: ${detail.time_limit}s</p>
         <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p> <br>
@@ -286,7 +291,7 @@
                     <td>
                     <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
-                    <c:if test="${item.status == 0}">
+                    <c:if test="${item.status == null}">
                         <td class="spinner">
                             <div class="spinner-border text-primary small-spinner" role="status">
                                 <span class="visually-hidden">Loading...</span>
@@ -295,21 +300,23 @@
                         <td></td>
                         <td></td>
                     </c:if>
-                    <c:if test="${item.status != 0}">
-                        <c:if test="${item.status == 1}">
+                    <c:if test="${item.status != null}">
+                        <c:if test="${item.status == true}">
                             <td style="color: #19BE6B;">AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
-                        <c:if test="${item.status == 2}">
-                            <td style="color: #FF0000;">${item.code}</td>
-                            <td>${item.time}s</td>
-                            <td>${item.memoryUsed}Kb</td>
-                        </c:if>
-                        <c:if test="${item.status == 3}">
-                            <td style="color: rgb(0, 0, 0)">CE</td>
-                            <td></td>
-                            <td></td>
+                        <c:if test="${item.status == false}">
+                            <c:if test="${item.code == 'CE'}">
+                                <td style="color: rgb(0, 0, 0)">CE</td>
+                                <td></td>
+                                <td></td>
+                            </c:if>
+                            <c:if test="${item.code != 'CE'}">
+                                <td style="color: #FF0000;">${item.code}</td>
+                                <td>${item.time}s</td>
+                                <td>${item.memoryUsed}Kb</td>
+                            </c:if>
                         </c:if>
                     </c:if>
                     <td>${item.language}</td>
@@ -405,10 +412,14 @@
     var description = document.getElementById('description');
     var line_description = `${detail.description}`.split("\n");
     description.innerHTML = "";
+    let rows = '';
     line_description.forEach(item => {
-        const p = document.createElement("p");
-        p.textContent = item;
-        description.appendChild(p);
+        if(item.includes("![image]")){
+            rows += ('<img ' + 'src="http://localhost:8080/uploads/' + item.substring(9,item.length-1) + '"' + '>');
+        }else{
+            rows += ('<p>' + item + '</p>');
+        }
+        description.innerHTML = rows;
     });
 </script>
 <script>

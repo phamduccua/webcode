@@ -12,7 +12,7 @@ public class SusscessUtils {
                 error.append(out[i]).append("\n");
             }
             submission.setError(error.toString());
-            submission.setStatus(3);
+            submission.setStatus("false");
             submission.setCode("CE");
         }
         else{
@@ -21,25 +21,30 @@ public class SusscessUtils {
             String[] array = timeAndMom.split(" ");
             Double time = Double.parseDouble(array[array.length - 2]);
             Long memory = Long.parseLong(array[array.length - 1]);
-            submission.setExecutionTime(max(submission.getExecutionTime(), time));
             if(submission.getMemoryUsed() == null){
                 submission.setMemoryUsed(memory);
             }
             else{
                 submission.setMemoryUsed(max(submission.getMemoryUsed(), memory));
             }
+            if(submission.getExecutionTime() == null){
+                submission.setExecutionTime(time);
+            }
+            else{
+                submission.setExecutionTime(max(submission.getMemoryUsed(), time));
+            }
             if (time > problem.getTime_limit()) {
                 submission.setExecutionTime(problem.getTime_limit());
-                submission.setStatus(2);
+                submission.setStatus("false");
                 submission.setCode("TLE");
             } else if (memory > problem.getMemory_limit()) {
-                submission.setStatus(2);
+                submission.setStatus("false");
                 submission.setCode("MLE");
             }else if (outPut.contains("RUNTIME ERROR")) {
-                submission.setStatus(2);
+                submission.setStatus("false");
                 submission.setCode("RTE");
             } else if (!outPut.equals(output_ex)) {
-                submission.setStatus(2);
+                submission.setStatus("false");
                 submission.setCode("WA");
             }
         }

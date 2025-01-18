@@ -6,7 +6,6 @@
 <body>
 <div class="head">
   <div class="logo">
-    <img souce="logo.webp" alt>
   </div>
   <a class="button button-exam" href="/admin/list">Bài tập</a>
   <a class="button button-status" href="https://www.youtube.com/">Trạng thái</a>

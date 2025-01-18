@@ -16,6 +16,8 @@
     <title>Tạo bài tập</title>
     <style>
         .main {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             position: relative;
             width: 1177.6px;
             margin: 30.39px auto 0;
@@ -87,6 +89,30 @@
             margin-right: 5px;
             margin-left: 20px;
         }
+        #btnupload{
+            width: 100px;
+            height: 30px;
+            margin-left: 20px;
+        }
+        #menu_upload {
+            display: none;
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            top: 350px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            background-color: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            /*align-content: center;*/
+        }
+        .file_upload{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -104,6 +130,7 @@
         <div>
             <label for="problem_statement" class="label">Đề bài</label>
             <form:textarea class="textarea" id="problem_statement" placeholder="Nhập đề bài" path="description"></form:textarea>
+            <button id="btnupload">Chọn tệp</button>
         </div>
         <div>
             <labe class="label">Độ khó</labe>
@@ -151,28 +178,115 @@
         </div>
         <button class="buttonadd" id="addProblem">Tạo bài tập</button>
     </form:form>
+    <div class="upload" id="menu_upload">
+        <div id="file_name" style="border: 1px solid black; margin-bottom: 20px;">Chưa có file nào</div>
+        <input type="file" class="file_upload" id="upload">
+        <label for="upload" style="border: 1px solid black;">Chọn tệp</label>
+        <button id="up">Upload</button>
+        <button id="close">Đóng</button>
+    </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $('#addProblem').click(function(e){
+    var listImages = [];
+    $('#btnupload').click(function(e){
         e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'block';
+    });
+    $('#close').click(function(e){
+        e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'none';
+    });
+    $('#up').click(function(e){
+        e.preventDefault();
+        var fileUpload = $('#upload')[0].files[0];
+        if (!fileUpload) {
+            alert('Vui lòng chọn một tệp');
+            return;
+        }
+        else{
+            // var formData = new FormData();
+            // formData.append("file",fileUpload);
+            listImages.push(fileUpload);
+            document.getElementById('problem_statement').value = document.getElementById('problem_statement').value + "\n![image](" + fileUpload.name + ")";
+            document.getElementById('upload').value = "";
+            document.getElementById('file_name').textContent = 'Chưa có file nào';
+            // $.ajax({
+            //     type: "POST",
+            //     url: "/admin/problem/upload/images",
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     success: function (response) {
+            //        console.log(response);
+            //     },
+            //     error: function () {
+            //         alert("Tải lên thất bại");
+            //     }
+            // });
+        }
+
+    });
+    const fileInput = document.getElementById('upload');
+    const fileNameDiv = document.getElementById('file_name');
+    fileInput.addEventListener('change', function () {
+        fileNameDiv.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'Chưa có file nào';
+    });
+    async function edit_debai(debai) {
+        var arr = debai.split("\n");
+        var fileName = [];
+        for (let i of arr) {
+            if (i.includes("image")) {
+                fileName.push(i);
+            }
+        }
+        for (let i of listImages) {
+            if (i && i.name && fileName.includes("![image](" + i.name + ")")) {
+                const name = i.name;
+                var formData = new FormData();
+                formData.append("file", i);
+                await $.ajax({
+                    type: "POST",
+                    url: "/admin/problem/upload/images",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        debai = debai.replace(`![image](` + name + `)`, `![image](` + response + `)`);
+                    },
+                    error: function () {
+                        alert("Tải lên thất bại");
+                    }
+                });
+            }
+        }
+        return debai;
+    }
+
+    $('#addProblem').click(async function (e) {
+        e.preventDefault();
+        let tmp = document.getElementById('problem_statement').value;
+        tmp = await edit_debai(tmp);
+        document.getElementById('problem_statement').value = tmp;
         var data = {};
         var language = [];
         var formData = $('#listForm').serializeArray();
 
-        $.each(formData, function(i, v){
-            if(v.name !== 'language'){
+        $.each(formData, function (i, v) {
+            if (v.name !== 'language') {
                 data[v.name] = v.value;
-            }
-            else{
+            } else {
                 language.push(v.value);
             }
         });
         data['language'] = language;
         var code = data['code'];
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",

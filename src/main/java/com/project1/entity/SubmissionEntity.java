@@ -21,7 +21,7 @@ public class SubmissionEntity {
     private String language;
 
     @Column(name="status")
-    private Integer status;
+    private String status;
 
     @Column(name="execution_time")
     private Double executionTime;

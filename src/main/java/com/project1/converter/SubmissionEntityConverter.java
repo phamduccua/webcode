@@ -21,7 +21,7 @@ public class SubmissionEntityConverter {
                 submitted = submitted.replace("public class " + fileName,"public class solution ");
             }
             else{
-                submissionEntity.setStatus(3);
+                submissionEntity.setStatus("false");
                 submissionEntity.setCode("CE");
                 submissionEntity.setError("No public class: your main class must be declared as a \"public class\"");
             }

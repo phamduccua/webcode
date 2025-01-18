@@ -44,7 +44,7 @@
                     <td>
                     <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
-                    <c:if test="${item.status == 0}">
+                    <c:if test="${item.status == null}">
                         <td class="spinner">
                             <div class="spinner-border text-primary small-spinner" role="status">
                                 <span class="visually-hidden">Loading...</span>
@@ -53,21 +53,23 @@
                         <td></td>
                         <td></td>
                     </c:if>
-                    <c:if test="${item.status != 0}">
-                        <c:if test="${item.status == 1}">
+                    <c:if test="${item.status != null}">
+                        <c:if test="${item.status == true}">
                             <td style="color: #19BE6B;">AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
-                        <c:if test="${item.status == 2}">
-                            <td style="color: #FF0000;">${item.code}</td>
-                            <td>${item.time}s</td>
-                            <td>${item.memoryUsed}Kb</td>
-                        </c:if>
-                        <c:if test="${item.status == 3}">
-                            <td style="color: rgb(0, 0, 0)">CE</td>
-                            <td></td>
-                            <td></td>
+                        <c:if test="${item.status == false}">
+                            <c:if test="${item.code == 'CE'}">
+                                <td style="color: rgb(0, 0, 0)">CE</td>
+                                <td></td>
+                                <td></td>
+                            </c:if>
+                            <c:if test="${item.code != 'CE'}">
+                                <td style="color: #FF0000;">${item.code}</td>
+                                <td>${item.time}s</td>
+                                <td>${item.memoryUsed}Kb</td>
+                            </c:if>
                         </c:if>
                     </c:if>
                     <td>${item.language}</td>
