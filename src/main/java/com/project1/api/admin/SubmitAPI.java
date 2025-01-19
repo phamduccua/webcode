@@ -6,6 +6,7 @@ import com.project1.repository.AddOrUpdateSubRepository;
 import com.project1.utils.CodeRunnerWorker;
 import com.project1.utils.RunCode;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +38,8 @@ public class SubmitAPI {
     @PostMapping("/file")
     public ResponseEntity<String> submit(@RequestParam("file") MultipartFile file,
                                          @RequestParam("language") String language,
-                                         @RequestParam("id") Long problemId) {
+                                         @RequestParam("id") Long problemId,
+                                            HttpServletRequest request) {
         String fileContent;
         String fileName;
         try {
@@ -47,7 +49,7 @@ public class SubmitAPI {
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
         }
-        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId, fileName);
+        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId, fileName,request);
         addOrUpdateSubRepository.addOrUpdateSub(submission);
 
         try {

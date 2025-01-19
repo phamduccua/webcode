@@ -98,15 +98,7 @@ public class UserAPI {
     @PostMapping("api/home")
     public ResponseEntity<?> homeAccount(HttpServletRequest request){
         try{
-            String token = "";
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    token = cookie.getValue();
-                    break;
-                }
-            }
-            UserEntity user = securityUtils.getUser(token);
+            UserEntity user = securityUtils.getUser(request);
             return ResponseEntity.ok(user.getId());
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

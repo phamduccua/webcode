@@ -1,6 +1,7 @@
 package com.project1.controller.admin;
 
 import com.project1.converter.SubmissionDTOConverter;
+import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
@@ -151,6 +152,18 @@ public class ProblemController {
         mav.addObject("detail", problemDTO);
         mav.addObject("listTest", listTest);
         mav.addObject("listLanguage", LanguageUtils.listLanguage(program));
+        return mav;
+    }
+
+    @GetMapping("/admin/submission/{id}/edit")
+    public ModelAndView problemEdit(@PathVariable("id") Long id , HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/edit_submission");
+        SubmissionEntity submissionEntity = submissionRepository.findById(id).get();
+        SubmissionDTO submission = submissionDTOConverter.toSubmissionDTO(submissionEntity);
+        ProblemDTO problemDTO = findProblemService.findByCode(submissionEntity.getProblem().getCode());
+        mav.addObject("problemDTO", problemDTO);
+        mav.addObject("submission", submission);
+        mav.addObject("listLanguage", LanguageUtils.listLanguage(problemDTO.getLanguage()));
         return mav;
     }
 }

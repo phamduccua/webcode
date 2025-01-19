@@ -24,15 +24,7 @@ public class ContestAPI {
     @PostMapping("admin/create_contest")
     public ResponseEntity<?> createContest(@RequestBody ContestCreate contestCreate, HttpServletRequest request) {
         try{
-            String token = "";
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    token = cookie.getValue();
-                    break;
-                }
-            }
-            UserEntity user = securityUtils.getUser(token);
+            UserEntity user = securityUtils.getUser(request);
             contestCreate.setCreated_by(user.getId());
             contestService.createContest(contestCreate);
             return ResponseEntity.ok().build();

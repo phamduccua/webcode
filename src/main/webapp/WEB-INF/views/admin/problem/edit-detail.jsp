@@ -71,6 +71,29 @@
             margin-right: 5px;
             margin-left: 20px;
         }
+        #btnupload{
+            width: 100px;
+            height: 30px;
+            margin-left: 20px;
+        }
+        #menu_upload {
+            display: none;
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            top: 550px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            background-color: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+        .file_upload{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +110,7 @@
         <div>
             <label for="problem_statement" class="label">Đề bài</label>
             <form:textarea class="textarea" id="problem_statement" placeholder="Nhập đề bài" path="description"></form:textarea>
+            <button id="btnupload">Chọn tệp</button>
         </div>
         <div>
             <labe class="label">Độ khó</labe>
@@ -135,32 +159,125 @@
         <form:hidden path="id" id="problemId"/>
         <button class="buttonadd" id="updateProblem">Cập nhật</button>
     </form:form>
+    <div class="upload" id="menu_upload">
+        <div id="file_name" style="border: 1px solid black; margin-bottom: 20px;">Chưa có file nào</div>
+        <input type="file" class="file_upload" id="upload">
+        <label for="upload" style="border: 1px solid black;">Chọn tệp</label>
+        <button id="up">Upload</button>
+        <button id="close">Đóng</button>
+    </div>
 </div>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#updateProblem').click(function(e){
+    var listImages = [];
+    $('#btnupload').click(function(e){
         e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'block';
+    });
+    $('#close').click(function(e){
+        e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'none';
+    });
+    $('#up').click(function(e){
+        e.preventDefault();
+        var fileUpload = $('#upload')[0].files[0];
+        if (!fileUpload) {
+            alert('Vui lòng chọn một tệp');
+            return;
+        }
+        else{
+            listImages.push(fileUpload);
+            document.getElementById('problem_statement').value = document.getElementById('problem_statement').value + "\n![image](" + fileUpload.name + ")";
+            document.getElementById('upload').value = "";
+            document.getElementById('file_name').textContent = 'Chưa có file nào';
+        }
+
+    });
+    const fileInput = document.getElementById('upload');
+    const fileNameDiv = document.getElementById('file_name');
+    fileInput.addEventListener('change', function () {
+        fileNameDiv.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'Chưa có file nào';
+    });
+    function cutImage(nd){
+        var tmp = nd.split("\n");
+        var images = [];
+        for(let i of tmp){
+            if(i.includes("image")){
+                images.push(i);
+            }
+        }
+        return images;
+    }
+    async function updateImage(imageName, newImageName, des) {
+        for (let i of imageName) {
+            if (!newImageName.some(name => i.includes(name))) {
+                await $.ajax({
+                    type: "delete",
+                    url: "/admin/problem/delete-image/" + i.substring(9,i.length-1),
+                    data: JSON.stringify(i),
+                    contentType: "application/json",
+                    succsess(response) {
+                        console.log(response);
+                    },
+                    error(e) {
+                        alert(e);
+                    }
+                })
+            }
+        }
+        console.log(listImages);
+        for (let i of listImages) {
+            let t = '![image](' + i.name + ')';
+            if (i && newImageName.some(name => t.includes(name))) {
+                const name = i.name;
+                var formData = new FormData();
+                formData.append("file", i);
+                await $.ajax({
+                    type: "POST",
+                    url: "/admin/problem/upload/images",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        des = des.replace(`![image](` + name + `)`, `![image](` + response + `)`);
+                    },
+                    error: function () {
+                        alert("Tải lên thất bại");
+                    }
+                });
+            }
+        }
+        return des;
+    }
+    let imageName = cutImage(`${problemEdit.description}`);
+
+    $('#updateProblem').click(async function (e) {
+        e.preventDefault();
+        let des = document.getElementById('problem_statement').value;
+        let newImageName = cutImage(des);
+        if (JSON.stringify(imageName) !== JSON.stringify(newImageName)) {
+            document.getElementById('problem_statement').value = await updateImage(imageName,newImageName,des);
+        }
         var data = {};
-        var language  = [];
+        var language = [];
         var formData = $('#listForm').serializeArray();
 
-        $.each(formData, function(i, v){
-            if(v.name !== 'language'){
+        $.each(formData, function (i, v) {
+            if (v.name !== 'language') {
                 data[v.name] = v.value;
-            }
-            else{
+            } else {
                 language.push(v.value);
             }
         });
         data['language'] = language;
 
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",

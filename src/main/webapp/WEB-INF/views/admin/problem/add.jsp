@@ -209,25 +209,10 @@
             return;
         }
         else{
-            // var formData = new FormData();
-            // formData.append("file",fileUpload);
             listImages.push(fileUpload);
             document.getElementById('problem_statement').value = document.getElementById('problem_statement').value + "\n![image](" + fileUpload.name + ")";
             document.getElementById('upload').value = "";
             document.getElementById('file_name').textContent = 'Chưa có file nào';
-            // $.ajax({
-            //     type: "POST",
-            //     url: "/admin/problem/upload/images",
-            //     data: formData,
-            //     processData: false,
-            //     contentType: false,
-            //     success: function (response) {
-            //        console.log(response);
-            //     },
-            //     error: function () {
-            //         alert("Tải lên thất bại");
-            //     }
-            // });
         }
 
     });
@@ -245,7 +230,8 @@
             }
         }
         for (let i of listImages) {
-            if (i && i.name && fileName.includes("![image](" + i.name + ")")) {
+            let t = "![image](" + i.name + ")";
+            if (i && i.name && fileName.some(name => t.includes(name))) {
                 const name = i.name;
                 var formData = new FormData();
                 formData.append("file", i);

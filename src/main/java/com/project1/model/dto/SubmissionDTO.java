@@ -19,6 +19,7 @@ public class SubmissionDTO {
     private String problemCode;
     private String code;
     private String error;
+    private String submitted;
     public String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(submittedAt);

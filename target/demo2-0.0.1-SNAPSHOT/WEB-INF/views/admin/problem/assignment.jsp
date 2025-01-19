@@ -163,9 +163,10 @@
             margin-left: 0px !important;
             margin-right: 0px !important;
         }
-        img{
-            width: 300px;
-            height: 200px;
+        .img_problem{
+            width: 350px;
+            height: 250px;
+            margin: 20px;
         }
     </style>
 </head>
@@ -201,9 +202,9 @@
                         </tr>
                     </thead>
                     <tbody id="test_case">
-                        <tr>
-                            <td data-content="${item.inputs.get(0).contentFile}"></td>
-                            <td data-content="${item.output.contentFile}"></td>
+                        <tr class="col-12">
+                            <td class="col-6" data-content="${item.inputs.get(0).contentFile}"></td>
+                            <td class="col-6" data-content="${item.output.contentFile}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -213,13 +214,13 @@
                     <tbody>
                         <c:forEach var="it" items="${item.inputs}" varStatus="status">
                             <c:if test="${status.count == 1}">
-                                <tr>
-                                    <td><strong>${it.fileName}</strong></td>
+                                <tr class="col-12">
+                                    <td class="col-6"><strong>${it.fileName}</strong></td>
                                     <c:if test="${item.output.fileName == 'std'}">
-                                        <td><strong>Output</strong></td>
+                                        <td class="col-6"><strong>Output</strong></td>
                                     </c:if>
                                     <c:if test="${item.output.fileName != 'std'}">
-                                        <td><strong>${item.output.fileName}</strong></td>
+                                        <td class="col-6"><strong>${item.output.fileName}</strong></td>
                                     </c:if>
                                 </tr>
                                 <tr>
@@ -302,18 +303,18 @@
                     </c:if>
                     <c:if test="${item.status != null}">
                         <c:if test="${item.status == true}">
-                            <td style="color: #19BE6B;">AC</td>
+                            <td><a style="color: #19BE6B;" href="/admin/submission/${item.id}/edit" />AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
                         <c:if test="${item.status == false}">
                             <c:if test="${item.code == 'CE'}">
-                                <td style="color: rgb(0, 0, 0)">CE</td>
+                                <td><a style="color: rgb(0, 0, 0)" href="/admin/submission/${item.id}/edit" />CE</td>
                                 <td></td>
                                 <td></td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td style="color: #FF0000;">${item.code}</td>
+                                <td><a style="color: #FF0000;" href="/admin/submission/${item.id}/edit" />${item.code}</td>
                                 <td>${item.time}s</td>
                                 <td>${item.memoryUsed}Kb</td>
                             </c:if>
@@ -415,7 +416,7 @@
     let rows = '';
     line_description.forEach(item => {
         if(item.includes("![image]")){
-            rows += ('<img ' + 'src="http://localhost:8080/uploads/' + item.substring(9,item.length-1) + '"' + '>');
+            rows += ('<img class="img_problem" ' + 'src="http://localhost:8080/uploads/' + item.substring(9,item.length-1) + '"' + '>');
         }else{
             rows += ('<p>' + item + '</p>');
         }

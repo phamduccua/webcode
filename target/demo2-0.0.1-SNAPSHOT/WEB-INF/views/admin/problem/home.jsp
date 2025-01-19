@@ -6,6 +6,7 @@
 <body>
 <div class="head">
   <div class="logo">
+    <img class="img" src="http://localhost:8080/uploads/logo.webp" alt="Ảnh">
   </div>
   <a class="button button-exam" href="/admin/list">Bài tập</a>
   <a class="button button-status" href="https://www.youtube.com/">Trạng thái</a>
@@ -187,6 +188,7 @@
   .img {
     width: 70%;
     height: 70%;
+    border-radius: 50%;
   }
 
   .logo {
@@ -195,7 +197,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    top: 12px;
+    top: 12px !important;
     left: 50px;
   }
   .open{
@@ -203,7 +205,6 @@
   }
   a {
     text-decoration: none !important;
-    pointer-events: auto !important;
   }
   .dropdown-menu-wrapper {
     display: none;

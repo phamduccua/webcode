@@ -65,4 +65,15 @@ public class ProblemAPI {
     private String getExtension(String filename) {
         return filename != null && filename.contains(".") ? filename.substring(filename.lastIndexOf(".") + 1) : "";
     }
+
+    @DeleteMapping("/delete-image/{name}")
+    public ResponseEntity<?> deleteImage(@PathVariable String name) {
+        try{
+            File file = new File(url + name);
+            file.delete();
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File delete failed");
+        }
+    }
 }

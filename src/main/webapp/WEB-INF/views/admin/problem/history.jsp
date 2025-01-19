@@ -55,18 +55,18 @@
                     </c:if>
                     <c:if test="${item.status != null}">
                         <c:if test="${item.status == true}">
-                            <td style="color: #19BE6B;">AC</td>
+                            <td><a style="color: #19BE6B;" href="/admin/submission/${item.id}/edit" />AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
                         <c:if test="${item.status == false}">
                             <c:if test="${item.code == 'CE'}">
-                                <td style="color: rgb(0, 0, 0)">CE</td>
+                                <td><a style="color: rgb(0, 0, 0)" href="/admin/submission/${item.id}/edit"/>CE</td>
                                 <td></td>
                                 <td></td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td style="color: #FF0000;">${item.code}</td>
+                                <td><a style="color: #FF0000;" href="/admin/submission/${item.id}/edit" />${item.code}</td>
                                 <td>${item.time}s</td>
                                 <td>${item.memoryUsed}Kb</td>
                             </c:if>

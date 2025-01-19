@@ -103,7 +103,7 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="assignment-${item.code}">
+                        <a class="open" href="/admin/assignment-${item.code}">
                             ${item.code}
                         </a>
                     </td>
