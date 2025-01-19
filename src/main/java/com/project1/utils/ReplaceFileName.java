@@ -13,7 +13,7 @@ public class ReplaceFileName {
         List<FileSubmission> listFile = new ArrayList<>();
         for(InputEntity item : listInput){
             FileSubmission fileSubmission = new FileSubmission();
-            String name = item.getFileName().substring(0,item.getFileName().lastIndexOf(".")) + ".txt";
+            String name = item.getFileName();
             fileSubmission.setFileName(name);
             fileSubmission.setContentFile(item.getContentFile());
             listFile.add(fileSubmission);

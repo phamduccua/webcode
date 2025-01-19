@@ -24,6 +24,7 @@ public class RunCode {
     private final String path_judge = "D:/webcode/src/main/judge/docker/";
     private String execute(
             String path,
+            String outputName,
             List<String> listInput,
             String language,
             ProblemEntity problem,
@@ -39,6 +40,7 @@ public class RunCode {
                 str.append(String.format("-v=\"%s\":/%s ",path + item,item));
             }
         }
+        str.append(String.format("-v=\"%s\":/%s ",path + outputName,outputName));
         str.append(String.format("-v=\"%s\":/%s ",fileName,codeFileName));
         str.append(String.format("-v=\"%s\":/testcase.txt ",testFileName));
         str.append(String.format("-v=\"%s\":/output.txt ",outputFileName));
@@ -66,30 +68,49 @@ public class RunCode {
             Files.createFile(Paths.get(testFileName));
             boolean ok = true;
             for (TestCaseEntity testCase : allTestCases) {
-                Files.writeString(Paths.get(fileName),ReplaceCode.replace(code,testCase.getInputs(),testCase.getOutputFileName()));
+                Files.writeString(Paths.get(fileName),code);
                 List<String> listFileInput = new ArrayList<>();
                 if(testCase.getType().equals("file")){
                     List<String> list = ReplaceFileName.newFileName(testCase.getInputs(),path);
                     listFileInput.addAll(list);
                     CreateFile.createFileTemp(list,path_judge);
+                    if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                        Files.createFile(Paths.get(path + testCase.getOutputFileName()));
+                        Files.createFile(Paths.get(path_judge + testCase.getOutputFileName()));
+                    }
+
                 }
-                ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", execute(path,listFileInput,submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
+                ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", execute(path,testCase.getOutputFileName(),listFileInput,submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
                 pb.directory(new File(path_init));
                 Process process = pb.start();
                 process.waitFor();
                 String expectedOutput = testCase.getExpctedOutputFileContent().trim();
-                String actualOutput = Files.readString(Paths.get(outputFileName)).trim();
+                String actualOutput = "";
+                if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                    actualOutput = Files.readString(Paths.get(path + testCase.getOutputFileName())).trim();
+                }
+                else{
+                    actualOutput = Files.readString(Paths.get(outputFileName)).trim();
+                }
                 String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
                 SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
                 if(sub.getStatus() != null && sub.getStatus().equals("false")){
                     ok = false;
                     if(testCase.getType().equals("file")){
                         DeleteFile.deleteFileTemp(listFileInput,path_judge);
+                        if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                            File file = new File(path_judge + testCase.getOutputFileName());
+                            file.delete();
+                        }
                     }
                     break;
                 }
                 if(testCase.getType().equals("file") && ok == true){
                     DeleteFile.deleteFileTemp(listFileInput,path_judge);
+                    if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                        File file = new File(path_judge + testCase.getOutputFileName());
+                        file.delete();
+                    }
                 }
             }
             if (ok) {
