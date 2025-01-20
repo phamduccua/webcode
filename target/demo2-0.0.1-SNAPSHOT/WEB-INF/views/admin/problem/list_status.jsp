@@ -13,18 +13,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Lịch sử</title>
+    <title>Trạng thái giải bài</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="main">
     <form:form id="listSubmission" modelAttribute="submission" method="GET">
-        <label><strong>Lịch sử nộp bài</strong></label>
+        <label><strong>Trạng thái giải bài</strong></label>
         <table id="tableList" class="table table-fixed">
             <thead class="table-head">
             <tr>
                 <th class="text-middle">ID</th>
                 <th>Thời gian</th>
+                <th>Tài khoản</th>
                 <th>Bài tập</th>
                 <th>Kết quả</th>
                 <th>Thời gian</th>
@@ -40,6 +41,7 @@
                         <p>${item.formattedDate}</p>
                         <p>${item.formattedTime}</p>
                     </td>
+                    <td>${item.username}(${item.fullname})</td>
                     <td>
                     <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
@@ -86,7 +88,7 @@
     function updateStatus() {
         var count = 0;
         $("tbody tr").each(function () {
-            var status = $(this).find("td:nth-child(4)").text().trim();
+            var status = $(this).find("td:nth-child(5)").text().trim();
             if (status !== ""  && status !== "AC" && status !== "WA" && status !== "RTE" && status !== "TLE" && status !== "CE"　&& status !== "MLE") {
                 count++;
             }
@@ -183,8 +185,7 @@
         color: #FFFFFF !important;
         background-color: #8A1111 !important;
     }
-
-    .table-head th:nth-child(2),.table-head th:nth-child(3) {
+    .table-head th:nth-child(3),.table-head th:nth-child(4) {
         text-align: left !important;
         vertical-align: middle !important;
         height: 50px !important;
@@ -201,9 +202,9 @@
         padding: 10px !important;
         border-bottom: 1px solid #ccc !important;
     }
-    .table-body td:nth-child(2), .table-body td:nth-child(3) {
+    .table-body td:nth-child(3), .table-body td:nth-child(4) {
         align-content: center;
-        text-align: left;
+        text-align: left !important;
         padding: 10px !important;
         border-bottom: 1px solid #ccc !important;
     }

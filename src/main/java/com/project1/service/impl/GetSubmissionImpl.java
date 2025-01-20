@@ -1,14 +1,17 @@
 package com.project1.service.impl;
 
+import com.project1.converter.StatusConverter;
 import com.project1.converter.SubmissionDTOConverter;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.SubmissionDTO;
+import com.project1.model.response.StatusResponse;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.GetSubmission;
 import com.project1.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ public class GetSubmissionImpl implements GetSubmission {
     private SubmissionDTOConverter submissionDTOConverter;
     @Autowired
     private SecurityUtils securityUtils;
+    @Autowired
+    private StatusConverter statusConverter;
     @Override
     public List<SubmissionDTO> getSub(HttpServletRequest request, Pageable pageable) {
         UserEntity user = securityUtils.getUser(request);
@@ -38,5 +43,16 @@ public class GetSubmissionImpl implements GetSubmission {
     public int countItems(HttpServletRequest request) {
         UserEntity user = securityUtils.getUser(request);
         return submissionRepository.countByUser_id(user.getId());
+    }
+
+    @Override
+    public List<StatusResponse> getAll(Pageable pageable) {
+        List<SubmissionEntity> listSubmission = submissionRepository.findAllByOrderByIdDesc(pageable);
+        List<StatusResponse> subs = new ArrayList<>();
+        for (SubmissionEntity submissionEntity : listSubmission) {
+            StatusResponse statusResponse = statusConverter.toStatusResponse(submissionEntity);
+            subs.add(statusResponse);
+        }
+        return subs;
     }
 }

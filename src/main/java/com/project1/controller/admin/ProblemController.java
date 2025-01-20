@@ -13,6 +13,7 @@ import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.request.ProblemSearchRequest;
 import com.project1.model.request.SubmissionRequest;
 import com.project1.model.response.ProblemSearchReponse;
+import com.project1.model.response.StatusResponse;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
 
@@ -179,6 +180,23 @@ public class ProblemController {
         mav.addObject("problemDTO", problemDTO);
         mav.addObject("submission", submission);
         mav.addObject("listLanguage", LanguageUtils.listLanguage(problemDTO.getLanguage()));
+        return mav;
+    }
+
+    @GetMapping("/admin/status")
+    public ModelAndView problemStatus(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/list_status");
+        mav.addObject("submission", submission);
+        List<StatusResponse> listSub = getSubmission.getAll(PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
+        submission.setListResult(listSub);
+        submission.setTotalItems(getSubmission.countItems(request));
+        if(submission.getTotalItems() % submission.getMaxPageItems() == 0){
+            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems());
+        }
+        else{
+            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems() + 1);
+        }
+        mav.addObject("listSub", listSub);
         return mav;
     }
 }

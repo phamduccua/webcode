@@ -9,7 +9,7 @@
     <img class="img" src="http://localhost:8080/uploads/logo.webp" alt="Ảnh">
   </div>
   <a class="button button-exam" href="/admin/list">Bài tập</a>
-  <a class="button button-status" href="https://www.youtube.com/">Trạng thái</a>
+  <a class="button button-status" href="/admin/status">Trạng thái</a>
   <a class="button button-history" href="/admin/history">Lịch sử</a>
   <a class="button button-rank" href="#">Bảng xếp hạng</a>
   <a class="button button-configuration">

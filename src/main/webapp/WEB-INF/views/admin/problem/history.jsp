@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Bài tập</title>
+    <title>Lịch sử</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -34,13 +34,13 @@
             </thead>
             <tbody class="table-body" id="listSubmission">
             <c:forEach var="item" items="${listSub}" >
-                <tr class="col-12">
-                    <td class="col-1">${item.id}</td>
-                    <td class="col-2">
+                <tr>
+                    <td>${item.id}</td>
+                    <td>
                         <p>${item.formattedDate}</p>
                         <p>${item.formattedTime}</p>
                     </td>
-                    <td class="col-3">
+                    <td>
                     <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
                     <c:if test="${item.status == null}">
@@ -174,19 +174,36 @@
     }
 
     .table-head th {
-        text-align: center !important; /* Căn chữ vào giữa theo chiều ngang */
-        vertical-align: middle !important; /* Căn chữ vào giữa theo chiều dọc */
-        height: 50px !important; /* Tăng chiều cao của thẻ <th> */
-        padding: 10px !important; /* Khoảng cách bên trong */
-        font-size: 16px !important; /* Kích thước chữ */
-        font-weight: bold !important; /* Đậm chữ */
-        color: #FFFFFF !important; /* Màu chữ */
-        background-color: #8A1111 !important; /* Màu nền */
+        text-align: center !important;
+        vertical-align: middle !important;
+        height: 50px !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: #FFFFFF !important;
+        background-color: #8A1111 !important;
+    }
+
+    .table-head th:nth-child(2),.table-head th:nth-child(3) {
+        text-align: left !important;
+        vertical-align: middle !important;
+        height: 50px !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: #FFFFFF !important;
+        background-color: #8A1111 !important;
     }
 
     .table-body td {
         align-content: center;
-        text-align: center !important;
+        text-align: center;
+        padding: 10px !important;
+        border-bottom: 1px solid #ccc !important;
+    }
+    .table-body td:nth-child(2), .table-body td:nth-child(3) {
+        align-content: center;
+        text-align: left;
         padding: 10px !important;
         border-bottom: 1px solid #ccc !important;
     }
