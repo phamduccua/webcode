@@ -101,7 +101,7 @@
     <form:form class="form-data" modelAttribute="submission" type="GET">
         <div class="language">
             <label>Trình biên dịch:</label>
-            <form:select path="language">
+            <form:select path="language" id="language">
                 <form:options items="${listLanguage}" />
             </form:select>
         </div>
@@ -121,6 +121,8 @@
         <button id="btnadd">Nộp lại bài</button>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function updateLineNumbers() {
         const editor = document.getElementById("codeEditor");
@@ -210,6 +212,36 @@
         }
         item.innerHTML = rows;
     </c:if>
+</script>
+<script>
+    $('#btnadd').click(function(e){
+        e.preventDefault();
+        let formData = new FormData();
+        let language = $('#language').val();
+        let code = $('#codeEditor').val();
+        let problemId = ${problemDTO.id};
+        formData.append('language',language);
+        formData.append('code',code);
+        formData.append('problemId',problemId);
+        $.ajax({
+            type: 'POST',
+            url: '/api/uploads/code',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("Thành công");
+                window.location.href = '/admin/history';
+            },error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: 'Đã xảy ra lỗi !!!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+    });
 </script>
 </body>
 </html>

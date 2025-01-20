@@ -19,17 +19,9 @@ public class SubmissionEntityConverter {
     private ProblemRepository problemRepository;
     @Autowired
     private SecurityUtils securityUtils;
-    public SubmissionEntity toSubmissonEntity(String submitted, String language, Long problemId, String fileName, HttpServletRequest request){
+    public SubmissionEntity toSubmissonEntity(String submitted, String language, Long problemId, HttpServletRequest request){
         SubmissionEntity submissionEntity = new SubmissionEntity();
         if(language.equals("Java")){
-            if(submitted.contains("public class")){
-                submitted = submitted.replace("public class " + fileName,"public class solution ");
-            }
-            else{
-                submissionEntity.setStatus("false");
-                submissionEntity.setCode("CE");
-                submissionEntity.setError("No public class: your main class must be declared as a \"public class\"");
-            }
             if(submitted.contains("package")){
                 submitted = submitted.replaceAll("^package\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s*;\\s*", "");
             }

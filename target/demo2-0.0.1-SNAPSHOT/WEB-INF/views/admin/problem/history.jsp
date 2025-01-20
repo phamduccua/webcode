@@ -18,8 +18,7 @@
 </head>
 <body>
 <div class="main">
-
-    <form>
+    <form:form id="listSubmission" modelAttribute="submission" method="GET">
         <label><strong>Lịch sử nộp bài</strong></label>
         <table id="tableList" class="table table-fixed">
             <thead class="table-head">
@@ -35,13 +34,13 @@
             </thead>
             <tbody class="table-body" id="listSubmission">
             <c:forEach var="item" items="${listSub}" >
-                <tr>
-                    <td>${item.id}</td>
-                    <td>
+                <tr class="col-12">
+                    <td class="col-1">${item.id}</td>
+                    <td class="col-2">
                         <p>${item.formattedDate}</p>
                         <p>${item.formattedTime}</p>
                     </td>
-                    <td>
+                    <td class="col-3">
                     <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
                     <c:if test="${item.status == null}">
@@ -75,11 +74,12 @@
                     <td>${item.language}</td>
                 </tr>
             </c:forEach>
-
-
             </tbody>
         </table>
-    </form>
+        <form:input type="hidden" id="inPage" path="page" />
+    </form:form>
+    <div class="page" id="page">
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -98,7 +98,51 @@
     setTimeout(updateStatus, 3000);
 
 </script>
-
+<script>
+    var item = document.getElementById('page')
+    item.innerHTML = "";
+    var totalPage = ${submission.totalPages};
+    var page = ${submission.page};
+    console.log(totalPage);
+    console.log(page);
+    var tmp = '<ul>';
+    if(totalPage > 1){
+        if(totalPage <= 3){
+            for(let i = 1;i <= totalPage;i++){
+                if(page === i){
+                    tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
+                }
+                else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
+            }
+        }
+        else{
+            let begin = 1;
+            let end = 3;
+            if(page > 3){
+                begin = page - 2;
+                end = page;
+            }
+            if(page > 1) tmp += '<li onclick=doipage(page-1)>«</li>' + '\n';
+            for(let i = begin; i <= end ;i++){
+                if(page === i){
+                    tmp += '<li class="pageChoose">' + i + '</li>' + '\n';
+                }
+                else tmp += '<li onclick="doipage(' + i + ')">' + i + '</li>' + '\n';
+            }
+            if(page < totalPage) tmp += '<li onclick=doipage(page+1)>»</li>' + '\n';
+        }
+        tmp += '</ul>';
+        item.innerHTML = tmp;
+    }
+    function listRole(){
+        document.getElementById("listSubmission").submit();
+    }
+    function doipage(i){
+        const valuePage = document.getElementById("inPage");
+        valuePage.value = i;
+        listRole();
+    }
+</script>
 <style>
     .main {
         width: 1177.6px;
@@ -141,6 +185,7 @@
     }
 
     .table-body td {
+        align-content: center;
         text-align: center !important;
         padding: 10px !important;
         border-bottom: 1px solid #ccc !important;
@@ -227,6 +272,31 @@
         width: 20px !important;
         height: 20px !important;
         border-width: 2px !important;
+    }
+    .page{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+    .page ul{
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        border : 1px solid black;
+        list-style: none;
+    }
+    .page ul li{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+        border: 1px solid black;
+    }
+    #page ul .pageChoose{
+        background-color: #bb2019 !important;
+        color : #FFFFFF !important;
     }
 
 </style>

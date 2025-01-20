@@ -251,15 +251,17 @@
         <p>Giới hạn bài tập: ${detail.time_limit}s</p>
         <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p> <br>
     <div>
+        <div id="notification" style="display: none;">
+            <p style="color: red;">Đối với ngôn ngữ Java đổi tên file thành "solution" trước khi nộp !!!!</p> <br>
+        </div>
         <form id="uploadForm" enctype="multipart/form-data">
             <div class="form-container">
                 <p>Trình biên dịch</p>
-                <select id="selectPogram" name="programingLanguage">
+                <select id="selectPogram" name="programingLanguage" onchange="onchangeLanguage()">
                     <c:forEach var="item" items="${listLanguage}" >
                         <option value="${item}" >${item}</option>
                     </c:forEach>
                 </select>
-
                 <p class="inputFile_value" onclick="upload()">Chọn tệp</p>
                 <p class="inputFile_browser" onclick="upload()">Duyệt</p>
                 <input type="file" name="file" id="fileInput" accept=".c,.cpp,.java,.py"/>
@@ -335,6 +337,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    function onchangeLanguage(){
+        if($('#selectPogram').val() === "Java"){
+            const item = document.getElementById('notification');
+            item.style.display = 'block';
+        }
+        else{
+            const item = document.getElementById('notification');
+            item.style.display = 'none';
+        }
+    }
+</script>
+<script>
     function updateStatus() {
         var count = 0;
         $("tbody tr").each(function () {
@@ -386,7 +400,7 @@
                 formData.append('language',language);
                 formData.append('id', id);
                 $.ajax({
-                    url: '/uploads/file',
+                    url: '/api/uploads/file',
                     type: 'POST',
                     data: formData,
                     processData: false,

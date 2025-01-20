@@ -3,6 +3,7 @@ package com.project1.controller.admin;
 import com.project1.converter.SubmissionDTOConverter;
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
+import com.project1.entity.UserEntity;
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
 import com.project1.entity.enums.language;
@@ -10,6 +11,7 @@ import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.request.ProblemSearchRequest;
+import com.project1.model.request.SubmissionRequest;
 import com.project1.model.response.ProblemSearchReponse;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
@@ -17,6 +19,7 @@ import com.project1.service.*;
 import com.project1.utils.ClassIdUtils;
 import com.project1.utils.LanguageUtils;
 import com.project1.utils.ReverseList;
+import com.project1.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,8 @@ public class ProblemController {
     private SubmissionRepository submissionRepository;
     @Autowired
     private SubmissionDTOConverter submissionDTOConverter;
+    @Autowired
+    private SecurityUtils securityUtils;
     @GetMapping("admin/list")
     public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
@@ -96,10 +101,19 @@ public class ProblemController {
     }
 
     @GetMapping("admin/history")
-    public ModelAndView problemHistory(HttpServletRequest request) {
+    public ModelAndView problemHistory(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/history");
-        List<SubmissionDTO> listSub = getSubmission.getSub();
-        mav.addObject("listSub", ReverseList.reverse(listSub));
+        mav.addObject("submission", submission);
+        List<SubmissionDTO> listSub = getSubmission.getSub(request,PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
+        submission.setListResult(listSub);
+        submission.setTotalItems(getSubmission.countItems(request));
+        if(submission.getTotalItems() % submission.getMaxPageItems() == 0){
+            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems());
+        }
+        else{
+            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems() + 1);
+        }
+        mav.addObject("listSub", listSub);
         return mav;
     }
     @GetMapping("admin/add")
@@ -143,7 +157,8 @@ public class ProblemController {
         ProblemDTO problemDTO = findProblemService.findByCode(code);
         List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
         List<String> program = problemDTO.getLanguage();
-        List<SubmissionEntity> list = submissionRepository.findByProblem_id(problemDTO.getId());
+        UserEntity user = securityUtils.getUser(request);
+        List<SubmissionEntity> list = submissionRepository.findByProblem_idAndUser_id(problemDTO.getId(),user.getId());
         List<SubmissionDTO> listSub = new ArrayList<>();
         for(SubmissionEntity submissionEntity : list){
             listSub.add(submissionDTOConverter.toSubmissionDTO(submissionEntity));
