@@ -18,5 +18,4 @@ public interface SubmissionRepository extends JpaRepository<SubmissionEntity,Lon
     List<SubmissionEntity> findByUser_idOrderByIdDesc(Long id,Pageable pageable);
     int countByUser_id(Long userId);
     List<SubmissionEntity> findAllByOrderByIdDesc(Pageable pageable);
-
 }

@@ -1,6 +1,7 @@
 package com.project1.controller.admin;
 
 import com.project1.converter.SubmissionDTOConverter;
+import com.project1.converter.UserConverter;
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.UserEntity;
@@ -10,17 +11,17 @@ import com.project1.entity.enums.language;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
+import com.project1.model.dto.UserDTO;
 import com.project1.model.request.ProblemSearchRequest;
+import com.project1.model.request.RankingRequest;
 import com.project1.model.request.SubmissionRequest;
 import com.project1.model.response.ProblemSearchReponse;
+import com.project1.model.response.RankingResponse;
 import com.project1.model.response.StatusResponse;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
 
-import com.project1.utils.ClassIdUtils;
-import com.project1.utils.LanguageUtils;
-import com.project1.utils.ReverseList;
-import com.project1.utils.SecurityUtils;
+import com.project1.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -53,6 +55,12 @@ public class ProblemController {
     private SubmissionDTOConverter submissionDTOConverter;
     @Autowired
     private SecurityUtils securityUtils;
+    @Autowired
+    private RankingService rankingService;
+    @Autowired
+    private UserConverter userConverter;
+    @Autowired
+    private GroupUtils groupUtils;
     @GetMapping("admin/list")
     public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
@@ -102,7 +110,7 @@ public class ProblemController {
     }
 
     @GetMapping("admin/history")
-    public ModelAndView problemHistory(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
+    public ModelAndView history(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/history");
         mav.addObject("submission", submission);
         List<SubmissionDTO> listSub = getSubmission.getSub(request,PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
@@ -184,7 +192,7 @@ public class ProblemController {
     }
 
     @GetMapping("/admin/status")
-    public ModelAndView problemStatus(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
+    public ModelAndView status(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/list_status");
         mav.addObject("submission", submission);
         List<StatusResponse> listSub = getSubmission.getAll(PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
@@ -197,6 +205,25 @@ public class ProblemController {
             submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems() + 1);
         }
         mav.addObject("listSub", listSub);
+        return mav;
+    }
+    @GetMapping("/admin/ranking")
+    public ModelAndView ranking(@ModelAttribute RankingRequest ranking, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/ranking");
+        UserDTO user = userConverter.toUserDTO(securityUtils.getUser(request));
+        mav.addObject("modelRanking", ranking);
+        List<RankingResponse> listranking = rankingService.findAllRanking(ranking,PageRequest.of(ranking.getPage() - 1,ranking.getMaxPageItems()));
+        ranking.setListResult(listranking);
+        ranking.setTotalItems(rankingService.countTotalItem(ranking));
+        if(ranking.getTotalItems() % ranking.getMaxPageItems() == 0){
+            ranking.setTotalPage(ranking.getTotalItems() / ranking.getMaxPageItems());
+        }
+        else{
+            ranking.setTotalPage(ranking.getTotalItems() / ranking.getMaxPageItems() + 1);
+        }
+        Map<String,String> listgroup = groupUtils.group(user.getClass_id(),group.type());
+        mav.addObject("listranking", listranking);
+        mav.addObject("listGroup", listgroup);
         return mav;
     }
 }

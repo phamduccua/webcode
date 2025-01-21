@@ -11,4 +11,5 @@ import java.util.List;
 public interface ProblemRepository extends JpaRepository<ProblemEntity,Long>, ProblemRepositoryCustom {
     ProblemEntity findById(long id);
     ProblemEntity findByCode(String code);
+    List<ProblemEntity> findByClassId(Long classId);
 }

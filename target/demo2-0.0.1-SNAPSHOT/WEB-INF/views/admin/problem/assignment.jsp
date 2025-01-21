@@ -92,13 +92,16 @@
         }
 
         table.table th {
-            height: 40px !important;
+            height: 50px !important;
+            align-content: center;
             text-align: center !important;
             background-color: #FAEDED !important;
             top: 10px !important;
         }
 
         table.table td {
+            height: 30px;
+            align-content: center;
             text-align: center !important;
             background-color: #F1ECEC !important;
             padding: 0 !important;

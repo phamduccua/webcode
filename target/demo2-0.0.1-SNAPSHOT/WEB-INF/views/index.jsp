@@ -108,9 +108,7 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
-                if(response.role === "ADMIN") {
-                    window.location.href = "/admin/list";
-                }
+                window.location.href = "/admin/list";
             },
             error: function (e) {
                 Swal.fire({

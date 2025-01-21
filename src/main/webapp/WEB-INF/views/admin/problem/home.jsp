@@ -11,7 +11,7 @@
   <a class="button button-exam" href="/admin/list">Bài tập</a>
   <a class="button button-status" href="/admin/status">Trạng thái</a>
   <a class="button button-history" href="/admin/history">Lịch sử</a>
-  <a class="button button-rank" href="#">Bảng xếp hạng</a>
+  <a class="button button-rank" href="/admin/ranking">Bảng xếp hạng</a>
   <a class="button button-configuration">
     <div style="display: flex; align-items: center; gap: 8px; position: relative;">
       <div class="dropdown">
