@@ -5,8 +5,10 @@ import com.project1.model.dto.ProblemDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.request.ContestRequest;
+import com.project1.model.request.ProblemByUserRequest;
 import com.project1.model.request.UserSearchRequest;
 import com.project1.model.response.LeaderBoardResponse;
+import com.project1.model.response.ProblemByUserResponse;
 import com.project1.model.response.UserResponse;
 import com.project1.service.ContestService;
 import com.project1.service.EditProblemService;
@@ -14,6 +16,7 @@ import com.project1.service.IUserService;
 import com.project1.service.TestCaseService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -117,6 +120,19 @@ public class ContestController {
         ContestDTO contestDTO =  contestService.findContestById(id);
         mav.addObject("contestDTO",contestDTO);
         mav.addObject("listLanguages", language.type());
+        return mav;
+    }
+
+    @GetMapping("/admin/list-problem-by-user/contest-{id}")
+    public ModelAndView listProblemByUserContest(@PathVariable Long id, @ModelAttribute ProblemByUserRequest problemByUserRequest, HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("admin/contest/list_problem_by_user");
+        problemByUserRequest.setContestId(id);
+        mav.addObject("id",id);
+        mav.addObject("modelSearch",problemByUserRequest);
+        List<ProblemByUserResponse> list = contestService.findByUser(problemByUserRequest,request,PageRequest.of(problemByUserRequest.getPage() - 1,problemByUserRequest.getMaxPageItems()));
+        mav.addObject("listProblem",list);
+        ContestDTO contestDTO =  contestService.findContestById(id);
+        mav.addObject("contestDTO",contestDTO);
         return mav;
     }
 }

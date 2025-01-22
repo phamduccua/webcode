@@ -350,6 +350,15 @@
             item.style.display = 'none';
         }
     }
+    function display(){
+        if($('#selectPogram').val() === 'Java'){
+            const item = document.getElementById('notification');
+            item.style.display = 'block';
+        }
+    }
+    $(document).ready(function () {
+        display();
+    });
 </script>
 <script>
     function updateStatus() {

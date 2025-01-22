@@ -84,7 +84,6 @@
                         <td class="col-4">${item.username}</td>
                     </tr>
                 </c:forEach>
-
                 </tbody>
             </table>
         </form>

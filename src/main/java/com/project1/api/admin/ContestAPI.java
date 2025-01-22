@@ -52,19 +52,29 @@ public class ContestAPI {
         }
     }
 
-    @PostMapping("admin/contest-create_problem")
-    public ResponseEntity<?> createProblem(@RequestBody ProblemContestDTO problemContestDTO){
+    @DeleteMapping("/admin/delete-problem")
+    public ResponseEntity<?> deleteProblem(@RequestBody Map<String,String> map) {
         try{
-            contestService.addProblemContest(problemContestDTO);
+            contestService.deleteProblemContest(map);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("admin/contest-create_problem")
+    public ResponseEntity<?> createProblem(@RequestBody ProblemContestDTO problemContestDTO,HttpServletRequest request) {
+        try{
+            contestService.addProblemContest(problemContestDTO,request);
             return ResponseEntity.ok().build();
         } catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PutMapping("admin/update_problem-contest")
-    public ResponseEntity<?> updateProblemContest(@RequestBody ProblemContestDTO problemContestDTO){
+    public ResponseEntity<?> updateProblemContest(@RequestBody ProblemContestDTO problemContestDTO,HttpServletRequest request) {
         try{
-            contestService.updateProblemContest(problemContestDTO);
+            contestService.updateProblemContest(problemContestDTO,request);
             return ResponseEntity.ok().build();
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -92,6 +102,16 @@ public class ContestAPI {
     public ResponseEntity<?> updateLanguageContest(@RequestBody ContestUpdateLanguageDTO contestUpdateLanguageDTO){
         try{
             contestService.updateLanguage(contestUpdateLanguageDTO);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/admin/edit-problem-by-user")
+    public ResponseEntity<?> updateProblemByUser(@RequestBody Map<String,String> map){
+        try{
+            contestService.updateProblemByUser(map);
             return ResponseEntity.ok().build();
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

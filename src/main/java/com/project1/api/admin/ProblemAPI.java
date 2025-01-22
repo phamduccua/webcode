@@ -4,6 +4,7 @@ import com.project1.model.dto.ProblemDTO;
 import com.project1.service.AddProblemService;
 import com.project1.service.DeleteProblemService;
 import com.project1.service.EditProblemService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,10 @@ public class ProblemAPI {
     @Autowired
     private DeleteProblemService deleteProblemService;
     @PostMapping
-    public ResponseEntity<?> addOrUpdateProblem(@RequestBody ProblemDTO problemDTO) {
+    public ResponseEntity<?> addOrUpdateProblem(@RequestBody ProblemDTO problemDTO, HttpServletRequest request) {
         try {
             if (problemDTO.getId() == null) {
-                addProblemService.addProblem(problemDTO);
+                addProblemService.addProblem(problemDTO,request);
             } else {
                 editProblemService.updateProblem(problemDTO);
             }

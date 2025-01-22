@@ -48,22 +48,20 @@ public class ProblemController {
     @Autowired
     private FindProblemService findProblemService;
     @Autowired
-    private GetSubmission getSubmission;
-    @Autowired
     private SubmissionRepository submissionRepository;
     @Autowired
     private SubmissionDTOConverter submissionDTOConverter;
     @Autowired
     private SecurityUtils securityUtils;
     @Autowired
-    private RankingService rankingService;
+    private GroupUtils groupUtils;
     @Autowired
     private UserConverter userConverter;
-    @Autowired
-    private GroupUtils groupUtils;
     @GetMapping("admin/list")
     public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
+        UserDTO user = userConverter.toUserDTO(securityUtils.getUser(request));
+        Map<String,String> listgroup = groupUtils.group(user.getClass_id(), group.type());
         String groups = request.getParameter("group");
         if (groups != null && !groups.isEmpty()) {
             session.setAttribute("group", groups);
@@ -72,6 +70,9 @@ public class ProblemController {
              groups = (String) session.getAttribute("group");
             if (groups != null) {
                 problemSearchRequest.setGroup(groups);
+            }
+            else{
+                problemSearchRequest.setGroup(listgroup.keySet().iterator().next());
             }
         }
         if((problemSearchRequest.getTopic() != null &&
@@ -92,6 +93,10 @@ public class ProblemController {
                 problemSearchRequest.setTopic(topics);
             }
         }
+        if(!groupUtils.isInGroup(user.getClass_id(),problemSearchRequest.getGroup())){
+            ModelAndView mavtmp = new ModelAndView("index");
+            return mavtmp;
+        }
         List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
         List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
         problemSearchRequest.setListResult(list);
@@ -104,25 +109,8 @@ public class ProblemController {
         }
         mav.addObject("modelSearch", problemSearchRequest);
         mav.addObject("problemList", list);
-        mav.addObject("listGroup", group.type());
+        mav.addObject("listGroup", listgroup);
         mav.addObject("listTopic", listTopic);
-        return mav;
-    }
-
-    @GetMapping("admin/history")
-    public ModelAndView history(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("admin/problem/history");
-        mav.addObject("submission", submission);
-        List<SubmissionDTO> listSub = getSubmission.getSub(request,PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
-        submission.setListResult(listSub);
-        submission.setTotalItems(getSubmission.countItems(request));
-        if(submission.getTotalItems() % submission.getMaxPageItems() == 0){
-            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems());
-        }
-        else{
-            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems() + 1);
-        }
-        mav.addObject("listSub", listSub);
         return mav;
     }
     @GetMapping("admin/add")
@@ -160,25 +148,6 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("admin/assignment-{code}")
-    public ModelAndView assignment(@PathVariable("code") String code , HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("admin/problem/assignment");
-        ProblemDTO problemDTO = findProblemService.findByCode(code);
-        List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
-        List<String> program = problemDTO.getLanguage();
-        UserEntity user = securityUtils.getUser(request);
-        List<SubmissionEntity> list = submissionRepository.findByProblem_idAndUser_id(problemDTO.getId(),user.getId());
-        List<SubmissionDTO> listSub = new ArrayList<>();
-        for(SubmissionEntity submissionEntity : list){
-            listSub.add(submissionDTOConverter.toSubmissionDTO(submissionEntity));
-        }
-        mav.addObject("listSub", ReverseList.reverse(listSub));
-        mav.addObject("detail", problemDTO);
-        mav.addObject("listTest", listTest);
-        mav.addObject("listLanguage", LanguageUtils.listLanguage(program));
-        return mav;
-    }
-
     @GetMapping("/admin/submission/{id}/edit")
     public ModelAndView problemEdit(@PathVariable("id") Long id , HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/problem/edit_submission");
@@ -191,39 +160,25 @@ public class ProblemController {
         return mav;
     }
 
-    @GetMapping("/admin/status")
-    public ModelAndView status(@ModelAttribute SubmissionRequest submission,HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("admin/problem/list_status");
-        mav.addObject("submission", submission);
-        List<StatusResponse> listSub = getSubmission.getAll(PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
-        submission.setListResult(listSub);
-        submission.setTotalItems(getSubmission.countItems(request));
-        if(submission.getTotalItems() % submission.getMaxPageItems() == 0){
-            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems());
-        }
-        else{
-            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems() + 1);
-        }
-        mav.addObject("listSub", listSub);
-        return mav;
-    }
-    @GetMapping("/admin/ranking")
-    public ModelAndView ranking(@ModelAttribute RankingRequest ranking, HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("admin/problem/ranking");
+    @GetMapping("admin/exercises")
+    public ModelAndView problemListByUser(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/list_problem_by_user");
         UserDTO user = userConverter.toUserDTO(securityUtils.getUser(request));
-        mav.addObject("modelRanking", ranking);
-        List<RankingResponse> listranking = rankingService.findAllRanking(ranking,PageRequest.of(ranking.getPage() - 1,ranking.getMaxPageItems()));
-        ranking.setListResult(listranking);
-        ranking.setTotalItems(rankingService.countTotalItem(ranking));
-        if(ranking.getTotalItems() % ranking.getMaxPageItems() == 0){
-            ranking.setTotalPage(ranking.getTotalItems() / ranking.getMaxPageItems());
+        problemSearchRequest.setCreatedBy(user.getId());
+        problemSearchRequest.setGroup(null);
+        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
+        List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
+        problemSearchRequest.setListResult(list);
+        problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));
+        if(problemSearchRequest.getTotalItems() % problemSearchRequest.getMaxPageItems() == 0){
+            problemSearchRequest.setTotalPage(problemSearchRequest.getTotalItems() / problemSearchRequest.getMaxPageItems());
         }
         else{
-            ranking.setTotalPage(ranking.getTotalItems() / ranking.getMaxPageItems() + 1);
+            problemSearchRequest.setTotalPage(problemSearchRequest.getTotalItems() / problemSearchRequest.getMaxPageItems() + 1);
         }
-        Map<String,String> listgroup = groupUtils.group(user.getClass_id(),group.type());
-        mav.addObject("listranking", listranking);
-        mav.addObject("listGroup", listgroup);
+        mav.addObject("modelSearch", problemSearchRequest);
+        mav.addObject("problemList", list);
+        mav.addObject("listTopic", listTopic);
         return mav;
     }
 }

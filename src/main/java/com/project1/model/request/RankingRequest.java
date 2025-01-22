@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RankingRequest extends AbstractDTO{
-    private String className;
+    private String group;
     RankingRequest(){
         this.setMaxPageItems(5);
     }

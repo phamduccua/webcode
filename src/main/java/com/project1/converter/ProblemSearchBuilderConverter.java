@@ -25,6 +25,7 @@ public class ProblemSearchBuilderConverter {
                 .setTitle(MapUtils.getObject(request.getCodeOrtitle(),String.class))
                 .setTopic(MapUtils.getObject(request.getTopic(), List.class))
                 .setGroup(MapUtils.getObject(group, Long.class))
+                .setCreatedBy(MapUtils.getObject(request.getCreatedBy(), Long.class))
                 .build();
         return problemSearchBuilder;
     }

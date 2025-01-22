@@ -20,7 +20,7 @@
 <div class="main">
     <form:form id="ranking" modelAttribute="modelRanking" method="GET">
         <label><strong>Bảng xếp hạng</strong></label> <br> <br>
-        <form:select path="className" onchange="onchangeClass()">
+        <form:select path="group" onchange="onchangeClass()">
             <form:options items="${listGroup}" />
         </form:select>
         <table id="tableList" class="table table-fixed">

@@ -7,12 +7,14 @@ public class ProblemSearchBuilder {
     private String title;
     private List<String> topic;
     private Long group;
+    private Long createdBy;
 
-    private ProblemSearchBuilder(Builder builer){
-        this.code = builer.code;
-        this.title = builer.title;
-        this.topic = builer.topic;
-        this.group = builer.group;
+    private ProblemSearchBuilder(Builder builder){
+        this.code = builder.code;
+        this.title = builder.title;
+        this.topic = builder.topic;
+        this.group = builder.group;
+        this.createdBy = builder.createdBy;
     }
 
 
@@ -32,11 +34,14 @@ public class ProblemSearchBuilder {
         return group;
     }
 
+    public Long getCreatedBy() {return createdBy;}
+
     public static class Builder{
         private String code;
         private String title;
         private List<String> topic;
         private Long group;
+        private Long createdBy;
 
         public Builder setCode(String code) {
             this.code = code;
@@ -54,6 +59,11 @@ public class ProblemSearchBuilder {
         }
         public Builder setGroup(Long group) {
             this.group = group;
+            return this;
+        }
+
+        public Builder setCreatedBy(Long createdBy) {
+            this.createdBy = createdBy;
             return this;
         }
         public ProblemSearchBuilder build(){

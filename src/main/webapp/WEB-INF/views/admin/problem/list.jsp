@@ -4,19 +4,6 @@
 <%@ include file="home.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function saveSelection() {
-        const selectValue = document.getElementById("group").value;
-        sessionStorage.setItem("groupSelect", selectValue);
-    }
-    window.onload = function () {
-        const saveValue = sessionStorage.getItem("groupSelect");
-        if (saveValue) {
-            document.getElementById("group").value = saveValue;
-        }
-    };
-
-</script>
 <%--
   Created by IntelliJ IDEA.
   User: DELL
@@ -37,7 +24,7 @@
     <form:form id="listForm" modelAttribute="modelSearch" method="GET">
         <label><strong>Bài tập</strong></label>
         <form:input id="search" type="search" placeholder="Tìm theo mã, tiêu đề" path="codeOrtitle"/> <br><br>
-        <form:select id="group" path="group" onchange="listGroup();saveSelection()">
+        <form:select id="group" path="group" onchange="listGroup()">
             <form:options items="${listGroup}" />
         </form:select><br><br>
         <table id="tableList" class="table table-fixed">

@@ -30,7 +30,7 @@ public class GetSubmissionImpl implements GetSubmission {
     @Override
     public List<SubmissionDTO> getSub(HttpServletRequest request, Pageable pageable) {
         UserEntity user = securityUtils.getUser(request);
-        List<SubmissionEntity> list = submissionRepository.findByUser_idOrderByIdDesc(user.getId(),pageable);
+        List<SubmissionEntity> list = submissionRepository.findSubmission(user.getId(),pageable);
         List<SubmissionDTO> subs = new ArrayList<>();
         for (SubmissionEntity submissionEntity : list) {
             SubmissionDTO submissionDTO = submissionDTOConverter.toSubmissionDTO(submissionEntity);
@@ -47,7 +47,7 @@ public class GetSubmissionImpl implements GetSubmission {
 
     @Override
     public List<StatusResponse> getAll(Pageable pageable) {
-        List<SubmissionEntity> listSubmission = submissionRepository.findAllByOrderByIdDesc(pageable);
+        List<SubmissionEntity> listSubmission = submissionRepository.findSubmission(null,pageable);
         List<StatusResponse> subs = new ArrayList<>();
         for (SubmissionEntity submissionEntity : listSubmission) {
             StatusResponse statusResponse = statusConverter.toStatusResponse(submissionEntity);

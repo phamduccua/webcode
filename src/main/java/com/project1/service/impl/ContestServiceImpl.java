@@ -1,5 +1,4 @@
 package com.project1.service.impl;
-
 import com.project1.converter.ContestConverter;
 import com.project1.converter.ProblemAddConverter;
 import com.project1.converter.ProblemDTOConverter;
@@ -7,19 +6,22 @@ import com.project1.entity.ContestEntity;
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.*;
+import com.project1.model.request.ProblemByUserRequest;
 import com.project1.model.response.LeaderBoardResponse;
+import com.project1.model.response.ProblemByUserResponse;
 import com.project1.model.response.UserLeaderBoeard;
 import com.project1.repository.ContestRepository;
 import com.project1.repository.ProblemRepository;
 import com.project1.repository.SubmissionRepository;
 import com.project1.repository.UserRepository;
 import com.project1.service.ContestService;
+import com.project1.utils.SecurityUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.*;
-
 @Service
 public class ContestServiceImpl implements ContestService {
     @Autowired
@@ -36,6 +38,8 @@ public class ContestServiceImpl implements ContestService {
     private UserRepository userRepository;
     @Autowired
     private SubmissionRepository submissionRepository;
+    @Autowired
+    private SecurityUtils securityUtils;
     @Override
     public List<ContestDTO> findAll() {
         List<ContestDTO> result = new ArrayList<>();
@@ -46,21 +50,18 @@ public class ContestServiceImpl implements ContestService {
         }
         return result;
     }
-
     @Override
     public void createContest(ContestCreate contestCreate) {
         ContestEntity newContest = contestConverter.toContestEntity(contestCreate);
         newContest.setStatus(1);
         contestRepository.save(newContest);
     }
-
     @Override
     public ContestDTO findContestById(Long id) {
         ContestEntity contestEntty = contestRepository.findContestById(id);
         ContestDTO contestDTO = contestConverter.toContestDTO(contestEntty);
         return contestDTO;
     }
-
     @Override
     public void updateContest(ContestDTO contestDTO) {
         ContestEntity contest = contestRepository.findContestById(contestDTO.getId());
@@ -79,17 +80,15 @@ public class ContestServiceImpl implements ContestService {
         contest.getProblemEntities().forEach(problem -> problem.getContestEntites().remove(contest));
         contestRepository.delete(contest);
     }
-
     @Override
-    public void addProblemContest(ProblemContestDTO problemContestDTO) {
-        ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemContestDTO);
+    public void addProblemContest(ProblemContestDTO problemContestDTO,HttpServletRequest request) {
+        ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemContestDTO,request);
         ContestEntity contest = contestRepository.findContestById(problemContestDTO.getId_contest());
         problemEntity.getContestEntites().add(contest);
         contest.getProblemEntities().add(problemEntity);
         problemRepository.save(problemEntity);
         contestRepository.save(contest);
     }
-
     @Override
     public List<ProblemDTO> findProblem(Long id) {
         ContestEntity contest = contestRepository.findContestById(id);
@@ -103,9 +102,9 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public void updateProblemContest(ProblemContestDTO problemContestDTO) {
+    public void updateProblemContest(ProblemContestDTO problemContestDTO,HttpServletRequest request) {
         ProblemEntity prolemEntity = problemRepository.findById(problemContestDTO.getId()).get();
-        prolemEntity = problemAddConverter.toProblemEntity(problemContestDTO);
+        prolemEntity = problemAddConverter.toProblemEntity(problemContestDTO,request);
         problemRepository.save(prolemEntity);
     }
 
@@ -209,5 +208,61 @@ public class ContestServiceImpl implements ContestService {
             problemRepository.save(problemEntity);
         }
         contestRepository.save(contest);
+    }
+
+    @Override
+    public List<ProblemByUserResponse> findByUser(ProblemByUserRequest problemByUserRequest, HttpServletRequest request, Pageable pageable) {
+        if(problemByUserRequest.getName() == null){
+            problemByUserRequest.setName("");
+        }
+        UserEntity user = securityUtils.getUser(request);
+        List<ProblemEntity> list = problemRepository.findByTitleContainingAndCreatedBy(problemByUserRequest.getName(),user.getId(),pageable);
+        List<ProblemByUserResponse> result = new ArrayList<>();
+        for(ProblemEntity problemEntity : list){
+            ProblemByUserResponse problemByUserResponse = new ProblemByUserResponse();
+            problemByUserResponse.setProblemId(problemEntity.getId());
+            problemByUserResponse.setName(problemEntity.getTitle());
+            List<ContestEntity> contests = problemEntity.getContestEntites();
+            for(ContestEntity contestEntity : contests){
+                if(contestEntity.getId() == problemByUserRequest.getContestId()){
+                    problemByUserResponse.setStatus(1);
+                    break;
+                }
+            }
+            result.add(problemByUserResponse);
+        }
+        return result;
+    }
+
+    @Override
+    public void updateProblemByUser(Map<String, String> map) {
+        Long contestId = Long.valueOf(map.get("contestId"));
+        Long problemId = Long.valueOf(map.get("problemId"));
+        ContestEntity contest = contestRepository.findContestById(contestId);
+        ProblemEntity problem = problemRepository.findById(problemId).get();
+        if(map.get("checked").equals("true")){
+            contest.getProblemEntities().add(problem);
+            problem.getContestEntites().add(contest);
+            contestRepository.save(contest);
+            problemRepository.save(problem);
+        }
+        else{
+            contest.getProblemEntities().remove(problem);
+            problem.getContestEntites().remove(contest);
+            contestRepository.save(contest);
+            problemRepository.save(problem);
+        }
+    }
+
+    @Override
+    public void deleteProblemContest(Map<String, String> map) {
+        Long contestId = Long.valueOf(map.get("contestId"));
+        Long problemId = Long.valueOf(map.get("problemId"));
+        ContestEntity contest = contestRepository.findContestById(contestId);
+        ProblemEntity problem = problemRepository.findById(problemId).get();
+        contest.getProblemEntities().remove(problem);
+        problem.getContestEntites().remove(contest);
+        contestRepository.save(contest);
+        problemRepository.save(problem);
     }
 }

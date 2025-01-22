@@ -54,6 +54,9 @@ public class ProblemEntity {
     @Column(name="language")
     private String language;
 
+    @Column(name="created_by")
+    private Long createdBy;
+
     @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
 

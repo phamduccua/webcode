@@ -16,4 +16,13 @@ public class GroupUtils {
         }
         return group;
     }
+
+    public boolean isInGroup(List<String> list,String grupRequest){
+        for(String item : list){
+            if(item.equals(grupRequest)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

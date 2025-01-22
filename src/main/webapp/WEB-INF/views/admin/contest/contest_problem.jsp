@@ -78,11 +78,40 @@
             margin: -1px;
             height: 40px;
         }
+        .menu_add{
+            position: relative;
+            display: none;
+        }
+        .menu_add ul{
+            left: 30px;
+            bottom: 20px;
+            position: absolute;
+            list-style: none;
+            width: 180px;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .menu_add ul li{
+            background-color: #8A1111;
+            width: 100%;
+            border: 1px solid black;
+            color: #fff;
+            height: 30px;
+        }
     </style>
 </head>
 <body>
 <div class="main_problem">
-    <div class="btnadd" onclick="create_problem()">Thêm bài tập</div>
+    <div class="btnadd" onclick="displaymenu()">
+        Thêm bài tập
+    </div>
+    <div class="menu_add" id="menuAdd">
+        <ul >
+            <li onclick="pageProblemByUser()">Sử dụng bài tập có sẵn</li>
+            <li onclick="create_problem()">Tạo bài tập mới</li>
+            <li onclick="closeMenu()">Đóng</li>
+        </ul>
+    </div>
     <div class="listProblem">
         <table>
             <thead>
@@ -103,7 +132,7 @@
                                 <div class="config" >
                                     <ul>
                                         <li onclick="doi_trang('${item.code}')">Chỉnh sửa</li>
-                                        <li onclick="deleateProblem(${item.id})">Xóa</li>
+                                        <li onclick="deleateProblem(${item.id},${contestDTO.id})">Xóa</li>
                                     </ul>
                                 </div>
                         </div>
@@ -119,6 +148,17 @@
 <script>
     function create_problem(){
         window.location.href = "/admin/contest-create_problem-${contestDTO.id}"
+    }
+    function displaymenu(){
+        const item = document.getElementById('menuAdd');
+        item.style.display = 'block';
+    }
+    function closeMenu(){
+        const item = document.getElementById('menuAdd');
+        item.style.display = 'none';
+    }
+    function pageProblemByUser(){
+        window.location.href = "/admin/list-problem-by-user/contest-${contestDTO.id}"
     }
 </script>
 <script>
@@ -152,11 +192,15 @@
     }
 </script>
 <script>
-    function deleateProblem(id){
+    function deleateProblem(id,conId){
+        let data = {};
+        data['contestId'] = conId;
+        data['problemId'] = id;
         $.ajax({
             type: "DELETE",
-            url: "/admin/problem/delete-item/" + id,
-            data: JSON.stringify(id),
+            url: "/admin/delete-problem",
+            data: JSON.stringify(data),
+            contentType: "application/json",
             success(){
                 Swal.fire({
                     title: 'Thành công!',
