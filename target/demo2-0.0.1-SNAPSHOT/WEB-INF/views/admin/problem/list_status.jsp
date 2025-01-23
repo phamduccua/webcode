@@ -43,7 +43,7 @@
                     </td>
                     <td>${item.username}(${item.fullname})</td>
                     <td>
-                    <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
+                        <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}</a>
                     </td>
                     <c:if test="${item.status == null}">
                         <td class="spinner">
@@ -55,19 +55,19 @@
                         <td></td>
                     </c:if>
                     <c:if test="${item.status != null}">
-                        <c:if test="${item.status == true}">
-                            <td><a style="color: #19BE6B;" href="/admin/submission/${item.id}/edit" />AC</td>
+                        <c:if test="${item.status == 'true'}">
+                            <td style="color: #19BE6B;">AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
-                        <c:if test="${item.status == false}">
+                        <c:if test="${item.status == 'false'}">
                             <c:if test="${item.code == 'CE'}">
-                                <td><a style="color: rgb(0, 0, 0)" href="/admin/submission/${item.id}/edit"/>CE</td>
+                                <td style="color: rgb(0, 0, 0)">CE</td>
                                 <td></td>
                                 <td></td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td><a style="color: #FF0000;" href="/admin/submission/${item.id}/edit" />${item.code}</td>
+                                <td style="color: #FF0000;">${item.code}</td>
                                 <td>${item.time}s</td>
                                 <td>${item.memoryUsed}Kb</td>
                             </c:if>

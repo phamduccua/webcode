@@ -2,9 +2,7 @@ package com.project1.controller.admin;
 
 import com.project1.converter.SubmissionDTOConverter;
 import com.project1.converter.UserConverter;
-import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
-import com.project1.entity.UserEntity;
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
 import com.project1.entity.enums.language;
@@ -13,14 +11,9 @@ import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.request.ProblemSearchRequest;
-import com.project1.model.request.RankingRequest;
-import com.project1.model.request.SubmissionRequest;
 import com.project1.model.response.ProblemSearchReponse;
-import com.project1.model.response.RankingResponse;
-import com.project1.model.response.StatusResponse;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
-
 import com.project1.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -97,7 +90,7 @@ public class ProblemController {
             ModelAndView mavtmp = new ModelAndView("index");
             return mavtmp;
         }
-        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
+        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest,request, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
         List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
         problemSearchRequest.setListResult(list);
         problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));
@@ -166,7 +159,7 @@ public class ProblemController {
         UserDTO user = userConverter.toUserDTO(securityUtils.getUser(request));
         problemSearchRequest.setCreatedBy(user.getId());
         problemSearchRequest.setGroup(null);
-        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
+        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest,request, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
         List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
         problemSearchRequest.setListResult(list);
         problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));

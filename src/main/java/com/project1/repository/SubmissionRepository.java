@@ -17,4 +17,5 @@ public interface SubmissionRepository extends JpaRepository<SubmissionEntity,Lon
     @Query("SELECT DISTINCT s.status FROM SubmissionEntity s WHERE s.user.id = :userId AND s.problem.id = :problemId")
     List<String> findDistinctStatusesByUserIdAndProblemId(Long userId,Long problemId);
     int countByUser_id(Long userId);
+    int countAllBy();
 }

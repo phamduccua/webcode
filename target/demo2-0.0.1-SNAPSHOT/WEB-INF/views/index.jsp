@@ -108,7 +108,12 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
-                window.location.href = "/admin/list";
+                if(response.role === 'ADMIN'){
+                    window.location.href = "/admin/list";
+                }
+                else if(response.role === 'USER'){
+                    window.location.href = "/api/question";
+                }
             },
             error: function (e) {
                 Swal.fire({

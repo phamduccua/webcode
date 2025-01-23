@@ -1,4 +1,4 @@
-package com.project1.controller.web;
+package com.project1.controller.admin;
 
 import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.request.SubmissionRequest;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 @Controller
 @RequestMapping("/")
-public class History {
+public class AdminHistory {
     @Autowired
     private GetSubmission getSubmission;
     @GetMapping("admin/history")

@@ -11,4 +11,5 @@ public interface GetSubmission {
     List<SubmissionDTO> getSub(HttpServletRequest request,Pageable pageable);
     int countItems(HttpServletRequest request);
     List<StatusResponse> getAll(Pageable pageable);
+    int countAll();
 }

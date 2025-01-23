@@ -10,7 +10,7 @@ import java.util.Date;
 public class StatusResponse {
     private Long id;
     private String problemName;
-    private String status;
+    private String status = null;
     private String time;
     private Long memoryUsed;
     private String language;

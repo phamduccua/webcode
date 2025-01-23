@@ -9,6 +9,7 @@ import com.project1.model.dto.TestCaseDTO;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.FindProblemService;
 import com.project1.service.TestCaseService;
+import com.project1.utils.ClassIdUtils;
 import com.project1.utils.LanguageUtils;
 import com.project1.utils.ReverseList;
 import com.project1.utils.SecurityUtils;
@@ -22,9 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Controller
 @RequestMapping("/")
-public class Solution {
+public class UserSolution {
     @Autowired
     private SecurityUtils securityUtils;
     @Autowired
@@ -35,13 +37,17 @@ public class Solution {
     private SubmissionRepository submissionRepository;
     @Autowired
     private SubmissionDTOConverter submissionDTOConverter;
-    @GetMapping("admin/assignment-{code}")
+    @GetMapping("api/solution/{code}")
     public ModelAndView assignment(@PathVariable("code") String code , HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("admin/problem/assignment");
+        ModelAndView mav = new ModelAndView("web/solution");
         ProblemDTO problemDTO = findProblemService.findByCode(code);
         List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
         List<String> program = problemDTO.getLanguage();
         UserEntity user = securityUtils.getUser(request);
+        if(!user.getClassId().contains(String.valueOf(ClassIdUtils.toClassId(problemDTO.getGroup())))){
+            ModelAndView view = new ModelAndView("web/not_found");
+            return view;
+        }
         List<SubmissionEntity> list = submissionRepository.findByProblem_idAndUser_id(problemDTO.getId(),user.getId());
         List<SubmissionDTO> listSub = new ArrayList<>();
         for(SubmissionEntity submissionEntity : list){
@@ -54,3 +60,4 @@ public class Solution {
         return mav;
     }
 }
+

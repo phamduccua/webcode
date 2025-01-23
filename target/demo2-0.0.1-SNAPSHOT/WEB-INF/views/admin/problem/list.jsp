@@ -84,7 +84,9 @@
             </thead>
             <tbody>
             <c:forEach var="item" items="${problemList}" varStatus="status">
-                <tr class="table-body col-24" style="background-color: ${item.color}">
+                <c:if test="${item.status != -1}">
+                    <c:if test="${item.status == 1}">
+                        <tr class="table-body col-24" style="background-color: #86C681;">
                     <td class="col-0.5">
                         <input type="checkbox" value="${item.id}"/>
                         ${status.count}
@@ -122,6 +124,88 @@
                         </div>
                     </td>
                 </tr>
+                    </c:if>
+                    <c:if test="${item.status == 0}">
+                        <tr class="table-body col-24" style="background-color: #FFA29E;">
+                    <td class="col-0.5">
+                        <input type="checkbox" value="${item.id}"/>
+                        ${status.count}
+                    </td>
+                    <td class="col-1">
+                        <a class="open" href="/admin/assignment-${item.code}">
+                            ${item.code}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="open" href="assignment-${item.code}">
+                            ${item.title}
+                        </a>
+                    </td>
+                    <td class="col-2">${item.type}</td>
+                    <td class="col-2">${item.topic}</td>
+                    <td class="mid">${item.difficul}</td>
+                    <td class="mid col-1">
+                        <div class="dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                            </svg>
+                            <div class="dropdown-menu-wrapper">
+                                <table class="table-configuration">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="detail-${item.code}">Chỉnh sửa</a>
+                                        </td>
+                                    </tr>
+                                    <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                    </c:if>
+                </c:if>
+                <c:if test="${item.status == -1}">
+                    <tr class="table-body col-24">
+                    <td class="col-0.5">
+                        <input type="checkbox" value="${item.id}"/>
+                        ${status.count}
+                    </td>
+                    <td class="col-1">
+                        <a class="open" href="/admin/assignment-${item.code}">
+                            ${item.code}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="open" href="assignment-${item.code}">
+                            ${item.title}
+                        </a>
+                    </td>
+                    <td class="col-2">${item.type}</td>
+                    <td class="col-2">${item.topic}</td>
+                    <td class="mid">${item.difficul}</td>
+                    <td class="mid col-1">
+                        <div class="dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                            </svg>
+                            <div class="dropdown-menu-wrapper">
+                                <table class="table-configuration">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="detail-${item.code}">Chỉnh sửa</a>
+                                        </td>
+                                    </tr>
+                                    <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </c:if>
             </c:forEach>
             </tbody>
         </table>

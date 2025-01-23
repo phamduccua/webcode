@@ -1,4 +1,4 @@
-package com.project1.controller.web;
+package com.project1.controller.admin;
 
 import com.project1.converter.UserConverter;
 import com.project1.entity.enums.group;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 @Controller
 @RequestMapping("/")
-public class Ranking {
+public class AdminRanking {
     @Autowired
     private RankingService rankingService;
     @Autowired

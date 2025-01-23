@@ -19,4 +19,5 @@ public class ProblemSearchReponse extends AbstractDTO {
     private String group;
     private String constraints;
     private String color;
+    private int status = -1;
 }

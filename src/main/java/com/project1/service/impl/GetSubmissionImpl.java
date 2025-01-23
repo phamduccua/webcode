@@ -46,6 +46,11 @@ public class GetSubmissionImpl implements GetSubmission {
     }
 
     @Override
+    public int countAll(){
+        return submissionRepository.countAllBy();
+    }
+
+    @Override
     public List<StatusResponse> getAll(Pageable pageable) {
         List<SubmissionEntity> listSubmission = submissionRepository.findSubmission(null,pageable);
         List<StatusResponse> subs = new ArrayList<>();
