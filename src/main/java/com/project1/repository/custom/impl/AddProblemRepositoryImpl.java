@@ -12,8 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public class AddProblemRepositoryImpl implements AddProblemRepository {
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
     private ProblemRepository problemRepository;
     @Override
@@ -21,6 +19,6 @@ public class AddProblemRepositoryImpl implements AddProblemRepository {
         if (problemRepository.findByCode(problemEntity.getCode()) != null) {
             throw new IllegalArgumentException("Mã bài tập đã tồn tại: " + problemEntity.getCode());
         }
-        entityManager.persist(problemEntity);
+        problemRepository.save(problemEntity);
     }
 }

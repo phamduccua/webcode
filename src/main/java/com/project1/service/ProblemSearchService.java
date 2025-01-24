@@ -11,4 +11,5 @@ import java.util.List;
 public interface ProblemSearchService {
     List<ProblemSearchReponse> findAll(ProblemSearchRequest problemSearchRequest, HttpServletRequest request, Pageable pageable);
     int countTotalItems(ProblemSearchRequest problemSearchRequest);
+    List<ProblemSearchReponse> findByContestId(Long id, HttpServletRequest request);
 }

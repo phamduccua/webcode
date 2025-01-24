@@ -158,7 +158,7 @@
     item.innerHTML = tmp;
   }
   function listRole(){
-    document.getElementById("ranking").submit();
+    document.getElementById("listForm").submit();
   }
   function doipage(i){
     const valuePage = document.getElementById("inPage");

@@ -54,14 +54,9 @@
 
 </script>
 <script>
-  function account_management(){
-    window.location.href = "/admin/list-account";
-  }
   function update_password(){
-    window.location.href = "/api/update_password-12";
-  }
-  function list_delete_account(){
-    window.location.href = "/admin/list-delete-account";
+    let id = document.getElementById('idUser').value;
+    window.location.href = "/api/update_password/" + id;
   }
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -85,7 +80,7 @@
           dataType: "JSON",
           success: function (response) {
             console.log(response);
-
+            document.getElementById('idUser').value = response.id;
             var item = document.getElementById('profile');
             if (item) {
               item.innerHTML = "";

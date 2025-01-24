@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface ContestService {
-    List<ContestDTO> findAll();
+    List<ContestDTO> findByUserCreateId(HttpServletRequest request);
+    List<ContestDTO> findAll(HttpServletRequest request);
     void createContest(ContestCreate contestCreate);
     ContestDTO findContestById(Long id);
     void updateContest(ContestDTO contestDTO);
@@ -25,4 +26,5 @@ public interface ContestService {
     List<ProblemByUserResponse> findByUser(ProblemByUserRequest problemByUserRequest, HttpServletRequest request, Pageable pageable);
     void updateProblemByUser(Map<String,String> map);
     void deleteProblemContest(Map<String,String> map);
+    int countTotalProblemByUser(HttpServletRequest request);
 }

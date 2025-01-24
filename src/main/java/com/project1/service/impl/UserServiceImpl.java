@@ -205,6 +205,7 @@ public class UserServiceImpl implements IUserService {
     public LoadUserDTO loadUser(Long id) {
         UserEntity user = userRepository.findById(id);
         LoadUserDTO loadUserDTO = new LoadUserDTO();
+        loadUserDTO.setId(user.getId());
         loadUserDTO.setFullname(user.getFullname());
         loadUserDTO.setUsername(user.getUsername());
         return loadUserDTO;

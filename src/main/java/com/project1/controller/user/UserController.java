@@ -83,7 +83,7 @@ public class UserController {
         mav.addObject("listGroup", group.type());
         return mav;
     }
-    @GetMapping("api/update_password-{id}")
+    @GetMapping("admin/update_password/{id}")
     public ModelAndView updatePassword(@PathVariable("id") Long id, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/user/updatePassword");
         UserDTO userDTO = userService.findById(id);

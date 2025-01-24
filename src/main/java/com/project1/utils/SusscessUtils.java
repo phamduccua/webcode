@@ -31,7 +31,7 @@ public class SusscessUtils {
                 submission.setExecutionTime(time);
             }
             else{
-                submission.setExecutionTime(max(submission.getMemoryUsed(), time));
+                submission.setExecutionTime(max(submission.getExecutionTime(), time));
             }
             if (time > problem.getTime_limit()) {
                 submission.setExecutionTime(problem.getTime_limit());

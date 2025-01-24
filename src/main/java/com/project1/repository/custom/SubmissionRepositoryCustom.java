@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface SubmissionRepositoryCustom {
     List<SubmissionEntity> findSubmission(Long id, Pageable pageable);
+    List<SubmissionEntity> findSubmissionContest(Long id, List<Long> problemId, Pageable pageable);
+    int coutSubmission(Long id);
+    int coutSubmissionContest(Long id, Long problemId);
 }

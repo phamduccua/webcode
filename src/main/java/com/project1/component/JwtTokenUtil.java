@@ -39,6 +39,10 @@ public class JwtTokenUtil {
             throw new InvalidParamException("Cannot create jwt token, error: "+e.getMessage());
         }
     }
+
+    public void logOut(UserEntity user){
+
+    }
     private Key getSignInKey() {
         byte[] bytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(bytes);

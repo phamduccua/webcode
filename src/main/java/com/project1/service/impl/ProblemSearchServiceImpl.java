@@ -3,11 +3,13 @@ package com.project1.service.impl;
 import com.project1.builder.ProblemSearchBuilder;
 import com.project1.converter.ProblemSearchBuilderConverter;
 import com.project1.converter.ProblemSearchConverter;
+import com.project1.entity.ContestEntity;
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.model.request.ProblemSearchRequest;
 import com.project1.model.response.ProblemSearchReponse;
+import com.project1.repository.ContestRepository;
 import com.project1.repository.ProblemRepository;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.ProblemSearchService;
@@ -35,6 +37,8 @@ public class ProblemSearchServiceImpl implements ProblemSearchService {
     private SecurityUtils securityUtils;
     @Autowired
     private SubmissionRepository submissionRepository;
+    @Autowired
+    private ContestRepository contestRepository;
     @Override
     public List<ProblemSearchReponse> findAll(ProblemSearchRequest problemSearchRequest, HttpServletRequest request, Pageable pageable) {
         ProblemSearchBuilder problemSearchBuilder = problemSearchBuilderConverter.toProblemSearchBuilder(problemSearchRequest);
@@ -79,5 +83,34 @@ public class ProblemSearchServiceImpl implements ProblemSearchService {
     public int countTotalItems(ProblemSearchRequest problemSearchRequest) {
         ProblemSearchBuilder problemSearchBuilder = problemSearchBuilderConverter.toProblemSearchBuilder(problemSearchRequest);
         return problemRepository.findAll(problemSearchBuilder).size();
+    }
+
+    @Override
+    public List<ProblemSearchReponse> findByContestId(Long id, HttpServletRequest request) {
+        ContestEntity contest = contestRepository.findById(id).get();
+        List<ProblemSearchReponse> result = new ArrayList<>();
+        List<ProblemEntity> listProblem = contest.getProblemEntities();
+        UserEntity user = securityUtils.getUser(request);
+        for (ProblemEntity problemEntity : listProblem) {
+            ProblemSearchReponse problemSearchReponse = problemSearchConverter.toProblemSearchReponse(problemEntity);
+            List<String> list = submissionRepository.findDistinctStatusesByUserIdAndProblemId(user.getId(), problemEntity.getId());
+            if(list != null && list.size() > 0) {
+                if(list.size() > 1){
+                    problemSearchReponse.setStatus(1);
+                }
+                else{
+                    if(list.get(0).equals("true")){
+                        problemSearchReponse.setStatus(1);
+                    }
+                    else{
+                        if(list.get(0).equals("false")){
+                            problemSearchReponse.setStatus(0);
+                        }
+                    }
+                }
+            }
+            result.add(problemSearchReponse);
+        }
+        return result;
     }
 }

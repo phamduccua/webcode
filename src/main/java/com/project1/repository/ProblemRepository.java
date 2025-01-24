@@ -13,5 +13,6 @@ public interface ProblemRepository extends JpaRepository<ProblemEntity,Long>, Pr
     ProblemEntity findById(long id);
     ProblemEntity findByCode(String code);
     List<ProblemEntity> findByClassId(Long classId);
-    List<ProblemEntity> findByTitleContainingAndCreatedBy(String title, Long createBy, Pageable pageable);
+    List<ProblemEntity> findByTitleContainingAndCreatedByAndType(String title, Long createBy, Pageable pageable, String type);
+    int countByCreatedByAndType(Long createBy,String type);
 }

@@ -35,4 +35,16 @@ public class EditSubmission {
         mav.addObject("listLanguage", LanguageUtils.listLanguage(problemDTO.getLanguage()));
         return mav;
     }
+    @GetMapping("/api/contest/{idContest}/submission/{id}/edit")
+    public ModelAndView contestEdit(@PathVariable("idContest") Long idContest, @PathVariable Long id, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("web/contest_editsubmission");
+        SubmissionEntity submissionEntity = submissionRepository.findById(id).get();
+        SubmissionDTO submission = submissionDTOConverter.toSubmissionDTO(submissionEntity);
+        ProblemDTO problemDTO = findProblemService.findByCode(submissionEntity.getProblem().getCode());
+        mav.addObject("id",idContest);
+        mav.addObject("problemDTO", problemDTO);
+        mav.addObject("submission", submission);
+        mav.addObject("listLanguage", LanguageUtils.listLanguage(problemDTO.getLanguage()));
+        return mav;
+    }
 }

@@ -27,7 +27,7 @@ public class ContestEntity {
     private LocalDateTime endTime;
 
     @Column(name="created_by")
-    private Long created_by;
+    private Long createdBy;
 
     @Column(name="status")
     private int status;

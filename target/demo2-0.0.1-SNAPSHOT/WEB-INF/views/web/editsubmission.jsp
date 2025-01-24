@@ -96,7 +96,7 @@
 <body>
 <div class="main">
     <div class="name_problem">
-        <a class="open" href="/admin/assignment-${problemDTO.code}">${problemDTO.code} - ${problemDTO.title}</a>
+        <a class="open" href="/api/solution/${problemDTO.code}">${problemDTO.code} - ${problemDTO.title}</a>
     </div>
     <form:form class="form-data" modelAttribute="submission" type="GET">
         <div class="language">

@@ -59,7 +59,7 @@
                             </c:if>
                             <c:if test="${item.end_time < now}">
                                 <span class="status ended">
-                                    Đã kết thúc
+                                    Kết thúc
                                 </span>
                             </c:if>
                         </span>

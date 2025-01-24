@@ -204,7 +204,7 @@
                         </span>
                     </td>
                     <td class="col-1">
-                        <button class="btn-join">Tham gia</button>
+                        <button class="btn-join" onclick="join(${item.id})">Tham gia</button>
                     </td>
                     <input type="hidden" class="start-time" value="${item.start_time}" />
                     <input type="hidden" class="end-time" value="${item.end_time}" />
@@ -256,4 +256,9 @@
 
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function join(id){
+        window.location.href = "/api/contest/" + id + "/question";
+    }
+</script>
 </html>

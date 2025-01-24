@@ -15,9 +15,11 @@ public class AddProblemServiceImpl implements AddProblemService {
     private ProblemAddConverter problemAddConverter;
     @Autowired
     private AddProblemRepository addProblemRepository;
+
     @Override
     public void addProblem(ProblemDTO problemDTO, HttpServletRequest request) {
         ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemDTO,request);
+
         addProblemRepository.addProblem(problemEntity);
     }
 }

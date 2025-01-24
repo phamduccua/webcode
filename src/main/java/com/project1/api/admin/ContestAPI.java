@@ -1,19 +1,13 @@
 package com.project1.api.admin;
-
 import com.project1.entity.UserEntity;
 import com.project1.model.dto.*;
 import com.project1.service.ContestService;
 import com.project1.utils.SecurityUtils;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
-
 @RequestMapping("/")
 @RestController
 public class ContestAPI {
@@ -25,7 +19,7 @@ public class ContestAPI {
     public ResponseEntity<?> createContest(@RequestBody ContestCreate contestCreate, HttpServletRequest request) {
         try{
             UserEntity user = securityUtils.getUser(request);
-            contestCreate.setCreated_by(user.getId());
+            contestCreate.setCreatedBy(user.getId());
             contestService.createContest(contestCreate);
             return ResponseEntity.ok().build();
         }

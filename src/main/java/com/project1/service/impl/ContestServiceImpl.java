@@ -40,12 +40,23 @@ public class ContestServiceImpl implements ContestService {
     private SubmissionRepository submissionRepository;
     @Autowired
     private SecurityUtils securityUtils;
+
     @Override
-    public List<ContestDTO> findAll() {
+    public List<ContestDTO> findByUserCreateId(HttpServletRequest request) {
+        UserEntity userEntity = securityUtils.getUser(request);
+        List<ContestEntity> list = contestRepository.findByCreatedBy(userEntity.getId());
+        List<ContestDTO> contestDTOList = new ArrayList<>();
+        for (ContestEntity contestEntity : list) {
+            contestDTOList.add(contestConverter.toContestDTO(contestEntity));
+        }
+        return contestDTOList;
+    }
+    @Override
+    public List<ContestDTO> findAll(HttpServletRequest request) {
         List<ContestDTO> result = new ArrayList<>();
-        List<ContestEntity> contestEntites = contestRepository.findAll();
+        UserEntity user = securityUtils.getUser(request);
+        List<ContestEntity> contestEntites = user.getContestEntities();
         for(ContestEntity contestEntity : contestEntites){
-            ContestDTO contestDTO = new ContestDTO();
             result.add(contestConverter.toContestDTO(contestEntity));
         }
         return result;
@@ -86,6 +97,7 @@ public class ContestServiceImpl implements ContestService {
         ContestEntity contest = contestRepository.findContestById(problemContestDTO.getId_contest());
         problemEntity.getContestEntites().add(contest);
         contest.getProblemEntities().add(problemEntity);
+        problemEntity.setLanguage(contest.getLanguage());
         problemRepository.save(problemEntity);
         contestRepository.save(contest);
     }
@@ -104,8 +116,9 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public void updateProblemContest(ProblemContestDTO problemContestDTO,HttpServletRequest request) {
         ProblemEntity prolemEntity = problemRepository.findById(problemContestDTO.getId()).get();
-        prolemEntity = problemAddConverter.toProblemEntity(problemContestDTO,request);
-        problemRepository.save(prolemEntity);
+        ProblemEntity tmp = problemAddConverter.toProblemEntity(problemContestDTO,request);
+        tmp.setLanguage(prolemEntity.getLanguage());
+        problemRepository.save(tmp);
     }
 
     @Override
@@ -131,7 +144,6 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public LeaderBoardResponse leaderBoard(ContestDTO contestDTO) {
         LeaderBoardResponse result = new LeaderBoardResponse();
-
         ContestEntity contest = contestRepository.findContestById(contestDTO.getId());
         int size = contest.getProblemEntities().size();
         List<String> nameProblem = new ArrayList<>(Collections.nCopies(size, ""));
@@ -154,7 +166,7 @@ public class ContestServiceImpl implements ContestService {
                             cnt++;
                         }
                         else{
-                            if(list.get(0).equals("1")){
+                            if(list.get(0).equals("true")){
                                 status.add("true");
                                 cnt++;
                             }
@@ -216,7 +228,7 @@ public class ContestServiceImpl implements ContestService {
             problemByUserRequest.setName("");
         }
         UserEntity user = securityUtils.getUser(request);
-        List<ProblemEntity> list = problemRepository.findByTitleContainingAndCreatedBy(problemByUserRequest.getName(),user.getId(),pageable);
+        List<ProblemEntity> list = problemRepository.findByTitleContainingAndCreatedByAndType(problemByUserRequest.getName(),user.getId(),pageable,"CONTEST");
         List<ProblemByUserResponse> result = new ArrayList<>();
         for(ProblemEntity problemEntity : list){
             ProblemByUserResponse problemByUserResponse = new ProblemByUserResponse();
@@ -264,5 +276,11 @@ public class ContestServiceImpl implements ContestService {
         problem.getContestEntites().remove(contest);
         contestRepository.save(contest);
         problemRepository.save(problem);
+    }
+
+    @Override
+    public int countTotalProblemByUser(HttpServletRequest request) {
+        UserEntity user = securityUtils.getUser(request);
+        return problemRepository.countByCreatedByAndType(user.getId(),"CONTEST");
     }
 }

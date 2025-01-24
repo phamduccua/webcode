@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 
 public class LoadUserDTO {
+    private Long id;
     private String username;
     private String fullname;
 }

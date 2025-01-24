@@ -20,6 +20,7 @@ public class SubmissionDTO {
     private String code;
     private String error;
     private String submitted;
+    private Long contestId;
     public String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(submittedAt);

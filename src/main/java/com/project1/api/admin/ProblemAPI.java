@@ -30,7 +30,7 @@ public class ProblemAPI {
             if (problemDTO.getId() == null) {
                 addProblemService.addProblem(problemDTO,request);
             } else {
-                editProblemService.updateProblem(problemDTO);
+                editProblemService.updateProblem(problemDTO,request);
             }
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {

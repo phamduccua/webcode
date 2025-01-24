@@ -39,10 +39,10 @@ public class ContestController {
     @Autowired
     private IUserService userSerice;
     @GetMapping("admin/list_contest")
-    public ModelAndView createContest(){
+    public ModelAndView listContest(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/contest/list_contest");
         LocalDateTime now = LocalDateTime.now();
-        List<ContestDTO> list = contestService.findAll();
+        List<ContestDTO> list = contestService.findByUserCreateId(request);
         mav.addObject("listContest",list);
         mav.addObject("now",now);
         return mav;
@@ -130,6 +130,14 @@ public class ContestController {
         mav.addObject("id",id);
         mav.addObject("modelSearch",problemByUserRequest);
         List<ProblemByUserResponse> list = contestService.findByUser(problemByUserRequest,request,PageRequest.of(problemByUserRequest.getPage() - 1,problemByUserRequest.getMaxPageItems()));
+        problemByUserRequest.setListResult(list);
+        problemByUserRequest.setTotalItems(contestService.countTotalProblemByUser(request));
+        if(problemByUserRequest.getTotalItems() % problemByUserRequest.getMaxPageItems() == 0){
+            problemByUserRequest.setTotalPage(problemByUserRequest.getTotalItems() / problemByUserRequest.getMaxPageItems());
+        }
+        else{
+            problemByUserRequest.setTotalPage(problemByUserRequest.getTotalItems() / problemByUserRequest.getMaxPageItems() + 1);
+        }
         mav.addObject("listProblem",list);
         ContestDTO contestDTO =  contestService.findContestById(id);
         mav.addObject("contestDTO",contestDTO);

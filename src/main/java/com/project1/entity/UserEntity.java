@@ -43,6 +43,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name="phone_number")
     private String phone_number;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
