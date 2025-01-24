@@ -14,6 +14,9 @@ import com.project1.model.response.UserSearchResponse;
 import com.project1.repository.ContestRepository;
 import com.project1.repository.UserRepository;
 import com.project1.service.IUserService;
+import com.project1.utils.TokenBlackList;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -40,6 +43,8 @@ public class UserServiceImpl implements IUserService {
     private ContestRepository contestRepository;
     @Autowired
     private UserResponseConverter userResponseConverter;
+    @Autowired
+    private TokenBlackList tokenBlackList;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
     private final PasswordEncoder passwordEncoder;
@@ -232,5 +237,26 @@ public class UserServiceImpl implements IUserService {
             userEntity.setStatus(1);
             userRepository.save(userEntity);
         }
+    }
+
+    @Override
+    public void logout(HttpServletRequest httpServletRequest) {
+        String token = extractToken(httpServletRequest);
+        tokenBlackList.addToken(token);
+    }
+
+    private String extractToken(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader;
+        }
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("token".equals(cookie.getName())) {
+                    return "Bearer " + cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 }

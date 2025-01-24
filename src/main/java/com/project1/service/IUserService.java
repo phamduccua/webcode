@@ -7,6 +7,7 @@ import com.project1.model.dto.UserupdatePassword;
 import com.project1.model.request.UserSearchRequest;
 import com.project1.model.response.UserResponse;
 import com.project1.model.response.UserSearchResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -27,4 +28,5 @@ public interface IUserService {
     LoadUserDTO loadUser(Long id);
     List<UserResponse> findByRole(String role,Long contestId,String fullname);
     void restoreUser(List<Long> ids);
+    void logout(HttpServletRequest httpServletRequest);
 }

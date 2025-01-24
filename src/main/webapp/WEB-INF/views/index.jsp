@@ -101,6 +101,7 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
+                console.log(response);
                 document.cookie = `token=` + response.token + `; path=/; max-age=604800;`;
                 Swal.fire({
                     title: 'Thành công!',

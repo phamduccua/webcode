@@ -2,6 +2,7 @@ package com.project1.fillter;
 
 import com.project1.component.JwtTokenUtil;
 import com.project1.entity.UserEntity;
+import com.project1.utils.TokenBlackList;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
+    @Autowired
+    private TokenBlackList tokenBlackList;
     private final UserDetailsService userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
     @Override
@@ -36,6 +40,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 return;
             }
             String authHeader = extractToken(request);
+            if(tokenBlackList.isBlacklisted(authHeader)) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                return;
+            }
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
                 return;

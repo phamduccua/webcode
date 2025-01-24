@@ -46,7 +46,7 @@
         <li onclick="account_management()">Quản lí tài khoản</li>
         <li onclick="update_password()">Thay đổi mật khẩu</li>
         <li onclick="list_delete_account()">Danh sách tài khoản bị xóa</li>
-        <li>Đăng xuất</li>
+        <li onclick="logout()">Đăng xuất</li>
       </ul>
     </div>
   </div>
@@ -84,6 +84,16 @@
   }
   function list_delete_account(){
     window.location.href = "/admin/list-delete-account";
+  }
+
+  function logout(){
+    $.ajax({
+      type: "POST",
+      url: "/api/logout",
+      success(){
+        window.location.href = "/login";
+      }
+    });
   }
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

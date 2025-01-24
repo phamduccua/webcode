@@ -40,9 +40,6 @@ public class JwtTokenUtil {
         }
     }
 
-    public void logOut(UserEntity user){
-
-    }
     private Key getSignInKey() {
         byte[] bytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(bytes);

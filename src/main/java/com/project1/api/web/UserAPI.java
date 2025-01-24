@@ -115,4 +115,14 @@ public class UserAPI {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @PostMapping("api/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request){
+        try{
+            userService.logout(request);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }
