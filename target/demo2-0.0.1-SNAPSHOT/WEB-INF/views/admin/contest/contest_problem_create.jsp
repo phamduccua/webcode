@@ -190,7 +190,7 @@
         formData.append("file", i);
         await $.ajax({
           type: "POST",
-          url: "/admin/problem/upload/images",
+          url: "/demo2-0.0.1-SNAPSHOT/admin/problem/upload/images",
           data: formData,
           processData: false,
           contentType: false,
@@ -228,7 +228,7 @@
     };
     $.ajax({
       type: "POST",
-      url: "/admin/contest-create_problem",
+      url: "/demo2-0.0.1-SNAPSHOT/admin/contest-create_problem",
       data: JSON.stringify(formData),
       contentType: "application/json",
       success() {

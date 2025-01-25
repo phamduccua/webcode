@@ -8,11 +8,11 @@
   <div class="logo">
     <img class="img" src="http://localhost:8080/uploads/logo.webp" alt="Ảnh">
   </div>
-  <a class="button button-exam" href="/api/question">Bài tập</a>
-  <a class="button button-status" href="/api/status">Trạng thái</a>
-  <a class="button button-history" href="/api/history">Lịch sử</a>
-  <a class="button button-rank" href="/api/ranking">Bảng xếp hạng</a>
-  <a class="button button-configuration" href="/api/contest">Danh sách cuộc thi</a>
+  <a class="button button-exam" href="/demo2-0.0.1-SNAPSHOT/api/question">Bài tập</a>
+  <a class="button button-status" href="/demo2-0.0.1-SNAPSHOT/api/status">Trạng thái</a>
+  <a class="button button-history" href="/demo2-0.0.1-SNAPSHOT/api/history">Lịch sử</a>
+  <a class="button button-rank" href="/demo2-0.0.1-SNAPSHOT/api/ranking">Bảng xếp hạng</a>
+  <a class="button button-configuration" href="/demo2-0.0.1-SNAPSHOT/api/contest">Danh sách cuộc thi</a>
   <a class="button button-gui" href="#">Hướng dẫn</a>
   <div class="avatar" onclick="displayAvatar(event)">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-person" viewBox="0 0 16 16">
@@ -62,7 +62,7 @@
   function logout(){
     $.ajax({
       type: "POST",
-      url: "/api/logout",
+      url: "/demo2-0.0.1-SNAPSHOT/api/logout",
       success(){
         window.location.href = "/login";
       }
@@ -77,14 +77,14 @@
   function loadUser() {
     $.ajax({
       type: "POST",
-      url: "/api/home",
+      url: "/demo2-0.0.1-SNAPSHOT/api/home",
       contentType: "application/json",
       dataType: "JSON",
       success: function (id) {
         console.log("ID người dùng:", id);
         $.ajax({
           type: "POST",
-          url: "/api/loader",
+          url: "/demo2-0.0.1-SNAPSHOT/api/loader",
           data: JSON.stringify(id),
           contentType: "application/json",
           dataType: "JSON",

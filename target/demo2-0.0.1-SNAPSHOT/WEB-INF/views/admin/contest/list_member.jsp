@@ -100,7 +100,7 @@
         data['checked'] = check;
         $.ajax({
             type: "PUT",
-            url: "/admin/edit-member",
+            url: "/demo2-0.0.1-SNAPSHOT/admin/edit-member",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function() {

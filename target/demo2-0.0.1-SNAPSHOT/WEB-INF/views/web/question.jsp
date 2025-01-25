@@ -90,12 +90,12 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="/api/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.code}">
                             ${item.code}
                         </a>
                     </td>
                     <td>
-                        <a class="open" href="/api/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -110,12 +110,12 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="/api/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.code}">
                             ${item.code}
                         </a>
                     </td>
                     <td>
-                        <a class="open" href="/api/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -131,12 +131,12 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="/api/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.code}">
                             ${item.code}
                         </a>
                     </td>
                     <td>
-                        <a class="open" href="/api/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>

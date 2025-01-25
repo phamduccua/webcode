@@ -40,12 +40,12 @@
                         ${status.count}
                     </td>
                     <td class="col-3">
-                        <a class="open" href="/admin/assignment-${item.code}">${item.code}
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">${item.code}
                         </a>
 
                     </td>
                     <td>
-                        <a class="open col-6" href="assignment-${item.code}">
+                        <a class="open col-6" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -63,7 +63,7 @@
                                                 <a href="detail-${item.code}">Chỉnh sửa</a>
                                             </c:if>
                                             <c:if test="${item.type == 'CONTEST'}">
-                                                <a href="/admin/problem_contest-edit-${item.code}">Chỉnh sửa</a>
+                                                <a href="/demo2-0.0.1-SNAPSHOT/admin/problem_contest-edit-${item.code}">Chỉnh sửa</a>
                                             </c:if>
                                         </td>
                                     </tr>
@@ -159,7 +159,7 @@
     function deleteItem(itemId) {
         $.ajax({
             type: "DELETE",
-            url: "/admin/problem/delete-item/" + itemId,
+            url: "/demo2-0.0.1-SNAPSHOT/admin/problem/delete-item/" + itemId,
             success: function () {
                 Swal.fire({
                     title: 'Đã xóa!',

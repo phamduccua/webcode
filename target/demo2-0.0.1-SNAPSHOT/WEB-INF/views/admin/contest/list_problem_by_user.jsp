@@ -176,7 +176,7 @@
     data['checked'] = check;
     $.ajax({
       type: "POST",
-      url: "/admin/edit-problem-by-user",
+      url: "/demo2-0.0.1-SNAPSHOT/admin/edit-problem-by-user",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function() {

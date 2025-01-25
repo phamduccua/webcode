@@ -39,7 +39,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        <a class="open" href="/api/contest/${id}/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -51,7 +51,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        <a class="open" href="/api/contest/${id}/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -64,7 +64,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        <a class="open" href="/api/contest/${id}/solution/${item.code}">
+                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
