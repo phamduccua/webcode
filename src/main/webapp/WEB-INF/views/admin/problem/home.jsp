@@ -76,20 +76,20 @@
 </script>
 <script>
   function account_management(){
-    window.location.href = "/admin/list-account";
+    window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/list-account";
   }
   function update_password(){
     let id = document.getElementById('idUser').value;
-    window.location.href = "/api/update_password/" + id;
+    window.location.href = "/demo2-0.0.1-SNAPSHOT/api/update_password/" + id;
   }
   function list_delete_account(){
-    window.location.href = "/admin/list-delete-account";
+    window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/list-delete-account";
   }
 
   function logout(){
     $.ajax({
       type: "POST",
-      url: "/api/logout",
+      url: "/demo2-0.0.1-SNAPSHOT/api/logout",
       success(){
         window.location.href = "/login";
       }
@@ -104,14 +104,14 @@
   function loadUser() {
     $.ajax({
       type: "POST",
-      url: "/api/home",
+      url: "/demo2-0.0.1-SNAPSHOT/api/home",
       contentType: "application/json",
       dataType: "JSON",
       success: function (id) {
         console.log("ID người dùng:", id);
         $.ajax({
           type: "POST",
-          url: "/api/loader",
+          url: "/demo2-0.0.1-SNAPSHOT/api/loader",
           data: JSON.stringify(id),
           contentType: "application/json",
           dataType: "JSON",

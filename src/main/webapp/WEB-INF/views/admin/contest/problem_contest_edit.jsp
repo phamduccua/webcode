@@ -174,7 +174,7 @@
             if (!newImageName.some(name => i.includes(name))) {
                 await $.ajax({
                     type: "delete",
-                    url: "/admin/problem/delete-image/" + i.substring(9,i.length-1),
+                    url: "/demo2-0.0.1-SNAPSHOT/admin/problem/delete-image/" + i.substring(9,i.length-1),
                     data: JSON.stringify(i),
                     contentType: "application/json",
                     succsess(response) {
@@ -227,7 +227,7 @@
         data['code'] = '${problemDTO.code}';
         $.ajax({
             type: "PUT",
-            url: "/admin/update_problem-contest",
+            url: "/demo2-0.0.1-SNAPSHOT/admin/update_problem-contest",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {

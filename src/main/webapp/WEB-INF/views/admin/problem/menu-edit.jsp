@@ -55,11 +55,11 @@
 <div id="home" class="main">
   <label class="labelTitle">${nameProblem}</label>
   <div class="menu">
-    <a class="chose detail" href="detail-${code}">Chi tiết</a>
-    <a class="chose testcase" href="list-testcase-${code}">Test Case</a>
-    <a class="chose languages" href="languages">Ngôn ngữ</a>
-    <a class="chose install" href="install">Cài đặt</a>
-    <a class="chose install" href="list">Quay về trang chủ</a>
+    <a class="chose detail" href="/demo2-0.0.1-SNAPSHOT/admin/detail-${code}">Chi tiết</a>
+    <a class="chose testcase" href="/demo2-0.0.1-SNAPSHOT/admin/list-testcase-${code}">Test Case</a>
+    <a class="chose languages" href="/demo2-0.0.1-SNAPSHOT/admin/languages">Ngôn ngữ</a>
+    <a class="chose install" href="/demo2-0.0.1-SNAPSHOT/admin/install">Cài đặt</a>
+    <a class="chose install" href="/demo2-0.0.1-SNAPSHOT/admin/list">Quay về trang chủ</a>
   </div>
 </div>
 </body>

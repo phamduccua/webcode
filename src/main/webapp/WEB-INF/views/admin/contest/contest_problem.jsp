@@ -123,7 +123,7 @@
             <c:forEach var="item" items="${listProblem}" varStatus="status">
                 <tr class="col-12">
                     <td class="col-1">${status.count}</td>
-                    <td class="col-8"><a class="open" href="/admin/assignment-${item.code}" />${item.title}</td>
+                    <td class="col-8"><a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}" />${item.title}</td>
                     <td class="col-2">
                         <div class="box" onclick="configdisplay(this)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -147,7 +147,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function create_problem(){
-        window.location.href = "/admin/contest-create_problem-${contestDTO.id}"
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/contest-create_problem-${contestDTO.id}"
     }
     function displaymenu(){
         const item = document.getElementById('menuAdd');
@@ -158,7 +158,7 @@
         item.style.display = 'none';
     }
     function pageProblemByUser(){
-        window.location.href = "/admin/list-problem-by-user/contest-${contestDTO.id}"
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/list-problem-by-user/contest-${contestDTO.id}"
     }
 </script>
 <script>
@@ -188,7 +188,7 @@
         });
     }
     function doi_trang(code){
-        window.location.href = "/admin/problem_contest-edit-" + code;
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/problem_contest-edit-" + code;
     }
 </script>
 <script>
@@ -198,7 +198,7 @@
         data['problemId'] = id;
         $.ajax({
             type: "DELETE",
-            url: "/admin/delete-problem",
+            url: "/demo2-0.0.1-SNAPSHOT/admin/delete-problem",
             data: JSON.stringify(data),
             contentType: "application/json",
             success(){

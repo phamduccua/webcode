@@ -24,19 +24,19 @@
 </body>
 <script>
     function contest_detail(){
-        window.location.href = "/admin/contest-detail-${contestDTO.id}";
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/contest-detail-${contestDTO.id}";
     }
     function contest_problem(){
-        window.location.href = "/admin/contest-problem-${contestDTO.id}";
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/contest-problem-${contestDTO.id}";
     }
     function contest_member(){
-        window.location.href = "/admin/list-member-${contestDTO.id}";
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/list-member-${contestDTO.id}";
     }
     function contest_leaderboard(){
-        window.location.href = "/admin/leader_board-${contestDTO.id}";
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/leader_board-${contestDTO.id}";
     }
     function contest_install(){
-        window.location.href = "/admin/install-contest-${contestDTO.id}";
+        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/install-contest-${contestDTO.id}";
     }
 </script>
 <style>

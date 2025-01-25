@@ -41,7 +41,7 @@
                         <p>${item.formattedTime}</p>
                     </td>
                     <td>
-                    <a href="/api/contest/${id}/solution/${item.problemCode}" style="color: #d30000;">${item.problemName}
+                    <a href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/solution/${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
                     <c:if test="${item.status == null}">
                         <td class="spinner">
@@ -54,18 +54,18 @@
                     </c:if>
                     <c:if test="${item.status != null}">
                         <c:if test="${item.status == true}">
-                            <td><a style="color: #19BE6B;" href="/api/contest/${id}/submission/${item.id}/edit" />AC</td>
+                            <td><a style="color: #19BE6B;" href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/submission/${item.id}/edit" />AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
                         <c:if test="${item.status == false}">
                             <c:if test="${item.code == 'CE'}">
-                                <td><a style="color: rgb(0, 0, 0)" href="/api/contest/${id}/submission/${item.id}/edit"/>CE</td>
+                                <td><a style="color: rgb(0, 0, 0)" href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/submission/${item.id}/edit"/>CE</td>
                                 <td></td>
                                 <td></td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td><a style="color: #FF0000;" href="/api/contest/${id}/submission/${item.id}/edit" />${item.code}</td>
+                                <td><a style="color: #FF0000;" href="/demo2-0.0.1-SNAPSHOT/api/contest/${id}/submission/${item.id}/edit" />${item.code}</td>
                                 <td>${item.time}s</td>
                                 <td>${item.memoryUsed}Kb</td>
                             </c:if>
@@ -317,6 +317,5 @@
     }
 
 </style>
-
 </body>
 </html>
