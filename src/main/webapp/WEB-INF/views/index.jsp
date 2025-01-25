@@ -97,7 +97,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/demo2-0.0.1-SNAPSHOT/login",
+            url: "/login",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
