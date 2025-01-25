@@ -6,12 +6,12 @@
 <body>
 <div class="head">
   <div class="logo">
-    <img class="img" src="http://localhost:8080/uploads/logo.webp" alt="Ảnh">
+    <img class="img" src="http://localhost:8080/demo2-0.0.1-SNAPSHOT/uploads/logo.webp" alt="Ảnh">
   </div>
-  <a class="button button-exam" href="/admin/list">Bài tập</a>
-  <a class="button button-status" href="/admin/status">Trạng thái</a>
-  <a class="button button-history" href="/admin/history">Lịch sử</a>
-  <a class="button button-rank" href="/admin/ranking">Bảng xếp hạng</a>
+  <a class="button button-exam" href="/demo2-0.0.1-SNAPSHOT/admin/list">Bài tập</a>
+  <a class="button button-status" href="/demo2-0.0.1-SNAPSHOT/admin/status">Trạng thái</a>
+  <a class="button button-history" href="/demo2-0.0.1-SNAPSHOT/admin/history">Lịch sử</a>
+  <a class="button button-rank" href="/demo2-0.0.1-SNAPSHOT/admin/ranking">Bảng xếp hạng</a>
   <a class="button button-configuration">
     <div style="display: flex; align-items: center; gap: 8px; position: relative;">
       <div class="dropdown">
