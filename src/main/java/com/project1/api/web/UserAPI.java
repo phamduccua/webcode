@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 import java.util.List;
 @RestController
-@RequestMapping("/")
+@RequestMapping("/demo2-0.0.1-SNAPSHOT/")
 public class UserAPI {
     @Autowired
     private IUserService userService;
