@@ -28,7 +28,7 @@ public class TestCaseEntity {
     @Column(name="expected_output_file_content")
     private String expctedOutputFileContent;
 
-    @OneToMany(mappedBy = "testCases", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "testCases", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<InputEntity> inputs = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

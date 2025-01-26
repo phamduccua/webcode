@@ -57,12 +57,12 @@ public class ProblemEntity {
     @Column(name="created_by")
     private Long createdBy;
 
-    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy="problem", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
 
-    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy="problem", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SubmissionEntity> submissions = new ArrayList<>();
 
-    @ManyToMany(mappedBy="problemEntities", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy="problemEntities", fetch = FetchType.EAGER)
     private List<ContestEntity> contestEntites = new ArrayList<>();
 }
