@@ -84,6 +84,7 @@ public class RunCode {
                     Files.writeString(Paths.get(testFileName), testCase.getInputs().get(0).getContentFile());
                 }
                 ProcessBuilder pb = new ProcessBuilder("bash", "-c", execute(path,testCase.getOutputFileName(),listFileInput,submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
+                System.out.println(execute(path,testCase.getOutputFileName(),listFileInput,submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
                 pb.directory(new File(path_init));
                 Process process = pb.start();
                 process.waitFor();
