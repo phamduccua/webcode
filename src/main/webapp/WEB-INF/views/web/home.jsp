@@ -6,7 +6,7 @@
 <body>
 <div class="head">
   <div class="logo">
-    <img class="img" src="http://localhost:8080/uploads/logo.webp" alt="Ảnh">
+    <img class="img" src="http://103.56.163.68:8080/uploads/logo.webp" alt="Ảnh">
   </div>
   <a class="button button-exam" href="/demo2-0.0.1-SNAPSHOT/api/question">Bài tập</a>
   <a class="button button-status" href="/demo2-0.0.1-SNAPSHOT/api/status">Trạng thái</a>

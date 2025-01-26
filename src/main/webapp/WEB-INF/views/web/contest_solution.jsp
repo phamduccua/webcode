@@ -441,7 +441,7 @@
     let rows = '';
     line_description.forEach(item => {
         if(item.includes("![image]")){
-            rows += ('<img class="img_problem" ' + 'src="http://localhost:8080/demo2-0.0.1-SNAPSHOT/uploads/' + item.substring(9,item.length-1) + '"' + '>');
+            rows += ('<img class="img_problem" ' + 'src="http://103.56.163.68:8080/demo2-0.0.1-SNAPSHOT/uploads/' + item.substring(9,item.length-1) + '"' + '>');
         }else{
             rows += ('<p>' + item + '</p>');
         }
