@@ -20,8 +20,8 @@ import static java.lang.Math.max;
 public class RunCode {
     @PersistenceContext
     private EntityManager entityManager;
-    private final String path_init = "D:/webcode/src/main/judge/submissions/";
-    private final String path_judge = "D:/webcode/src/main/judge/docker/";
+    private final String path_init = "/opt/apache-tomcat-10.1.34/webapps/judge/submissions/";
+    private final String path_judge = "/opt/apache-tomcat-10.1.34/webapps/judge/docker/";
     private String execute(
             String path,
             String outputName,

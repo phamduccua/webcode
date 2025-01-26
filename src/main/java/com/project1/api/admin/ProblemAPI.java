@@ -42,7 +42,7 @@ public class ProblemAPI {
         deleteProblemService.deleteProblem(id);
         return ResponseEntity.ok().build();
     }
-    private final String url = "D:/webcode/src/main/images/";
+    private final String url = "/opt/apache-tomcat-10.1.34/webapps/images/";
     @PostMapping("/upload/images")
     public ResponseEntity<?> uploadImage(@RequestParam MultipartFile file) {
         if (file.isEmpty()) {

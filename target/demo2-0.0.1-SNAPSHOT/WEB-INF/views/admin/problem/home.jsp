@@ -19,9 +19,9 @@
         <div class="dropdown-menu-wrapper">
           <table class="table-configuration">
             <tbody>
-            <tr><td><a href="/admin/add" />Thêm bài tập</td></tr>
-            <tr><td><a href="/admin/list_contest" />Danh sách cuộc thi</td></tr>
-            <tr><td><a href="/admin/exercises" />Danh sách bài tập của bạn</td></tr>
+            <tr><td><a href="/demo2-0.0.1-SNAPSHOT/admin/add" />Thêm bài tập</td></tr>
+            <tr><td><a href="/demo2-0.0.1-SNAPSHOT/admin/list_contest" />Danh sách cuộc thi</td></tr>
+            <tr><td><a href="/demo2-0.0.1-SNAPSHOT/admin/exercises" />Danh sách bài tập của bạn</td></tr>
             </tbody>
           </table>
         </div>
