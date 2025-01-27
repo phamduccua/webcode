@@ -46,7 +46,7 @@ public class RunCode1 {
         str.append(String.format("-v=\"%s\":/testcase.txt ",testFileName));
         str.append(String.format("-v=\"%s\":/output.txt ",outputFileName));
         str.append(String.format("-v=\"%s\":/timeMemory.txt ",timeMemoryfileName));
-        str.append(String.format("online-judge %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
+        str.append(String.format("online-judge1 %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
         return str.toString();
     }
 
