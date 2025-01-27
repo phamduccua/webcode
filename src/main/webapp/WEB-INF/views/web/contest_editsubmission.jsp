@@ -225,7 +225,7 @@
         formData.append('problemId',problemId);
         $.ajax({
             type: 'POST',
-            url: '/demo2-0.0.1-SNAPSHOT/api/uploads/code',
+            url: '/web/api/uploads/code',
             data: formData,
             processData: false,
             contentType: false,

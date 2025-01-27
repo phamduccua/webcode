@@ -49,8 +49,8 @@
 <div id="home" class="main">
   <label class="labelTitle">${nameProblem}</label>
   <div class="menu_edit">
-    <a class="chose detail" href="/demo2-0.0.1-SNAPSHOT/problem_contest-edit-${code}">Chi tiết</a>
-    <a class="chose testcase" href="/demo2-0.0.1-SNAPSHOT/list_testcase_contest-problem-${code}">Test Case</a>
+    <a class="chose detail" href="/web/problem_contest-edit-${code}">Chi tiết</a>
+    <a class="chose testcase" href="/web/list_testcase_contest-problem-${code}">Test Case</a>
   </div>
 </div>
 </body>

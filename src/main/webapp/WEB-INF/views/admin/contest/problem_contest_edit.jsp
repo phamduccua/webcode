@@ -174,7 +174,7 @@
             if (!newImageName.some(name => i.includes(name))) {
                 await $.ajax({
                     type: "delete",
-                    url: "/demo2-0.0.1-SNAPSHOT/admin/problem/delete-image/" + i.substring(9,i.length-1),
+                    url: "/web/admin/problem/delete-image/" + i.substring(9,i.length-1),
                     data: JSON.stringify(i),
                     contentType: "application/json",
                     succsess(response) {
@@ -195,7 +195,7 @@
                 formData.append("file", i);
                 await $.ajax({
                     type: "POST",
-                    url: "/admin/problem/upload/images",
+                    url: "/web/admin/problem/upload/images",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -227,7 +227,7 @@
         data['code'] = '${problemDTO.code}';
         $.ajax({
             type: "PUT",
-            url: "/demo2-0.0.1-SNAPSHOT/admin/update_problem-contest",
+            url: "/web/admin/update_problem-contest",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {

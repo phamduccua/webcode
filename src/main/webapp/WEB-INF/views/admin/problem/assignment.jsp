@@ -295,7 +295,7 @@
                         <p>${item.formattedTime}</p>
                     </td>
                     <td>
-                    <a href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
+                    <a href="/web/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
                     <c:if test="${item.status == null}">
                         <td class="spinner">
@@ -308,18 +308,18 @@
                     </c:if>
                     <c:if test="${item.status != null}">
                         <c:if test="${item.status == true}">
-                            <td><a style="color: #19BE6B;" href="/demo2-0.0.1-SNAPSHOT/admin/submission/${item.id}/edit" />AC</td>
+                            <td><a style="color: #19BE6B;" href="/web/admin/submission/${item.id}/edit" />AC</td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
                         <c:if test="${item.status == false}">
                             <c:if test="${item.code == 'CE'}">
-                                <td><a style="color: rgb(0, 0, 0)" href="/demo2-0.0.1-SNAPSHOT/admin/submission/${item.id}/edit" />CE</td>
+                                <td><a style="color: rgb(0, 0, 0)" href="/web/admin/submission/${item.id}/edit" />CE</td>
                                 <td></td>
                                 <td></td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td><a style="color: #FF0000;" href="/demo2-0.0.1-SNAPSHOT/admin/submission/${item.id}/edit" />${item.code}</td>
+                                <td><a style="color: #FF0000;" href="/web/admin/submission/${item.id}/edit" />${item.code}</td>
                                 <td>${item.time}s</td>
                                 <td>${item.memoryUsed}Kb</td>
                             </c:if>
@@ -412,14 +412,14 @@
                 formData.append('language',language);
                 formData.append('id', id);
                 $.ajax({
-                    url: '/demo2-0.0.1-SNAPSHOT/api/uploads/file',
+                    url: '/web/api/uploads/file',
                     type: 'POST',
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function(response) {
                         console.log("Thành công");
-                        window.location.href = '/demo2-0.0.1-SNAPSHOT/admin/history';
+                        window.location.href = '/web/admin/history';
                     },
                     error: function(xhr, status, error) {
                         Swal.fire({
@@ -442,7 +442,7 @@
     let rows = '';
     line_description.forEach(item => {
         if(item.includes("![image]")){
-            rows += ('<img class="img_problem" ' + 'src="http://103.56.163.68:8080/uploads/' + item.substring(9,item.length-1) + '"' + '>');
+            rows += ('<img class="img_problem" ' + 'src="http://103.56.163.68/web/uploads/' + item.substring(9,item.length-1) + '"' + '>');
         }else{
             rows += ('<p>' + item + '</p>');
         }

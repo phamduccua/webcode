@@ -165,6 +165,10 @@
                 let idcontent = "inputcontent" + i;
                 let name = document.getElementById(idname).value;
                 let value = document.getElementById(idcontent).value;
+                if(name !== 'std' && !name.contain(".")){
+                    alert("Tên File bị lỗi !!");
+                    return;
+                }
                 let inputTmp = {
                     fileName : name,
                     contentFile : value
@@ -176,11 +180,15 @@
                 fileName : document.getElementById("outputname").value,
                 contentFile: document.getElementById("outputcontent").value
             }
+            if(outputTmp.fileName !== 'std' && !outputTmp.contentFile.contain(".")){
+                alert("Tên File bị lỗi !!");
+                return;
+            }
             data['output'] = outputTmp;
         }
         $.ajax({
             type: "POST",
-            url: "/demo2-0.0.1-SNAPSHOT/admin/testcase",
+            url: "/web/admin/testcase",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {

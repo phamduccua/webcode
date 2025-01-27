@@ -6,13 +6,13 @@
 <body>
 <div class="head">
   <div class="logo">
-    <img class="img" src="http://103.56.163.68:8080/uploads/logo.webp" alt="Ảnh">
+    <img class="img" src="http://103.56.163.68/web/uploads/logo.webp" alt="Ảnh">
   </div>
-  <a class="button button-exam" href="/demo2-0.0.1-SNAPSHOT/api/question">Bài tập</a>
-  <a class="button button-status" href="/demo2-0.0.1-SNAPSHOT/api/status">Trạng thái</a>
-  <a class="button button-history" href="/demo2-0.0.1-SNAPSHOT/api/history">Lịch sử</a>
-  <a class="button button-rank" href="/demo2-0.0.1-SNAPSHOT/api/ranking">Bảng xếp hạng</a>
-  <a class="button button-configuration" href="/demo2-0.0.1-SNAPSHOT/api/contest">Danh sách cuộc thi</a>
+  <a class="button button-exam" href="/web/api/question">Bài tập</a>
+  <a class="button button-status" href="/web/api/status">Trạng thái</a>
+  <a class="button button-history" href="/web/api/history">Lịch sử</a>
+  <a class="button button-rank" href="/web/api/ranking">Bảng xếp hạng</a>
+  <a class="button button-configuration" href="/web/api/contest">Danh sách cuộc thi</a>
   <div class="avatar" onclick="displayAvatar(event)">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-icon bi bi-person" viewBox="0 0 16 16">
       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
@@ -55,13 +55,13 @@
 <script>
   function update_password(){
     let id = document.getElementById('idUser').value;
-    window.location.href = "/api/update_password/" + id;
+    window.location.href = "/web/api/update_password/" + id;
   }
 
   function logout(){
     $.ajax({
       type: "POST",
-      url: "/demo2-0.0.1-SNAPSHOT/api/logout",
+      url: "/web/api/logout",
       success(){
         window.location.href = "/login";
       }
@@ -76,14 +76,14 @@
   function loadUser() {
     $.ajax({
       type: "POST",
-      url: "/demo2-0.0.1-SNAPSHOT/api/home",
+      url: "/web/api/home",
       contentType: "application/json",
       dataType: "JSON",
       success: function (id) {
         console.log("ID người dùng:", id);
         $.ajax({
           type: "POST",
-          url: "/demo2-0.0.1-SNAPSHOT/api/loader",
+          url: "/web/api/loader",
           data: JSON.stringify(id),
           contentType: "application/json",
           dataType: "JSON",

@@ -130,7 +130,7 @@
   function callAPI(){
     $.ajax({
       type: "POST",
-      url: '/demo2-0.0.1-SNAPSHOT/admin/testcase/get/' + ${testCaseDTO.id},
+      url: '/web/admin/testcase/get/' + ${testCaseDTO.id},
       dataType: "JSON",
       success: function (response) {
         console.log(response);
@@ -186,7 +186,7 @@
     }
     $.ajax({
       type: "POST",
-      url: "/admin/testcase",
+      url: "/web/admin/testcase",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function () {

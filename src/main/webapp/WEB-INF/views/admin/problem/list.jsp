@@ -92,12 +92,12 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
+                        <a class="open" href="/web/admin/assignment-${item.code}">
                             ${item.code}
                         </a>
                     </td>
                     <td>
-                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
+                        <a class="open" href="/web/admin/assignment-${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -132,12 +132,12 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
+                        <a class="open" href="/web/admin/assignment-${item.code}">
                             ${item.code}
                         </a>
                     </td>
                     <td>
-                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
+                        <a class="open" href="/web/admin/assignment-${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -173,12 +173,12 @@
                         ${status.count}
                     </td>
                     <td class="col-1">
-                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
+                        <a class="open" href="/web/admin/assignment-${item.code}">
                             ${item.code}
                         </a>
                     </td>
                     <td>
-                        <a class="open" href="/demo2-0.0.1-SNAPSHOT/admin/assignment-${item.code}">
+                        <a class="open" href="/web/admin/assignment-${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -291,7 +291,7 @@
     function deleteItem(itemId) {
         $.ajax({
             type: "DELETE",
-            url: "/demo2-0.0.1-SNAPSHOT/admin/problem/delete-item/" + itemId,
+            url: "/web/admin/problem/delete-item/" + itemId,
             success: function () {
                 Swal.fire({
                     title: 'Đã xóa!',

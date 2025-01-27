@@ -155,7 +155,7 @@
         });
     }
     function doi_trang(id){
-        window.location.href = "edit-account-" + id;
+        window.location.href = "/web/admin/edit-account-" + id;
     }
     function doipage(i){
         const valuePage = document.getElementById("inPage");
@@ -177,7 +177,7 @@
     function Delete(data){
         $.ajax({
             type: "DELETE",
-            url:  "/admin/delete/" + data,
+            url:  "/web/admin/delete/" + data,
             data: JSON.stringify(data),
             success: function(response) {
                 Swal.fire({

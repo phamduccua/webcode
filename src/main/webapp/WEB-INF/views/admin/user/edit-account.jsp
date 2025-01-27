@@ -100,7 +100,7 @@
     let data = getData();
     $.ajax({
       type: "POST",
-      url: "/admin/register",
+      url: "/web/admin/register",
       data: JSON.stringify(data),
       contentType: "application/json",
       dataType: "JSON",
@@ -125,7 +125,7 @@
     let data = getData();
     $.ajax({
       type: "PUT",
-      url: "/admin/update",
+      url: "/web/admin/update",
       data: JSON.stringify(data),
       contentType: "application/json",
       dataType: "JSON",
@@ -149,7 +149,7 @@
     let data = getData();
     $.ajax({
       type: "PUT",
-      url: "/admin/reset",
+      url: "/web/admin/reset",
       data: JSON.stringify(data),
       contentType: "application/json",
       dataType: "JSON",

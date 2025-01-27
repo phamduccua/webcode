@@ -65,7 +65,7 @@
         else{
             $.ajax({
                 type: "PUT",
-                url: "/api/update_password",
+                url: "/web/api/update_password",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 dataType: "JSON",

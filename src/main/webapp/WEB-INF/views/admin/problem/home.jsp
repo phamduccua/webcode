@@ -6,12 +6,12 @@
 <body>
 <div class="head">
   <div class="logo">
-    <img class="img" src="http://103.56.163.68:8080/uploads/logo.webp" alt="Ảnh">
+    <img class="img" src="http://103.56.163.68/web/uploads/logo.webp" alt="Ảnh">
   </div>
-  <a class="button button-exam" href="/demo2-0.0.1-SNAPSHOT/admin/list">Bài tập</a>
-  <a class="button button-status" href="/demo2-0.0.1-SNAPSHOT/admin/status">Trạng thái</a>
-  <a class="button button-history" href="/demo2-0.0.1-SNAPSHOT/admin/history">Lịch sử</a>
-  <a class="button button-rank" href="/demo2-0.0.1-SNAPSHOT/admin/ranking">Bảng xếp hạng</a>
+  <a class="button button-exam" href="/web/admin/list">Bài tập</a>
+  <a class="button button-status" href="/web/admin/status">Trạng thái</a>
+  <a class="button button-history" href="/web/admin/history">Lịch sử</a>
+  <a class="button button-rank" href="/web/admin/ranking">Bảng xếp hạng</a>
   <a class="button button-configuration">
     <div style="display: flex; align-items: center; gap: 8px; position: relative;">
       <div class="dropdown">
@@ -19,9 +19,9 @@
         <div class="dropdown-menu-wrapper">
           <table class="table-configuration">
             <tbody>
-            <tr><td><a href="/demo2-0.0.1-SNAPSHOT/admin/add" />Thêm bài tập</td></tr>
-            <tr><td><a href="/demo2-0.0.1-SNAPSHOT/admin/list_contest" />Danh sách cuộc thi</td></tr>
-            <tr><td><a href="/demo2-0.0.1-SNAPSHOT/admin/exercises" />Danh sách bài tập của bạn</td></tr>
+            <tr><td><a href="/web/admin/add" />Thêm bài tập</td></tr>
+            <tr><td><a href="/web/admin/list_contest" />Danh sách cuộc thi</td></tr>
+            <tr><td><a href="/web/admin/exercises" />Danh sách bài tập của bạn</td></tr>
             </tbody>
           </table>
         </div>
@@ -75,20 +75,20 @@
 </script>
 <script>
   function account_management(){
-    window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/list-account";
+    window.location.href = "/web/admin/list-account";
   }
   function update_password(){
     let id = document.getElementById('idUser').value;
-    window.location.href = "/demo2-0.0.1-SNAPSHOT/api/update_password/" + id;
+    window.location.href = "/web/api/update_password/" + id;
   }
   function list_delete_account(){
-    window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/list-delete-account";
+    window.location.href = "/web/admin/list-delete-account";
   }
 
   function logout(){
     $.ajax({
       type: "POST",
-      url: "/demo2-0.0.1-SNAPSHOT/api/logout",
+      url: "/web/api/logout",
       success(){
         window.location.href = "/login";
       }
@@ -103,14 +103,14 @@
   function loadUser() {
     $.ajax({
       type: "POST",
-      url: "/demo2-0.0.1-SNAPSHOT/api/home",
+      url: "/web/api/home",
       contentType: "application/json",
       dataType: "JSON",
       success: function (id) {
         console.log("ID người dùng:", id);
         $.ajax({
           type: "POST",
-          url: "/demo2-0.0.1-SNAPSHOT/api/loader",
+          url: "/web/api/loader",
           data: JSON.stringify(id),
           contentType: "application/json",
           dataType: "JSON",

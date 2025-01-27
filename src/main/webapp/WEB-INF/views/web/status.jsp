@@ -43,7 +43,7 @@
                     </td>
                     <td>${item.username}(${item.fullname})</td>
                     <td>
-                        <a href="/demo2-0.0.1-SNAPSHOT/api/solution/${item.problemCode}" style="color: #d30000;">${item.problemName}</a>
+                        <a href="/web/api/solution/${item.problemCode}" style="color: #d30000;">${item.problemName}</a>
                     </td>
                     <c:if test="${item.status == null}">
                         <td class="spinner">

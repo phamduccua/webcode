@@ -271,10 +271,10 @@
 <script>
   $('#btnadd').click(function(e){
     e.preventDefault();
-    window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/add_testcase-problem-${problemCode}";
+    window.location.href = "/web/admin/add_testcase-problem-${problemCode}";
   });
   function doi_trang(id) {
-    window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/edit_testcase-" + id;
+    window.location.href = "/web/admin/edit_testcase-" + id;
   }
 </script>
 <script>
@@ -284,7 +284,7 @@
     data['example'] = check !== false ? 'check' : null;
     $.ajax({
       type: "PUT",
-      url: "/demo2-0.0.1-SNAPSHOT/admin/testcase/edit_example",
+      url: "/web/admin/testcase/edit_example",
       data: JSON.stringify(data),
       contentType: "application/json",
       success(){
@@ -309,7 +309,7 @@
   function deleteTest(id){
     $.ajax({
       type: "DELETE",
-      url: "/demo2-0.0.1-SNAPSHOT/admin/testcase/delete/" + id,
+      url: "/web/admin/testcase/delete/" + id,
       success(){
         Swal.fire({
           text: 'Đã xóa Test Case thành công',

@@ -78,7 +78,7 @@
         else{
             $.ajax({
                 type: "PUT",
-                url: "/demo2-0.0.1-SNAPSHOT/admin/update_contest",
+                url: "/web/admin/update_contest",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success(){

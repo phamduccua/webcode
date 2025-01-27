@@ -177,7 +177,7 @@
     function Restore(data){
         $.ajax({
             type: "PUT",
-            url:  "/admin/restore/" + data,
+            url:  "/web/admin/restore/" + data,
             data: JSON.stringify(data),
             success: function(response) {
                 Swal.fire({

@@ -222,7 +222,7 @@
         else{
             $.ajax({
                 type: "POST",
-                url: "/demo2-0.0.1-SNAPSHOT/admin/create_contest",
+                url: "/web/admin/create_contest",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success(){
@@ -250,14 +250,14 @@
 </script>
 <script>
     function contestDetail(id){
-        window.location.href = "/demo2-0.0.1-SNAPSHOT/admin/contest-detail-" + id;
+        window.location.href = "/web/admin/contest-detail-" + id;
     }
 </script>
 <script>
     function deleatContest(id){
         $.ajax({
             type: "DELETE",
-            url: "/demo2-0.0.1-SNAPSHOT/admin/delete-contest-" + id,
+            url: "/web/admin/delete-contest-" + id,
             data: JSON.stringify(id),
             contentType: "application/json",
             success(){
