@@ -4,7 +4,9 @@ import com.project1.converter.SubmissionEntityConverter;
 import com.project1.entity.SubmissionEntity;
 import com.project1.repository.AddOrUpdateSubRepository;
 import com.project1.utils.CodeRunnerWorker;
+import com.project1.utils.CodeRunnerWorker1;
 import com.project1.utils.RunCode;
+import com.project1.utils.RunCode1;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,14 @@ public class SubmitAPI {
     private AddOrUpdateSubRepository addOrUpdateSubRepository;
     @Autowired
     private RunCode runCode;
+    @Autowired
+    private RunCode1 runCode1;
     private final BlockingQueue<SubmissionEntity> submissionQueue = new LinkedBlockingQueue<>();
     @PostConstruct
     public void startCodeRunnerWorker() {
         new Thread(new CodeRunnerWorker(submissionQueue,runCode)).start();
+        new Thread(new CodeRunnerWorker1(submissionQueue,runCode1)).start();
     }
-
     @PostMapping("/file")
     public ResponseEntity<String> submit(@RequestParam("file") MultipartFile file,
                                          @RequestParam("language") String language,

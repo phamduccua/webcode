@@ -9,6 +9,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:D:/webcode/src/main/images/");
+                .addResourceLocations("file:/opt/apache-tomcat-10.1.34/webapps/images/");
     }
 }

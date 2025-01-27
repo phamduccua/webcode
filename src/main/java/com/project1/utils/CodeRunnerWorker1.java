@@ -1,4 +1,5 @@
 package com.project1.utils;
+
 import com.project1.entity.SubmissionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,14 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.BlockingQueue;
 
 @Component
-public class CodeRunnerWorker implements Runnable {
+public class CodeRunnerWorker1 implements Runnable {
     private final BlockingQueue<SubmissionEntity> queue;
-    private final RunCode runCode;
+    private final RunCode1 runCode1;
 
     @Autowired
-    public CodeRunnerWorker(BlockingQueue<SubmissionEntity> queue, RunCode runCode) {
+    public CodeRunnerWorker1(BlockingQueue<SubmissionEntity> queue, RunCode1 runCode1) {
         this.queue = queue;
-        this.runCode = runCode;
+        this.runCode1 = runCode1;
     }
 
     @Override
@@ -21,7 +22,7 @@ public class CodeRunnerWorker implements Runnable {
         while (true) {
             try {
                 SubmissionEntity submission = queue.take();
-                runCode.run(submission);
+                runCode1.run(submission);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
@@ -29,4 +30,3 @@ public class CodeRunnerWorker implements Runnable {
         }
     }
 }
-
