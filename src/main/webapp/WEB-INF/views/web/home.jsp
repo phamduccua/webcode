@@ -6,7 +6,7 @@
 <body>
 <div class="head">
   <div class="logo">
-    <img class="img" src="http://103.56.163.68/web/uploads/logo.webp" alt="Ảnh">
+    <img class="img" src="http://luyencode.online/web/uploads/logo.webp" alt="Ảnh">
   </div>
   <a class="button button-exam" href="/web/api/question">Bài tập</a>
   <a class="button button-status" href="/web/api/status">Trạng thái</a>

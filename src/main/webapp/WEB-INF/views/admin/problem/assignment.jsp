@@ -442,7 +442,7 @@
     let rows = '';
     line_description.forEach(item => {
         if(item.includes("![image]")){
-            rows += ('<img class="img_problem" ' + 'src="http://103.56.163.68/web/uploads/' + item.substring(9,item.length-1) + '"' + '>');
+            rows += ('<img class="img_problem" ' + 'src="http://luyencode.online/web/uploads/' + item.substring(9,item.length-1) + '"' + '>');
         }else{
             rows += ('<p>' + item + '</p>');
         }
