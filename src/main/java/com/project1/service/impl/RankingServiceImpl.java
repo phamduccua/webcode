@@ -28,7 +28,7 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public List<RankingResponse> findAllRanking(RankingRequest rankingRequest, Pageable pageable) {
         Long classId = ClassIdUtils.toClassId(rankingRequest.getGroup());
-        List<UserEntity> listUser = userRepository.findByRoleAndClassIdContaining("USER",String.valueOf(classId));
+        List<UserEntity> listUser = userRepository.findByRoleAndClassIdContainingAndStatus("USER",String.valueOf(classId),1);
         List<ProblemEntity> listProblem = problemRepository.findByClassId(classId);
         List<RankingResponse> listRankingResponse = new ArrayList<>();
         for(UserEntity user:listUser){
@@ -69,7 +69,7 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public int countTotalItem(RankingRequest rankingRequest) {
         Long classId = ClassIdUtils.toClassId(rankingRequest.getGroup());
-        return userRepository.countByRoleAndClassIdContaining("USER",String.valueOf(classId));
+        return userRepository.countByRoleAndClassIdContainingAndStatus("USER",String.valueOf(classId),1);
     }
 
     private List<RankingResponse> sortAndPage(List<RankingResponse> list,Pageable pageable) {

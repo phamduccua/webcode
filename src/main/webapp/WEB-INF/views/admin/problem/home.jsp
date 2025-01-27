@@ -79,7 +79,7 @@
   }
   function update_password(){
     let id = document.getElementById('idUser').value;
-    window.location.href = "/web/api/update_password/" + id;
+    window.location.href = "/web/admin/update_password/" + id;
   }
   function list_delete_account(){
     window.location.href = "/web/admin/list-delete-account";

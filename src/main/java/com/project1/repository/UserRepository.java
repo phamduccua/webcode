@@ -19,6 +19,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     List<UserEntity> findByRoleContainingAndStatus(String role,int status);
     UserEntity findById(Long id);
     List<UserEntity> findByRoleAndStatusAndFullnameContaining(String role,int status,String fullname);
-    List<UserEntity> findByRoleAndClassIdContaining(String role,String classId);
-    int countByRoleAndClassIdContaining(String role,String classId);
+    List<UserEntity> findByRoleAndClassIdContainingAndStatus(String role,String classId,int status);
+    int countByRoleAndClassIdContainingAndStatus(String role,String classId,int status);
 }

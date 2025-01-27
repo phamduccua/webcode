@@ -31,7 +31,7 @@
             <label for="rentPassword">Xác nhận mật khẩu:</label>
             <input id="rentPassword" type="password" placeholder="Xác nhận mật khẩu" name="rentPassword"/>
         </div>
-        <input type="hidden" value="10" name="id"/>
+        <input type="hidden" value="${id}" name="id"/>
         <div class="btnupdate" onclick="updatePass()">Thay đổi mật khẩu</div>
     </form>
 </div>

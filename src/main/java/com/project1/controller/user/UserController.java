@@ -88,6 +88,7 @@ public class UserController {
         ModelAndView mav = new ModelAndView("admin/user/updatePassword");
         UserDTO userDTO = userService.findById(id);
         mav.addObject("user", userDTO);
+        mav.addObject("id",id);
         return mav;
     }
 }

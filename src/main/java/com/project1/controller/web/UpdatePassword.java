@@ -20,6 +20,7 @@ public class UpdatePassword {
         ModelAndView mav = new ModelAndView("web/updatePassword");
         UserDTO userDTO = userService.findById(id);
         mav.addObject("user", userDTO);
+        mav.addObject("id",id);
         return mav;
     }
 }
