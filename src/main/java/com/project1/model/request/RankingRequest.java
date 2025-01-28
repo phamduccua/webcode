@@ -9,6 +9,6 @@ import lombok.Setter;
 public class RankingRequest extends AbstractDTO{
     private String group;
     RankingRequest(){
-        this.setMaxPageItems(5);
+        this.setMaxPageItems(100);
     }
 }

@@ -250,8 +250,8 @@
             </div>
         </c:if>
 </div><br>
-        <p>Giới hạn bài tập: ${detail.time_limit}s</p>
-        <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p> <br>
+        <p>Giới hạn bài tập: ${detail.time_limit} s</p>
+        <p>Giới hạn bộ nhớ: ${detail.memory_limit} Kb</p> <br>
     <div>
         <div id="notification" style="display: none;">
             <p style="color: red;">Đối với ngôn ngữ Java đổi tên file thành "solution" trước khi nộp !!!!</p> <br>

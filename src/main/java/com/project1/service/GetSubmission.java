@@ -14,4 +14,6 @@ public interface GetSubmission {
     int countAll();
     List<SubmissionDTO> listSubmissionContest(HttpServletRequest request, Long contestId, Pageable pageable);
     int countItemsContest(HttpServletRequest request, Long contestId);
+    List<StatusResponse> getByProblem(Long problemId, Pageable pageable);
+    int countByProbem(Long problemId);
 }

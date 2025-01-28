@@ -2,6 +2,7 @@ package com.project1.controller.admin;
 
 import com.project1.converter.SubmissionDTOConverter;
 import com.project1.converter.UserConverter;
+import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.enums.difficulty;
 import com.project1.entity.enums.group;
@@ -11,7 +12,10 @@ import com.project1.model.dto.SubmissionDTO;
 import com.project1.model.dto.TestCaseDTO;
 import com.project1.model.dto.UserDTO;
 import com.project1.model.request.ProblemSearchRequest;
+import com.project1.model.request.SubmissionRequest;
 import com.project1.model.response.ProblemSearchReponse;
+import com.project1.model.response.StatusResponse;
+import com.project1.repository.ProblemRepository;
 import com.project1.repository.SubmissionRepository;
 import com.project1.service.*;
 import com.project1.utils.*;
@@ -50,6 +54,10 @@ public class ProblemController {
     private GroupUtils groupUtils;
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private GetSubmission getSubmission;
+    @Autowired
+    private ProblemRepository problemRepository;
     @GetMapping("admin/list")
     public ModelAndView problemList(@ModelAttribute ProblemSearchRequest problemSearchRequest , HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("admin/problem/list");
@@ -172,6 +180,25 @@ public class ProblemController {
         mav.addObject("modelSearch", problemSearchRequest);
         mav.addObject("problemList", list);
         mav.addObject("listTopic", listTopic);
+        return mav;
+    }
+
+    @GetMapping("admin/submission/problem/{code}")
+    public ModelAndView problemEdit(@ModelAttribute SubmissionRequest submission, @PathVariable("code") String code , HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("admin/problem/submission_problem");
+        mav.addObject("submission", submission);
+        ProblemEntity problem = problemRepository.findByCode(code);
+        List<StatusResponse> listSub = getSubmission.getByProblem(problem.getId() ,PageRequest.of(submission.getPage() - 1,submission.getMaxPageItems()));
+        submission.setListResult(listSub);
+        submission.setTotalItems(getSubmission.countByProbem(problem.getId()));
+        if(submission.getTotalItems() % submission.getMaxPageItems() == 0){
+            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems());
+        }
+        else{
+            submission.setTotalPage(submission.getTotalItems() / submission.getMaxPageItems() + 1);
+        }
+        mav.addObject("problem", problem);
+        mav.addObject("listSub", listSub);
         return mav;
     }
 }

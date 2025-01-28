@@ -11,6 +11,6 @@ public class UserSearchRequest extends AbstractDTO {
     private String name;
     private String role;
     UserSearchRequest(){
-        this.setMaxPageItems(5);
+        this.setMaxPageItems(100);
     }
 }

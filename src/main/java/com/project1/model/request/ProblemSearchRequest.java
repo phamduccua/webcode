@@ -40,6 +40,6 @@ public class ProblemSearchRequest extends AbstractDTO {
     }
 
     ProblemSearchRequest(){
-        this.setMaxPageItems(10);
+        this.setMaxPageItems(100);
     }
 }

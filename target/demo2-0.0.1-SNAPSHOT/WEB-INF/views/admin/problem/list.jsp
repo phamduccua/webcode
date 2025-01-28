@@ -112,12 +112,9 @@
                             <div class="dropdown-menu-wrapper">
                                 <table class="table-configuration">
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="detail-${item.code}">Chỉnh sửa</a>
-                                        </td>
-                                    </tr>
-                                    <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
+                                        <tr><td><a href="/web/admin/detail-${item.code}">Chỉnh sửa</a></td></tr>
+                                        <tr><td><a href="/web/admin/submission/problem/${item.code}">Xem các bài nộp</a></td></tr>
+                                        <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
                                 </tbody>
                                 </table>
                             </div>
@@ -157,6 +154,7 @@
                                             <a href="detail-${item.code}">Chỉnh sửa</a>
                                         </td>
                                     </tr>
+                                    <tr><td><a href="/web/admin/submission/problem/${item.code}">Xem các bài nộp</a></td></tr>
                                     <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
                                 </tbody>
                                 </table>
@@ -198,6 +196,7 @@
                                             <a href="detail-${item.code}">Chỉnh sửa</a>
                                         </td>
                                     </tr>
+                                    <tr><td><a href="/web/admin/submission/problem/${item.code}">Xem các bài nộp</a></td></tr>
                                     <tr><td onclick="confirmDelete(${item.id})">Xóa</td></tr>
                                 </tbody>
                                 </table>

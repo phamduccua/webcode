@@ -8,6 +8,6 @@ import lombok.Setter;
 public class SubmissionRequest extends AbstractDTO {
     private Long id;
     SubmissionRequest(){
-        this.setMaxPageItems(5);
+        this.setMaxPageItems(100);
     }
 }

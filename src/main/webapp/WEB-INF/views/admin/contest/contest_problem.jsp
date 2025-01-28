@@ -132,6 +132,7 @@
                                 <div class="config" >
                                     <ul>
                                         <li onclick="doi_trang('${item.code}')">Chỉnh sửa</li>
+                                        <li onclick="submission('${item.code}')">Xem các bài nộp</li>
                                         <li onclick="deleateProblem(${item.id},${contestDTO.id})">Xóa</li>
                                     </ul>
                                 </div>
@@ -159,6 +160,10 @@
     }
     function pageProblemByUser(){
         window.location.href = "/web/admin/list-problem-by-user/contest-${contestDTO.id}"
+    }
+
+    function submission(code){
+        window.location.href = "/web/admin/submission/problem/" + String(code);
     }
 </script>
 <script>

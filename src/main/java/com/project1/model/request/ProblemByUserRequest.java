@@ -11,6 +11,6 @@ public class ProblemByUserRequest extends AbstractDTO {
     private String name;
     private Long contestId;
     ProblemByUserRequest(){
-        this.setMaxPageItems(2);
+        this.setMaxPageItems(100);
     }
 }

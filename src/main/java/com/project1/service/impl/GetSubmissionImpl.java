@@ -83,6 +83,20 @@ public class GetSubmissionImpl implements GetSubmission {
     }
 
     @Override
+    public List<StatusResponse> getByProblem(Long problemId, Pageable pageable) {
+        List<SubmissionEntity>  list = submissionRepository.findByProblem_id(problemId,pageable);
+        List<StatusResponse> statusResponses = new ArrayList<>();
+        for (SubmissionEntity submissionEntity : list) {
+            StatusResponse statusResponse = statusConverter.toStatusResponse(submissionEntity);
+            statusResponses.add(statusResponse);
+        }
+        return statusResponses;
+    }
+    @Override
+    public int countByProbem(Long problemId) {
+       return submissionRepository.countByProblem_id(problemId);
+    }
+    @Override
     public List<StatusResponse> getAll(Pageable pageable) {
         List<SubmissionEntity> listSubmission = submissionRepository.findSubmission(null,pageable);
         List<StatusResponse> subs = new ArrayList<>();
