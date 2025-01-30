@@ -89,13 +89,21 @@ public class RunCode1 {
                 pb.directory(new File(path_init));
                 Process process = pb.start();
                 process.waitFor();
-                String expectedOutput = testCase.getExpctedOutputFileContent().trim();
+                String expectedOutput = testCase.getExpctedOutputFileContent()
+                        .replaceAll("^[\\n\\r]+", "")
+                        .replaceAll("[\\n\\r]+$", "");
+                expectedOutput = TrimUtil.Trim(expectedOutput);
                 String actualOutput = "";
-                if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
-                    actualOutput = Files.readString(Paths.get(path + testCase.getOutputFileName())).trim();
-                }
-                else{
-                    actualOutput = Files.readString(Paths.get(outputFileName)).trim();
+                if (!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")) {
+                    actualOutput = Files.readString(Paths.get(path + testCase.getOutputFileName()))
+                            .replaceAll("^[\\n\\r]+", "")
+                            .replaceAll("[\\n\\r]+$", "");
+                    actualOutput = TrimUtil.Trim(actualOutput);
+                } else {
+                    actualOutput = Files.readString(Paths.get(outputFileName))
+                            .replaceAll("^[\\n\\r]+", "")
+                            .replaceAll("[\\n\\r]+$", "");
+                    actualOutput = TrimUtil.Trim(actualOutput);
                 }
                 String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
                 SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
