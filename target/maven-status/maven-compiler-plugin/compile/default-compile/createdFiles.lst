@@ -138,6 +138,7 @@ com\project1\converter\UserResponseConverter.class
 com\project1\service\impl\EditProblemServiceImpl.class
 com\project1\repository\custom\SubmissionRepositoryCustom.class
 com\project1\service\DeleteTestCaseService.class
+com\project1\utils\TrimUtil.class
 com\project1\service\impl\DeleteTestCaseServiceImpl.class
 com\project1\model\response\UserSearchResponse.class
 com\project1\utils\TokenBlackList.class
