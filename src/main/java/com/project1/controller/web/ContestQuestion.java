@@ -31,16 +31,14 @@ public class ContestQuestion {
         ModelAndView mav = new ModelAndView("web/contest_problem");
         LocalDateTime now = LocalDateTime.now();
         ContestEntity contest = contestRepository.findContestById(id);
-        if(now.isAfter(contest.getStartTime()) && now.isBefore(contest.getEndTime())) {
-            List<ProblemSearchReponse> list = problemSerachService.findByContestId(id,request);
+        if (!now.isBefore(contest.getStartTime()) && !now.isAfter(contest.getEndTime())) {
+            List<ProblemSearchReponse> list = problemSerachService.findByContestId(id, request);
             mav.addObject("id", id);
             mav.addObject("modelSearch", problemSearchRequest);
             mav.addObject("problemList", list);
             return mav;
-        }
-        else{
-            ModelAndView tmp = new ModelAndView("web/not_found");
-            return tmp;
+        } else {
+            return new ModelAndView("web/not_found");
         }
     }
 }

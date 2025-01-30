@@ -46,7 +46,7 @@ public class ContestSolution {
         ModelAndView mav = new ModelAndView("web/contest_solution");
         LocalDateTime now = LocalDateTime.now();
         ContestEntity contest = contestRepository.findContestById(id);
-        if(now.isAfter(contest.getStartTime()) && now.isBefore(contest.getEndTime())){
+        if(!now.isBefore(contest.getStartTime()) && !now.isAfter(contest.getEndTime())){
             ProblemDTO problemDTO = findProblemService.findByCode(code);
             List<TestCaseDTO> listTest = testCaseService.findByProblemIdAndExample(problemDTO.getId(),"check");
             List<String> program = problemDTO.getLanguage();
