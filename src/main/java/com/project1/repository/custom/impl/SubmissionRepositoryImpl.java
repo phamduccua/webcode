@@ -39,13 +39,16 @@ public class SubmissionRepositoryImpl implements SubmissionRepositoryCustom {
         }
         sql.append("where p.type = 'CONTEST' \n");
         sql.append("and s.user_id = ").append(userId).append(" \n");
-        sql.append(" and (\n");
-        for(int i = 0;i<problemId.size();i++) {
-            if(i != problemId.size() - 1){
-                sql.append(" s.problem_id = " + problemId.get(i) + " or ");
-            }
-            else{
-                sql.append(" s.problem_id = " + problemId.get(i) + " ) ");
+        if(problemId.size() > 0) {
+            sql.append(" and (\n");
+            for(int i = 0;i<problemId.size();i++) {
+
+                if(i != problemId.size() - 1){
+                    sql.append(" s.problem_id = " + problemId.get(i) + " or ");
+                }
+                else{
+                    sql.append(" s.problem_id = " + problemId.get(i) + " ) ");
+                }
             }
         }
         sql.append(" order by s.id desc \n");
