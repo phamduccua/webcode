@@ -23,7 +23,7 @@
 
                 </li>
                 <li onclick="update_password()">Thay đổi mật khẩu</li>
-                <li>Đăng xuất</li>
+                <li onclick="logout()">Đăng xuất</li>
             </ul>
         </div>
     </div>
@@ -54,6 +54,15 @@
 <script>
     function update_password(){
         window.location.href = "/web/api/update_password/${idUser}";
+    }
+    function logout(){
+        $.ajax({
+            type: "POST",
+            url: "/web/api/logout",
+            success(){
+                window.location.href = "/web/login";
+            }
+        });
     }
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

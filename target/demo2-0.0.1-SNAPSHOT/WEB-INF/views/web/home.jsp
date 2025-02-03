@@ -63,7 +63,7 @@
       type: "POST",
       url: "/web/api/logout",
       success(){
-        window.location.href = "/login";
+        window.location.href = "/web/login";
       }
     });
   }

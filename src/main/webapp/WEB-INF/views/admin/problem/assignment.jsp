@@ -167,8 +167,8 @@
             margin-right: 0px !important;
         }
         .img_problem{
-            width: 350px;
-            height: 250px;
+            width: auto;
+            height: auto;
             margin: 20px;
         }
     </style>
