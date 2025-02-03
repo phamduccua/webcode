@@ -167,7 +167,6 @@
                 <c:if test="${item.status == -1}">
                     <tr class="table-body col-24">
                     <td class="col-0.5">
-                        <input type="checkbox" value="${item.id}"/>
                         ${status.count}
                     </td>
                     <td class="col-1">

@@ -36,7 +36,6 @@
             <c:forEach var="item" items="${problemList}" varStatus="status">
                 <tr class="table-body col-24" style="background-color: ${item.color}">
                     <td class="col-0.5">
-                        <input type="checkbox" value="${item.id}"/>
                         ${status.count}
                     </td>
                     <td class="col-3">
