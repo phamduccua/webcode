@@ -19,7 +19,12 @@ public class ReplaceFileName {
             listFile.add(fileSubmission);
             result.add(fileSubmission.getFileName());
         }
-        CreateFile.createFile(listFile,path);
+        try{
+            CreateFile.createFile(listFile,path);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
         return result;
     }
 }

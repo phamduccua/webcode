@@ -120,6 +120,7 @@ public class RunCode1 {
                 }
                 if(testCase.getType().equals("file") && ok == true){
                     DeleteFile.deleteFileTemp(listFileInput,path_judge);
+                    DeleteFile.deleteFileTemp(listFileInput,path);
                     if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
                         File file = new File(path_judge + testCase.getOutputFileName());
                         file.delete();

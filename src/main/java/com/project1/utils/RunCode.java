@@ -21,8 +21,8 @@ import static java.lang.Math.max;
 public class RunCode {
     @PersistenceContext
     private EntityManager entityManager;
-    private final String path_init = "/opt/apache-tomcat-10.1.34/webapps/judge/submissions/";
-    private final String path_judge = "/opt/apache-tomcat-10.1.34/webapps/judge/docker/";
+    private final String path_init = "/opt/apache-tomcat-10.1.34/webapps/judge1/submissions/";
+    private final String path_judge = "/opt/apache-tomcat-10.1.34/webapps/judge1/docker/";
     private String execute(
             String path,
             String outputName,
@@ -46,7 +46,7 @@ public class RunCode {
         str.append(String.format("-v=\"%s\":/testcase.txt ",testFileName));
         str.append(String.format("-v=\"%s\":/output.txt ",outputFileName));
         str.append(String.format("-v=\"%s\":/timeMemory.txt ",timeMemoryfileName));
-        str.append(String.format("online-judge1 %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
+        str.append(String.format("online-judge %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
         return str.toString();
     }
 
@@ -79,7 +79,6 @@ public class RunCode {
                         Files.createFile(Paths.get(path + testCase.getOutputFileName()));
                         Files.createFile(Paths.get(path_judge + testCase.getOutputFileName()));
                     }
-
                 }
                 else{
                     Files.writeString(Paths.get(testFileName), testCase.getInputs().get(0).getContentFile());
@@ -120,6 +119,7 @@ public class RunCode {
                 }
                 if(testCase.getType().equals("file") && ok == true){
                     DeleteFile.deleteFileTemp(listFileInput,path_judge);
+                    DeleteFile.deleteFileTemp(listFileInput,path);
                     if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
                         File file = new File(path_judge + testCase.getOutputFileName());
                         file.delete();
