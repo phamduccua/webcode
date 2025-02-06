@@ -1,4 +1,5 @@
 package com.project1.utils;
+
 import com.project1.entity.ProblemEntity;
 import com.project1.entity.SubmissionEntity;
 import com.project1.entity.TestCaseEntity;
@@ -20,8 +21,8 @@ import static java.lang.Math.max;
 public class RunCode {
     @PersistenceContext
     private EntityManager entityManager;
-    private final String path_init = "/opt/apache-tomcat-10.1.34/webapps/judge/submissions/";
-    private final String path_judge = "/opt/apache-tomcat-10.1.34/webapps/judge/submissions/";
+    private final String path_init = "/opt/apache-tomcat-10.1.34/webapps/judge1/submissions/";
+    private final String path_judge = "/opt/apache-tomcat-10.1.34/webapps/judge1/docker/";
     private String execute(
             String path,
             String outputName,
@@ -45,7 +46,7 @@ public class RunCode {
         str.append(String.format("-v=\"%s\":/testcase.txt ",testFileName));
         str.append(String.format("-v=\"%s\":/output.txt ",outputFileName));
         str.append(String.format("-v=\"%s\":/timeMemory.txt ",timeMemoryfileName));
-        str.append(String.format("online-judge %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
+        str.append(String.format("online-judge1 %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
         return str.toString();
     }
 
@@ -154,3 +155,4 @@ public class RunCode {
         }
     }
 }
+

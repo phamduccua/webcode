@@ -35,6 +35,3 @@ logging:
         web: DEBUG
         security: DEBUG
       springframework.boot: DEBUG
-
-
-

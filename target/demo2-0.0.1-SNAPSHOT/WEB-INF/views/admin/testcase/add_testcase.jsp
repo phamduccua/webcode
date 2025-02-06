@@ -165,7 +165,7 @@
                 let idcontent = "inputcontent" + i;
                 let name = document.getElementById(idname).value;
                 let value = document.getElementById(idcontent).value;
-                if(name !== 'std' && !name.contain(".")){
+                if(name !== 'std' && !name.includes(".")){
                     alert("Tên File bị lỗi !!");
                     return;
                 }
@@ -180,7 +180,7 @@
                 fileName : document.getElementById("outputname").value,
                 contentFile: document.getElementById("outputcontent").value
             }
-            if(outputTmp.fileName !== 'std' && !outputTmp.contentFile.contain(".")){
+            if(outputTmp.fileName !== 'std' && !outputTmp.contentFile.includes(".")){
                 alert("Tên File bị lỗi !!");
                 return;
             }

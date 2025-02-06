@@ -142,7 +142,7 @@
         .example {
             width: 100% !important;
             border-collapse: collapse !important;
-            margin-bottom: 10px;
+            margin-bottom: 50px;
         }
 
         table.example th {

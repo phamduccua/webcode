@@ -288,7 +288,7 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    location.reload();
+                    window.location.href = "/web/admin/detail-" + String($('#code').val());
                 });
             },
             error: function (e) {

@@ -171,6 +171,10 @@
         let idcontent = "inputcontent" + i;
         let name = document.getElementById(idname).value;
         let value = document.getElementById(idcontent).value;
+        if(name !== 'std' && !name.includes(".")){
+          alert("Tên File bị lỗi !!");
+          return;
+        }
         let inputTmp = {
           fileName : name,
           contentFile : value
@@ -181,6 +185,10 @@
       var outputTmp = {
         fileName : document.getElementById("outputname").value,
         contentFile: document.getElementById("outputcontent").value
+      }
+      if(outputTmp.fileName !== 'std' && !outputTmp.contentFile.includes(".")){
+        alert("Tên File bị lỗi !!");
+        return;
       }
       data['output'] = outputTmp;
     }
