@@ -102,6 +102,9 @@ public class ProblemController {
         List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
         problemSearchRequest.setListResult(list);
         problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));
+        if(problemSearchRequest.getPage() > problemSearchRequest.getMaxPageItems()){
+            problemSearchRequest.setPage(1);
+        }
         if(problemSearchRequest.getTotalItems() % problemSearchRequest.getMaxPageItems() == 0){
             problemSearchRequest.setTotalPage(problemSearchRequest.getTotalItems() / problemSearchRequest.getMaxPageItems());
         }
