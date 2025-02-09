@@ -165,6 +165,7 @@
             margin-top: 0px !important;
             margin-left: 0px !important;
             margin-right: 0px !important;
+            min-height: 10px;
         }
         .img_problem{
             width: auto;
