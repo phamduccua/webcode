@@ -97,7 +97,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/web/login",
+            url: "/login",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
@@ -109,11 +109,11 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
-                if(response.role === 'ADMIN'){
-                    window.location.href = "/web/admin/list";
+                if(response.role === 'ADMIN' || response.role === 'MANAGER'){
+                    window.location.href = "/admin/list";
                 }
                 else if(response.role === 'USER'){
-                    window.location.href = "/web/api/question";
+                    window.location.href = "/api/question";
                 }
             },
             error: function (e) {

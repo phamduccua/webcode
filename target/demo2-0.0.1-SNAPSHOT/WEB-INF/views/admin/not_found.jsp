@@ -35,6 +35,6 @@
 <body>
 <h1>404 - Không tìm thấy</h1>
 <p>Xin lỗi, trang bạn đang tìm kiếm không tồn tại.</p>
-<p><a href="/">Trở về trang chủ</a></p>
+<p><a href="/admin/list">Trở về trang chủ</a></p>
 </body>
 </html>

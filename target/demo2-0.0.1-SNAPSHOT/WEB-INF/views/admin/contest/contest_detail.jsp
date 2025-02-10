@@ -14,6 +14,52 @@
     <meta charset="UTF-8" />
     <title>Chi tiết cuộc thi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main_detail{
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+            border: 1px solid black;
+        }
+        .detail{
+            margin-top: 30px;
+            background-color:#FFFFFF;
+            border-radius: 5px;
+            padding: 30px;
+            margin-left: 150px;
+            border: 1px solid black;
+            width: 70%;
+            margin-bottom: 30px;
+        }
+        .detail_item{
+            margin-bottom: 80px;
+        }
+        .detail .detail_item:first-of-type {
+            margin-top: 30px;
+        }
+        .detail_item label{
+            margin-right: 50px;
+            margin-left: 30px;
+        }
+        .detail_item input{
+            height: 30px;
+            width: 350px;
+            border-radius: 5px;
+        }
+        .btnupdate{
+            margin-left: 30px;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: brown;
+            color: #fff;
+            border-radius: 8px;
+            border: 1px solid black;
+            width: 180px;
+            height: 35px;
+            margin-top: 80px;
+        }
+    </style>
 </head>
 <body>
     <div class="main_detail">
@@ -78,7 +124,7 @@
         else{
             $.ajax({
                 type: "PUT",
-                url: "/web/admin/update_contest",
+                url: "/admin/update_contest",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success(){
@@ -105,50 +151,4 @@
 
     }
 </script>
-<style>
-    .main_detail{
-        width: 1177.6px;
-        margin: 30.39px auto 0;
-        border: 1px solid black;
-    }
-    .detail{
-        margin-top: 30px;
-        background-color:#FFFFFF;
-        border-radius: 5px;
-        padding: 30px;
-        margin-left: 150px;
-        border: 1px solid black;
-        width: 70%;
-        margin-bottom: 30px;
-    }
-    .detail_item{
-        margin-bottom: 80px;
-    }
-    .detail .detail_item:first-of-type {
-        margin-top: 30px;
-    }
-    .detail_item label{
-        margin-right: 50px;
-        margin-left: 30px;
-    }
-    .detail_item input{
-        height: 30px;
-        width: 350px;
-        border-radius: 5px;
-    }
-    .btnupdate{
-        margin-left: 30px;
-        margin-top: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: brown;
-        color: #fff;
-        border-radius: 8px;
-        border: 1px solid black;
-        width: 180px;
-        height: 35px;
-        margin-top: 80px;
-    }
-</style>
 </html>

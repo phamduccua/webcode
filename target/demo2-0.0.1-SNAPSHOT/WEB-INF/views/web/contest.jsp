@@ -259,7 +259,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function join(id){
-        window.location.href = "/web/api/contest/" + id + "/question";
+        window.location.href = "/api/contest/" + id + "/question";
     }
 </script>
 </html>

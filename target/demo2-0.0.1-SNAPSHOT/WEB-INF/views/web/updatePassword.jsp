@@ -12,6 +12,42 @@
     <meta charset="UTF-8" />
     <title>Thay đổi mật khẩu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main{
+            border: 1px solid black;
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+        }
+        .title{
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        label{
+            margin-left: 100px;
+        }
+        input{
+            margin-right: 90%;
+            margin-bottom: 30px;
+            margin-left: 100px;
+            margin-top: 10px;
+            width: 350px;
+            height:30px;
+            border-radius: 5px;
+        }
+        .btnupdate{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 100px;
+            margin-bottom: 20px;
+            background-color: brown;
+            color: #FFF;
+            border-radius: 8px;
+            width: 180px;
+            height: 30px;
+        }
+    </style>
 </head>
 <body>
 <div class="main">
@@ -65,7 +101,7 @@
         else{
             $.ajax({
                 type: "PUT",
-                url: "/web/api/update_password",
+                url: "/api/update_password",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 dataType: "JSON",
@@ -90,40 +126,4 @@
 
     }
 </script>
-<style>
-    .main{
-        border: 1px solid black;
-        width: 1177.6px;
-        margin: 30.39px auto 0;
-    }
-    .title{
-        margin-top: 30px;
-        display: flex;
-        justify-content: center;
-    }
-    label{
-        margin-left: 100px;
-    }
-    input{
-        margin-right: 90%;
-        margin-bottom: 30px;
-        margin-left: 100px;
-        margin-top: 10px;
-        width: 350px;
-        height:30px;
-        border-radius: 5px;
-    }
-    .btnupdate{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 100px;
-        margin-bottom: 20px;
-        background-color: brown;
-        color: #FFF;
-        border-radius: 8px;
-        width: 180px;
-        height: 30px;
-    }
-</style>
 </html>

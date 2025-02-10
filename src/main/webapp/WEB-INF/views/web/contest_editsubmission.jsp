@@ -96,7 +96,7 @@
 <body>
 <div class="main">
     <div class="name_problem">
-        <a class="open" href="/web/api/contest/${id}/solution/${problemDTO.code}">${problemDTO.code} - ${problemDTO.title}</a>
+        <a class="open" href="/api/contest/${id}/solution/${problemDTO.code}">${problemDTO.code} - ${problemDTO.title}</a>
     </div>
     <form:form class="form-data" modelAttribute="submission" type="GET">
         <div class="language">
@@ -225,7 +225,7 @@
         formData.append('problemId',problemId);
         $.ajax({
             type: 'POST',
-            url: '/web/api/uploads/code',
+            url: '/api/uploads/code',
             data: formData,
             processData: false,
             contentType: false,

@@ -55,9 +55,9 @@
 <div id="home" class="main">
   <label class="labelTitle">${nameProblem}</label>
   <div class="menu">
-    <a class="chose detail" href="/web/admin/detail-${code}">Chi tiết</a>
-    <a class="chose testcase" href="/web/admin/list-testcase-${code}">Test Case</a>
-    <a class="chose install" href="/web/admin/list">Quay về trang chủ</a>
+    <a class="chose detail" href="/admin/detail-${code}">Chi tiết</a>
+    <a class="chose testcase" href="/admin/list-testcase-${code}">Test Case</a>
+    <a class="chose install" href="/admin/list">Quay về trang chủ</a>
   </div>
 </div>
 </body>

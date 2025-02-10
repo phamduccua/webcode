@@ -218,7 +218,7 @@
             if (!newImageName.some(name => i.includes(name))) {
                 await $.ajax({
                     type: "delete",
-                    url: "/web/admin/problem/delete-image/" + i.substring(9,i.length-1),
+                    url: "/admin/problem/delete-image/" + i.substring(9,i.length-1),
                     data: JSON.stringify(i),
                     contentType: "application/json",
                     succsess(response) {
@@ -239,7 +239,7 @@
                 formData.append("file", i);
                 await $.ajax({
                     type: "POST",
-                    url: "/web/admin/problem/upload/images",
+                    url: "/admin/problem/upload/images",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -278,7 +278,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/web/admin/problem",
+            url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {
@@ -288,7 +288,7 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    window.location.href = "/web/admin/detail-" + String($('#code').val());
+                    window.location.href = "/admin/detail-" + String($('#code').val());
                 });
             },
             error: function (e) {

@@ -17,11 +17,11 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/WEB-INF/views/*","/api/uploads","/api/logout").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/*").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/admin/register","/admin/update","/admin/reset","/admin/delete/**","/admin/restore/**").hasRole("MANAGER")
+                        .requestMatchers("/admin/**").hasAnyRole("MANAGER","ADMIN")
+                        .requestMatchers("/api/*").hasAnyRole("ADMIN","USER","MANAGER")
                         .anyRequest().authenticated()
                 )
-
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

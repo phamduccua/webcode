@@ -188,7 +188,7 @@
         }
         $.ajax({
             type: "POST",
-            url: "/web/admin/testcase",
+            url: "/admin/testcase",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {

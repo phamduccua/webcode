@@ -3,6 +3,7 @@ package com.project1.entity.enums;
 import java.util.LinkedHashMap;
 
 public enum role {
+    MANAGER("MANAGER"),
     ADMIN("ADMIN"),
     USER("USER");
     private final String name;

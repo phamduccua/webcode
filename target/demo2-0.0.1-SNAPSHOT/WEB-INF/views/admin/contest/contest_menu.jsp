@@ -9,6 +9,35 @@
 <html>
 <head>
     <title>Title</title>
+    <meta charset="UTF-8" />
+    <style>
+        .main{
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+            border: 1px solid black;
+        }
+        h1{
+            margin-top: 30px !important;
+            margin-left: 150px;
+        }
+        .menu_contest{
+            border-radius: 5px;
+            margin-left: 150px;
+            width: 800px;
+            height: 40px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: #bb2019;
+        }
+        .item{
+            font-size: 17px;
+            margin-left: 40px;
+            margin-right: 20px;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
     <div class="main">
@@ -24,47 +53,19 @@
 </body>
 <script>
     function contest_detail(){
-        window.location.href = "/web/admin/contest-detail-${contestDTO.id}";
+        window.location.href = "/admin/contest-detail-${contestDTO.id}";
     }
     function contest_problem(){
-        window.location.href = "/web/admin/contest-problem-${contestDTO.id}";
+        window.location.href = "/admin/contest-problem-${contestDTO.id}";
     }
     function contest_member(){
-        window.location.href = "/web/admin/list-member-${contestDTO.id}";
+        window.location.href = "/admin/list-member-${contestDTO.id}";
     }
     function contest_leaderboard(){
-        window.location.href = "/web/admin/leader_board-${contestDTO.id}";
+        window.location.href = "/admin/leader_board-${contestDTO.id}";
     }
     function contest_install(){
-        window.location.href = "/web/admin/install-contest-${contestDTO.id}";
+        window.location.href = "/admin/install-contest-${contestDTO.id}";
     }
 </script>
-<style>
-    .main{
-        width: 1177.6px;
-        margin: 30.39px auto 0;
-        border: 1px solid black;
-    }
-    h1{
-        margin-top: 30px !important;
-        margin-left: 150px;
-    }
-    .menu_contest{
-        border-radius: 5px;
-        margin-left: 150px;
-        width: 800px;
-        height: 40px;
-        border: 1px solid black;
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-        background-color: #bb2019;
-    }
-    .item{
-        font-size: 17px;
-        margin-left: 40px;
-        margin-right: 20px;
-        color: #fff;
-    }
-</style>
 </html>

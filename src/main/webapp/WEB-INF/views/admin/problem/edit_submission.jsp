@@ -96,7 +96,7 @@
 <body>
 <div class="main">
     <div class="name_problem">
-        <a class="open" href="/web/admin/assignment-${problemDTO.code}">${problemDTO.code} - ${problemDTO.title}</a>
+        <a class="open" href="/admin/assignment-${problemDTO.code}">${problemDTO.code} - ${problemDTO.title}</a>
     </div>
     <form:form class="form-data" modelAttribute="submission" type="GET">
         <div class="language">
@@ -225,13 +225,13 @@
         formData.append('problemId',problemId);
         $.ajax({
             type: 'POST',
-            url: '/web/api/uploads/code',
+            url: '/api/uploads/code',
             data: formData,
             processData: false,
             contentType: false,
             success: function(response) {
                 console.log("Thành công");
-                window.location.href = '/web/admin/history';
+                window.location.href = '/admin/history';
             },error: function(xhr, status, error) {
                 Swal.fire({
                     title: 'Lỗi!',

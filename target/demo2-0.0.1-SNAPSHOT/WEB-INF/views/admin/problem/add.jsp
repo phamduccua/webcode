@@ -237,7 +237,7 @@
                 formData.append("file", i);
                 await $.ajax({
                     type: "POST",
-                    url: "/web/admin/problem/upload/images",
+                    url: "/admin/problem/upload/images",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -273,7 +273,7 @@
         var code = data['code'];
         $.ajax({
             type: "POST",
-            url: "/web/admin/problem",
+            url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {
@@ -283,7 +283,7 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    window.location.href = "/web/admin/detail-" + code;
+                    window.location.href = "/admin/detail-" + code;
                 });
             },
             error: function (xhr) {

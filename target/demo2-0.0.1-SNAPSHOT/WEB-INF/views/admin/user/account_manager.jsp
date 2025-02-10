@@ -13,6 +13,135 @@
 <head>
     <meta charset="UTF-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main{
+            border: 1px solid black;
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+        }
+        .title{
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            margin-bottom:30px;
+        }
+        .item{
+            display: flex;
+            align-content: center;
+            width: 100%;
+        }
+        .search{
+            margin-left: 50px;
+            width: 300px;
+            height: 30px;
+            left: 50px;
+            background-color: #FAEDED;
+            border-radius: 5px;
+            margin-right: 50px
+        }
+        .role{
+            top: 230px;
+            border-radius: 5px;
+            left: 50px;
+        }
+        .add{
+            background-color: #8A1111;
+            color: #fff;
+            width: 160px;
+            height: 30px;
+            border-radius: 5px;
+            text-align: center;
+            align-content: center;
+            margin-left: auto;
+        }
+        .delete{
+            background-color: #8A1111;
+            color: #fff;
+            width: 50px;
+            height: 30px;
+            border-radius: 5px;
+            align-content: center;
+            text-align: center;
+            margin-left: 30px;
+            margin-right: 100px;
+        }
+        .table{
+            left: 50px;
+            top: 290px;
+            width: 100%;
+        }
+        .table table{
+            margin-top: 50px;
+            margin-left: 50px;
+            margin-bottom: 50px;
+            width: 90%;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .table table tr th{
+            border: 1px solid black;
+            background-color: #8A1111;
+            height: 50px;
+            color: #fff;
+            text-align: center;
+        }
+        .table table tr td{
+            text-align: center;
+            height:30px;
+            border: 1px solid black;
+        }
+        .role option{
+            text-align: center;
+        }
+        .box{
+            position: relative;
+            left : 43%;
+            width: 20px;
+        }
+        .config{
+            position: absolute;
+            display: none;
+            z-index: 1000;
+        }
+        .config ul{
+            width: 140px;
+            margin: 0 !important;
+            padding: 0 !important;
+            list-style: none;
+            background-color: #FFFFFF;
+        }
+        .config li{
+            padding: 5px;
+            border: 1px solid black;
+            margin: -1px;
+            height: 40px;
+        }
+        .page{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .page ul{
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            border : 1px solid black;
+            list-style: none;
+        }
+        .page ul li{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            height: 25px;
+            border: 1px solid black;
+        }
+        #page ul .pageChoose{
+            background-color: #bb2019 !important;
+            color : #FFFFFF !important;
+        }
+    </style>
 </head>
 <body>
 <div class="main">
@@ -155,7 +284,7 @@
         });
     }
     function doi_trang(id){
-        window.location.href = "/web/admin/edit-account-" + id;
+        window.location.href = "/admin/edit-account-" + id;
     }
     function doipage(i){
         const valuePage = document.getElementById("inPage");
@@ -177,7 +306,7 @@
     function Delete(data){
         $.ajax({
             type: "DELETE",
-            url:  "/web/admin/delete/" + data,
+            url:  "/admin/delete/" + data,
             data: JSON.stringify(data),
             success: function(response) {
                 Swal.fire({
@@ -199,135 +328,4 @@
         });
     }
 </script>
-
-
-<style>
-    .main{
-        border: 1px solid black;
-        width: 1177.6px;
-        margin: 30.39px auto 0;
-    }
-    .title{
-        margin-top: 30px;
-         display: flex;
-         justify-content: center;
-        margin-bottom:30px;
-     }
-    .item{
-        display: flex;
-        align-content: center;
-        width: 100%;
-    }
-    .search{
-        margin-left: 50px;
-        width: 300px;
-        height: 30px;
-        left: 50px;
-        background-color: #FAEDED;
-        border-radius: 5px;
-        margin-right: 50px
-    }
-    .role{
-        top: 230px;
-        border-radius: 5px;
-        left: 50px;
-    }
-    .add{
-        background-color: #8A1111;
-        color: #fff;
-        width: 160px;
-        height: 30px;
-        border-radius: 5px;
-        text-align: center;
-        align-content: center;
-        margin-left: auto;
-    }
-    .delete{
-        background-color: #8A1111;
-        color: #fff;
-        width: 50px;
-        height: 30px;
-        border-radius: 5px;
-        align-content: center;
-        text-align: center;
-        margin-left: 30px;
-        margin-right: 100px;
-    }
-    .table{
-        left: 50px;
-        top: 290px;
-        width: 100%;
-    }
-    .table table{
-        margin-top: 50px;
-        margin-left: 50px;
-        margin-bottom: 50px;
-        width: 90%;
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-    .table table tr th{
-        border: 1px solid black;
-        background-color: #8A1111;
-        height: 50px;
-        color: #fff;
-        text-align: center;
-    }
-    .table table tr td{
-        text-align: center;
-        height:30px;
-        border: 1px solid black;
-    }
-    .role option{
-        text-align: center;
-    }
-    .box{
-        position: relative;
-        left : 43%;
-        width: 20px;
-    }
-    .config{
-        position: absolute;
-        display: none;
-        z-index: 1000;
-    }
-    .config ul{
-        width: 140px;
-        margin: 0 !important;
-        padding: 0 !important;
-        list-style: none;
-        background-color: #FFFFFF;
-    }
-    .config li{
-        padding: 5px;
-        border: 1px solid black;
-        margin: -1px;
-        height: 40px;
-    }
-    .page{
-        display: flex;
-        justify-content: center;
-        margin-bottom: 30px;
-    }
-    .page ul{
-        display: flex;
-        justify-content: center;
-        margin: 0;
-        padding: 0;
-        border : 1px solid black;
-        list-style: none;
-    }
-    .page ul li{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 25px;
-        height: 25px;
-        border: 1px solid black;
-    }
-    #page ul .pageChoose{
-        background-color: #bb2019 !important;
-        color : #FFFFFF !important;
-    }
-</style>
 </html>

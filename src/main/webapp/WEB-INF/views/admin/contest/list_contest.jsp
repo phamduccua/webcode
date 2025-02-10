@@ -13,6 +13,138 @@
     <meta charset="UTF-8" />
     <title>Danh sách cuộc thi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main{
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+            border: 1px solid black;
+            position: relative;
+        }
+        .title{
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .btnadd{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            width: 150px;
+            border: 1px solid black;
+            margin-left: 100px;
+            height: 30px;
+            border-radius: 8px;
+            background-color: brown;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+        .table table{
+            width: 90%;
+            margin-left: 50px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin-bottom: 50px;
+        }
+        .table table thead th{
+            background-color: rgb(250, 237, 237);
+            padding: 10px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        .table table tbody tr td{
+            text-align: center;
+            border: 1px solid black;
+        }
+        .create_contest{
+            display: none;
+            /*display: flex;*/
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFFFFF;
+            z-index: 1000;
+        }
+        .formacreate{
+            border: 1px solid black;
+            width: 1000px;
+            min-height: 500px;
+            border-radius: 5px;
+        }
+        .title_creatcreat{
+            display:flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .name label, .begin label, .end label{
+            margin-left: 40px;
+        }
+        .name input, .begin input, .end input{
+            margin: 30px;
+            height: 30px;
+            width: 350px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btns{
+            margin-top: 50px;
+            width: 100%;
+            display: flex;
+        }
+        .btncreaet ,.btnclose{
+            width: 150px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            margin-right: 100px;
+            margin-left: 100px;
+            border: 1px solid black;
+            border-radius: 8px;
+
+        }
+        .btncreaet{
+            background-color:brown;
+            color: #fff;
+        }
+        .btnclose{
+            background-color:blueviolet;
+        }
+        .upcoming {
+            color: blue;
+        }
+
+        .ongoing {
+            color: green;
+        }
+
+        .ended {
+            color: red;
+        }
+        .config{
+            position: absolute;
+            display: none;
+            z-index: 1000;
+        }
+        .config ul{
+            width: 120px;
+            margin: 0 !important;
+            padding: 0 !important;
+            list-style: none;
+            background-color: #FFFFFF;
+        }
+        .config ul li{
+            padding: 5px;
+            border: 1px solid black;
+            margin: -1px;
+            height: 40px;
+        }
+    </style>
 </head>
 <body>
 <div class="main">
@@ -222,7 +354,7 @@
         else{
             $.ajax({
                 type: "POST",
-                url: "/web/admin/create_contest",
+                url: "/admin/create_contest",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success(){
@@ -250,14 +382,14 @@
 </script>
 <script>
     function contestDetail(id){
-        window.location.href = "/web/admin/contest-detail-" + id;
+        window.location.href = "/admin/contest-detail-" + id;
     }
 </script>
 <script>
     function deleatContest(id){
         $.ajax({
             type: "DELETE",
-            url: "/web/admin/delete-contest-" + id,
+            url: "/admin/delete-contest-" + id,
             data: JSON.stringify(id),
             contentType: "application/json",
             success(){
@@ -282,136 +414,4 @@
         })
     }
 </script>
-<style>
-    .main{
-        width: 1177.6px;
-        margin: 30.39px auto 0;
-        border: 1px solid black;
-        position: relative;
-    }
-    .title{
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-    }
-    .btnadd{
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-        width: 150px;
-        border: 1px solid black;
-        margin-left: 100px;
-        height: 30px;
-        border-radius: 8px;
-        background-color: brown;
-        color: #fff;
-        margin-bottom: 30px;
-    }
-    .table table{
-        width: 90%;
-        margin-left: 50px;
-        border: 1px solid black;
-        border-collapse: collapse;
-        margin-bottom: 50px;
-    }
-    .table table thead th{
-        background-color: rgb(250, 237, 237);
-        padding: 10px;
-        border: 1px solid black;
-        text-align: center;
-    }
-    .table table tbody tr td{
-        text-align: center;
-        border: 1px solid black;
-    }
-    .create_contest{
-         display: none;
-        /*display: flex;*/
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #FFFFFF;
-        z-index: 1000;
-    }
-    .formacreate{
-        border: 1px solid black;
-        width: 1000px;
-        min-height: 500px;
-        border-radius: 5px;
-    }
-    .title_creatcreat{
-        display:flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .name label, .begin label, .end label{
-        margin-left: 40px;
-    }
-    .name input, .begin input, .end input{
-        margin: 30px;
-        height: 30px;
-        width: 350px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .btns{
-        margin-top: 50px;
-        width: 100%;
-        display: flex;
-    }
-    .btncreaet ,.btnclose{
-        width: 150px;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-        margin-right: 100px;
-        margin-left: 100px;
-        border: 1px solid black;
-        border-radius: 8px;
-
-    }
-    .btncreaet{
-        background-color:brown;
-        color: #fff;
-    }
-    .btnclose{
-        background-color:blueviolet;
-    }
-    .upcoming {
-        color: blue;
-    }
-
-    .ongoing {
-        color: green;
-    }
-
-    .ended {
-        color: red;
-    }
-    .config{
-        position: absolute;
-        display: none;
-        z-index: 1000;
-    }
-    .config ul{
-        width: 120px;
-        margin: 0 !important;
-        padding: 0 !important;
-        list-style: none;
-        background-color: #FFFFFF;
-    }
-    .config ul li{
-        padding: 5px;
-        border: 1px solid black;
-        margin: -1px;
-        height: 40px;
-    }
-</style>
 </html>

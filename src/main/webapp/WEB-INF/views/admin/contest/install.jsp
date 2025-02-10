@@ -83,7 +83,7 @@
     console.log(data);
     $.ajax({
       type:"PUT",
-      url: "/web/admin/update_language_contest",
+      url: "/admin/update_language_contest",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function () {

@@ -14,6 +14,70 @@
   <meta charset="UTF-8" />
   <title>Chỉnh sửa tài khoản</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .main{
+      border: 1px solid black;
+      width: 1177.6px;
+      margin: 30.39px auto 0;
+    }
+    .title{
+      margin-top: 30px;
+      text-align: center;
+    }
+    .name label, .phone label, .role label, .table label{
+      left: 50px;
+      font-size: 20px;
+      margin-bottom: 20px;
+      margin-left: 100px;
+      margin-right: 20px;
+    }
+    .name input,.phone input{
+      border-radius: 5px;
+      margin-bottom: 20px;
+      width: 300px;
+      height: 30px;
+    }
+    select{
+      height: 30px;
+      width: 200px;
+    }
+    option{
+      text-align: center;
+    }
+    .table{
+      width: 300px;
+    }
+    .class{
+      width: 100%;
+      margin-left: 100px;
+      margin-top: 20px;
+      border: 1px solid black;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    .class thead th{
+      text-align: center;
+      border: 1px solid black;
+    }
+    .class tbody td{
+      text-align: center;
+      border: 1px solid black;
+    }
+    .btn{
+      display: flex;
+    }
+    .btnadd ,.btnreset{
+      color: #FFF;
+      background-color: brown;
+      border-radius: 5px;
+      margin-left: 100px;
+      width: 150px;
+      height: 35px;
+      margin-bottom: 30px;
+      align-content: center;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 <div class="main">
@@ -100,7 +164,7 @@
     let data = getData();
     $.ajax({
       type: "POST",
-      url: "/web/admin/register",
+      url: "/admin/register",
       data: JSON.stringify(data),
       contentType: "application/json",
       dataType: "JSON",
@@ -125,7 +189,7 @@
     let data = getData();
     $.ajax({
       type: "PUT",
-      url: "/web/admin/update",
+      url: "/admin/update",
       data: JSON.stringify(data),
       contentType: "application/json",
       dataType: "JSON",
@@ -149,7 +213,7 @@
     let data = getData();
     $.ajax({
       type: "PUT",
-      url: "/web/admin/reset",
+      url: "/admin/reset",
       data: JSON.stringify(data),
       contentType: "application/json",
       dataType: "JSON",
@@ -172,69 +236,4 @@
   }
 </script>
 </body>
-
-<style>
-  .main{
-    border: 1px solid black;
-    width: 1177.6px;
-    margin: 30.39px auto 0;
-  }
-  .title{
-    margin-top: 30px;
-    text-align: center;
-  }
-  .name label, .phone label, .role label, .table label{
-    left: 50px;
-    font-size: 20px;
-    margin-bottom: 20px;
-    margin-left: 100px;
-    margin-right: 20px;
-  }
-  .name input,.phone input{
-    border-radius: 5px;
-    margin-bottom: 20px;
-    width: 300px;
-    height: 30px;
-  }
-  select{
-    height: 30px;
-    width: 200px;
-  }
-  option{
-    text-align: center;
-  }
-  .table{
-    width: 300px;
-  }
-  .class{
-    width: 100%;
-    margin-left: 100px;
-    margin-top: 20px;
-    border: 1px solid black;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-  }
-  .class thead th{
-    text-align: center;
-    border: 1px solid black;
-  }
-  .class tbody td{
-    text-align: center;
-    border: 1px solid black;
-  }
-  .btn{
-    display: flex;
-  }
-  .btnadd ,.btnreset{
-    color: #FFF;
-    background-color: brown;
-    border-radius: 5px;
-    margin-left: 100px;
-    width: 150px;
-    height: 35px;
-    margin-bottom: 30px;
-    align-content: center;
-    text-align: center;
-  }
-</style>
 </html>

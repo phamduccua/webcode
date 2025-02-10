@@ -17,6 +17,117 @@
     <meta charset="UTF-8">
     <title>Bài tập</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main {
+            width: 1177.6px;
+            margin: 30.39px auto 0;
+            padding: 25.6px 39.19px;
+            border-radius: 4px;
+            border: solid 1.6px #e1e4e8;
+        }
+        .table {
+            margin-left: 100px;
+            margin-top: 30px;
+            border-spacing: 0;
+            border-radius: 4px;
+            width: 800px;
+            border: 1px solid #ccc;
+        }
+
+        .table-head {
+            background-color: #8A1111;
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
+
+        .table-head th {
+            text-align: left;
+            vertical-align: middle;
+            height: 50px;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #8A1111;
+        }
+        .table-head .mid{
+            text-align: center;
+        }
+        .table-body td {
+            align-content: center;
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid black;
+        }
+        .table-body .mid{
+            text-align: center;
+        }
+        .text-middle {
+            width: 40px;
+            min-width: 40px;
+            padding: 0;
+            text-align: center;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            overflow: visible;
+        }
+        .dropdown-btn {
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+        .dropdown-icon {
+            cursor: pointer;
+        }
+        .dropdown-menu-wrapper {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            width: max-content;
+        }
+        .dropdown:hover .dropdown-menu-wrapper {
+            display: block;
+        }
+        .filter-button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .filter-button {
+            border : 1px solid black;
+            background-color : forestgreen;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .filter-button:hover {
+            background-color: #e0e0e0;
+        }
+        .listPage{
+            color : red;
+            display: flex;
+            justify-content: center;
+        }
+        .itemPage {
+            display : inline-flex;
+            border : 1px solid black;
+            padding-left: 8px;
+            padding-right : 8px;
+        }
+        .pageChoose{
+            background-color: #bb2019;
+            color : #FFFFFF;
+        }
+    </style>
 </head>
 <body>
 <div class="main">
@@ -39,7 +150,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        <a class="open" href="/web/api/contest/${id}/solution/${item.code}">
+                        <a class="open" href="/api/contest/${id}/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -51,7 +162,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        <a class="open" href="/web/api/contest/${id}/solution/${item.code}">
+                        <a class="open" href="/api/contest/${id}/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -64,7 +175,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        <a class="open" href="/web/api/contest/${id}/solution/${item.code}">
+                        <a class="open" href="/api/contest/${id}/solution/${item.code}">
                             ${item.title}
                         </a>
                     </td>
@@ -130,118 +241,5 @@
         listGroup();
     }
 </script>
-
-
-<style>
-    .main {
-        width: 1177.6px;
-        margin: 30.39px auto 0;
-        padding: 25.6px 39.19px;
-        border-radius: 4px;
-        border: solid 1.6px #e1e4e8;
-    }
-    .table {
-        margin-left: 100px;
-        margin-top: 30px;
-        border-spacing: 0;
-        border-radius: 4px;
-        width: 800px;
-        border: 1px solid #ccc;
-    }
-
-    .table-head {
-        background-color: #8A1111;
-        font-size: 16px;
-        font-weight: bold;
-        color: #FFFFFF;
-    }
-
-    .table-head th {
-        text-align: left;
-        vertical-align: middle;
-        height: 50px;
-        padding: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #FFFFFF;
-        background-color: #8A1111;
-    }
-    .table-head .mid{
-        text-align: center;
-    }
-    .table-body td {
-        align-content: center;
-        text-align: left;
-        padding: 10px;
-        border-bottom: 1px solid black;
-    }
-    .table-body .mid{
-        text-align: center;
-    }
-    .text-middle {
-        width: 40px;
-        min-width: 40px;
-        padding: 0;
-        text-align: center;
-    }
-    .dropdown {
-        position: relative;
-        display: inline-block;
-        overflow: visible;
-    }
-    .dropdown-btn {
-        cursor: pointer;
-        color: white;
-        font-weight: bold;
-    }
-    .dropdown-icon {
-        cursor: pointer;
-    }
-    .dropdown-menu-wrapper {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        overflow-y: auto;
-        width: max-content;
-    }
-    .dropdown:hover .dropdown-menu-wrapper {
-        display: block;
-    }
-    .filter-button-container {
-        text-align: center;
-        margin-top: 10px;
-    }
-    .filter-button {
-        border : 1px solid black;
-        background-color : forestgreen;
-        padding: 5px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-    .filter-button:hover {
-        background-color: #e0e0e0;
-    }
-    .listPage{
-        color : red;
-        display: flex;
-        justify-content: center;
-    }
-    .itemPage {
-        display : inline-flex;
-        border : 1px solid black;
-        padding-left: 8px;
-        padding-right : 8px;
-    }
-    .pageChoose{
-        background-color: #bb2019;
-        color : #FFFFFF;
-    }
-</style>
 </body>
 </html>
