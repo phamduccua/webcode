@@ -207,7 +207,6 @@
       <c:forEach var="item" items="${listTest}" varStatus="status">
       <tr class="table-body">
         <td>
-          <input type="checkbox" value="${item.id}"/>
           ${status.count}
         </td>
         <td>input${status.count}</td>

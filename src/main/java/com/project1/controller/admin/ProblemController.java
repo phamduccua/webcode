@@ -98,9 +98,6 @@ public class ProblemController {
             ModelAndView mavtmp = new ModelAndView("index");
             return mavtmp;
         }
-        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest,request, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
-        List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
-        problemSearchRequest.setListResult(list);
         problemSearchRequest.setTotalItems(problemSerachService.countTotalItems(problemSearchRequest));
         if(problemSearchRequest.getPage() > problemSearchRequest.getTotalItems()){
             problemSearchRequest.setPage(1);
@@ -111,6 +108,9 @@ public class ProblemController {
         else{
             problemSearchRequest.setTotalPage(problemSearchRequest.getTotalItems() / problemSearchRequest.getMaxPageItems() + 1);
         }
+        List<ProblemSearchReponse> list = problemSerachService.findAll(problemSearchRequest,request, PageRequest.of(problemSearchRequest.getPage() - 1,problemSearchRequest.getMaxPageItems()));
+        List<String> listTopic = topicService.findTopic(ClassIdUtils.toClassId(problemSearchRequest.getGroup()));
+        problemSearchRequest.setListResult(list);
         mav.addObject("modelSearch", problemSearchRequest);
         mav.addObject("problemList", list);
         mav.addObject("listGroup", listgroup);
