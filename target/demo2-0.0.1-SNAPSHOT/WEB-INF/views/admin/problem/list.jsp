@@ -222,7 +222,6 @@
                     <c:if test="${item.status == 1}">
                         <tr class="table-body col-24" style="background-color: #86C681;">
                     <td class="col-0.5">
-                        <input type="checkbox" value="${item.id}"/>
                         ${status.count}
                     </td>
                     <td class="col-1">
@@ -259,7 +258,6 @@
                     <c:if test="${item.status == 0}">
                         <tr class="table-body col-24" style="background-color: #FFA29E;">
                     <td class="col-0.5">
-                        <input type="checkbox" value="${item.id}"/>
                         ${status.count}
                     </td>
                     <td class="col-1">

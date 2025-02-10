@@ -161,11 +161,9 @@
         }
 
         p {
-            margin-bottom: 5px !important;
-            margin-top: 0px !important;
-            margin-left: 0px !important;
-            margin-right: 0px !important;
+            margin: 0 0 5px !important;
             min-height: 10px;
+            white-space: pre-wrap;
         }
         .img_problem{
             width: auto;
