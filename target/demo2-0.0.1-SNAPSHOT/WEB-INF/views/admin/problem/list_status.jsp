@@ -260,9 +260,9 @@
 <script>
     function updateStatus() {
         var count = 0;
-        $("tbody tr").each(function () {
-            var status = $(this).find("td:nth-child(5)").text().trim();
-            if (status !== ""  && status !== "AC" && status !== "WA" && status !== "RTE" && status !== "TLE" && status !== "CE"　&& status !== "MLE") {
+        $(".table-body tr").each(function () {
+            var status = $(this).find("td:nth-child(4)").text().trim();
+            if (status === "") {
                 count++;
             }
         });
@@ -278,8 +278,6 @@
     item.innerHTML = "";
     var totalPage = ${submission.totalPages};
     var page = ${submission.page};
-    console.log(totalPage);
-    console.log(page);
     var tmp = '<ul>';
     if(totalPage > 1){
         if(totalPage <= 3){

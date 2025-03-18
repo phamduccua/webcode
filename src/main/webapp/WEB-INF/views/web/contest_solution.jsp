@@ -371,9 +371,9 @@
 <script>
     function updateStatus() {
         var count = 0;
-        $("tbody tr").each(function () {
+        $(".table-body tr").each(function () {
             var status = $(this).find("td:nth-child(4)").text().trim();
-            if (status !== ""  && status !== "AC" && status !== "WA" && status !== "RTE" && status !== "TLE" && status !== "CE"　&& status !== "MLE") {
+            if (status === "") {
                 count++;
             }
         });

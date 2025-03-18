@@ -257,6 +257,21 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    function updateStatus() {
+        var count = 0;
+        $(".table-body tr").each(function () {
+            var status = $(this).find("td:nth-child(4)").text().trim();
+            if (status === "") {
+                count++;
+            }
+        });
+        if (count > 0) {
+            location.reload();
+        }
+    }
+    setTimeout(updateStatus, 3000);
+</script>
+<script>
     var item = document.getElementById('page')
     item.innerHTML = "";
     var totalPage = ${submission.totalPages};

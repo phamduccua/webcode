@@ -229,8 +229,6 @@
     item.innerHTML = "";
     var totalPage = ${modelRanking.totalPage};
     var page = ${modelRanking.page};
-    console.log(totalPage);
-    console.log(page);
     var tmp = '<ul>';
     if(totalPage > 1){
         if(totalPage <= 3){
