@@ -7,7 +7,7 @@ public class TrimUtil {
         StringTokenizer str = new StringTokenizer(s,"\n");
         StringBuilder stbd =  new StringBuilder();
         while(str.hasMoreTokens()){
-            stbd.append(str.nextToken().trim());
+            stbd.append(str.nextToken().trim() + "\n");
         }
         return stbd.toString();
     }

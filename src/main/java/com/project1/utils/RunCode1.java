@@ -68,6 +68,7 @@ public class RunCode1 {
             Files.createFile(Paths.get(timeMemoryfileName));
             Files.createFile(Paths.get(testFileName));
             boolean ok = true;
+            int count = 0;
             for (TestCaseEntity testCase : allTestCases) {
                 Files.writeString(Paths.get(fileName),code);
                 List<String> listFileInput = new ArrayList<>();
@@ -79,7 +80,6 @@ public class RunCode1 {
                         Files.createFile(Paths.get(path + testCase.getOutputFileName()));
                         Files.createFile(Paths.get(path_judge + testCase.getOutputFileName()));
                     }
-
                 }
                 else{
                     Files.writeString(Paths.get(testFileName), testCase.getInputs().get(0).getContentFile());
@@ -126,11 +126,13 @@ public class RunCode1 {
                         file.delete();
                     }
                 }
+                count++;
             }
             if (ok) {
                 submission.setStatus("true");
                 submission.setCode("AC");
             }
+            submission.setTestAcept(String.valueOf(count) + "/" + String.valueOf(allTestCases.size()));
             entityManager.merge(submission);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

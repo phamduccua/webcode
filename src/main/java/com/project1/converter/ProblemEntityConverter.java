@@ -35,6 +35,7 @@ public class ProblemEntityConverter {
         UserEntity user = securityUtils.getUser(request);
         problemEntity.setCreatedBy(user.getId());
         problemEntity.setLanguage(langua.toString());
+        problemEntity.setShow_test(problemDTO.isShow_test() == true ? 1 : 0);
         return problemEntity;
     }
 }

@@ -20,7 +20,7 @@ public class ProblemRepositoryImpl implements ProblemRepositoryCustom {
     private EntityManager entityManager;
     @Override
     public List<ProblemEntity> findAll(ProblemSearchBuilder problemSearchBuilder) {
-        StringBuilder sql = new StringBuilder("SELECT p.id, p.title, p.description, p.difficulty, p.input_format, p.output_format, p.code, p.type , p.topic, p.class_id, p.constraints, p.time_limit, p.memory_limit, p.language, p.created_by \n");
+        StringBuilder sql = new StringBuilder("SELECT p.id, p.title, p.description, p.difficulty, p.input_format, p.output_format, p.code, p.type , p.topic, p.class_id, p.constraints, p.time_limit, p.memory_limit, p.language, p.created_by, p.show_test \n");
         sql.append("FROM problem p \n");
         sql.append("WHERE 1 = 1\n");
         if(problemSearchBuilder.getCreatedBy() != null) {

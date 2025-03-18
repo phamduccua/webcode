@@ -26,6 +26,8 @@ public class StatusConverter {
         statusResponse.setTime(String.format("%.2f",submissionEntity.getExecutionTime()));
         statusResponse.setUsername(userEntity.getUsername());
         statusResponse.setFullname(userEntity.getFullname());
+        statusResponse.setTest_acept(submissionEntity.getTestAcept());
+        statusResponse.setShow_test(problemEntity.getShow_test() == 1 ? true : false);
         return statusResponse;
     }
 }

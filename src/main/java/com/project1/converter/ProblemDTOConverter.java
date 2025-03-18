@@ -31,6 +31,7 @@ public class ProblemDTOConverter {
             }
         }
         problemDTO.setLanguage(arr);
+        problemDTO.setShow_test(item.getShow_test() == 1 ? true : false);
         return problemDTO;
     }
 }

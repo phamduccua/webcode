@@ -55,7 +55,7 @@
             color: #FFFFFF !important;
             background-color: #8A1111 !important;
         }
-        .table-head th:nth-child(3),.table-head th:nth-child(4) {
+        .table-head th:nth-child(2), .table-head th:nth-child(3){
             text-align: left !important;
             vertical-align: middle !important;
             height: 50px !important;
@@ -72,9 +72,15 @@
             padding: 10px !important;
             border-bottom: 1px solid #ccc !important;
         }
-        .table-body td:nth-child(3), .table-body td:nth-child(4) {
+        .table-body td:nth-child(2), .table-body td:nth-child(3) {
             align-content: center;
             text-align: left !important;
+            padding: 10px !important;
+            border-bottom: 1px solid #ccc !important;
+        }
+        .table-body td:nth-child(4){
+            align-content: center;
+            text-align: center !important;
             padding: 10px !important;
             border-bottom: 1px solid #ccc !important;
         }
@@ -218,14 +224,24 @@
                     </c:if>
                     <c:if test="${item.status != null}">
                         <c:if test="${item.status == 'true'}">
-                            <td style="color: #19BE6B;">AC</td>
+                            <td style="color: #19BE6B;">
+                            <c:if test="${item.show_test == true}">
+                                (${item.test_acept})
+                            </c:if>
+                            AC
+                            </td>
                         </c:if>
                         <c:if test="${item.status == 'false'}">
                             <c:if test="${item.code == 'CE'}">
                                 <td style="color: rgb(0, 0, 0)">CE</td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td style="color: #FF0000;">${item.code}</td>
+                                <td style="color: #FF0000;">
+                                <c:if test="${item.show_test == true}">
+                                    (${item.test_acept})
+                                </c:if>
+                                ${item.code}
+                                </td>
                             </c:if>
                         </c:if>
                     </c:if>

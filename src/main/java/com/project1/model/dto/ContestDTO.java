@@ -22,5 +22,6 @@ public class ContestDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime start_time;
     private int status;
+    private boolean show_test;
     private List<String> language;
 }

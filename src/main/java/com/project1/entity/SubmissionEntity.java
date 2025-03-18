@@ -38,6 +38,9 @@ public class SubmissionEntity {
     @Column(name="error")
     private String error;
 
+    @Column(name="test_acept")
+    private String testAcept;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="problem_id")
     private ProblemEntity problem;

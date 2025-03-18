@@ -57,6 +57,9 @@ public class ProblemEntity {
     @Column(name="created_by")
     private Long createdBy;
 
+    @Column(name="show_test")
+    private Integer show_test;
+
     @OneToMany(mappedBy="problem", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
 

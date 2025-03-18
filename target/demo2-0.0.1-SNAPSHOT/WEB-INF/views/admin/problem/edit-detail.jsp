@@ -156,6 +156,10 @@
             <label for="code" class="label">Giới hạn bộ nhớ</label>
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn bộ nhớ" path="memory_limit"/>
         </div>
+         <div>
+            <label class="label">Show test</label>
+            <form:checkbox id="show_test" path="show_test"/>
+        </div>
         <form:hidden path="id" id="problemId"/>
         <button class="buttonadd" id="updateProblem">Cập nhật</button>
     </form:form>

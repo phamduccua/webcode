@@ -2,7 +2,7 @@ server:
   port : 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/webcode?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/web?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 16042005
@@ -35,3 +35,6 @@ logging:
         web: DEBUG
         security: DEBUG
       springframework.boot: DEBUG
+
+#  "/opt/apache-tomcat-10.1.34/webapps/judge1/submissions/"
+#  "D:/webcode/src/main/judge/submissions/";

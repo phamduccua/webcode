@@ -98,6 +98,7 @@ public class ContestServiceImpl implements ContestService {
         problemEntity.getContestEntites().add(contest);
         contest.getProblemEntities().add(problemEntity);
         problemEntity.setLanguage(contest.getLanguage());
+        problemEntity.setShow_test(contest.getShowTest());
         problemRepository.save(problemEntity);
         contestRepository.save(contest);
     }
@@ -203,9 +204,10 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public void updateLanguage(ContestUpdateLanguageDTO contestUpdateLanguageDTO) {
+    public void install(ContestInstallDTO contestInstallDTO) {
         StringBuilder language = new StringBuilder();
-        List<String> languages = contestUpdateLanguageDTO.getLanguages();
+        boolean show_test = contestInstallDTO.isShow_test();
+        List<String> languages = contestInstallDTO.getLanguages();
         if(languages != null) {
             for (int i = 0; i < languages.size(); i++) {
                 if (i != languages.size() - 1) {
@@ -213,12 +215,14 @@ public class ContestServiceImpl implements ContestService {
                 } else language.append(languages.get(i));
             }
         }
-        ContestEntity contest = contestRepository.findContestById(contestUpdateLanguageDTO.getContestId());
+        ContestEntity contest = contestRepository.findContestById(contestInstallDTO.getContestId());
         contest.setLanguage(language.toString());
         for(ProblemEntity problemEntity : contest.getProblemEntities()){
             problemEntity.setLanguage(language.toString());
+            problemEntity.setShow_test(show_test == true ? 1 : 0);
             problemRepository.save(problemEntity);
         }
+        contest.setShowTest(show_test == true ? 1 : 0);
         contestRepository.save(contest);
     }
 

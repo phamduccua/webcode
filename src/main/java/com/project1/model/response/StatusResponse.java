@@ -21,6 +21,8 @@ public class StatusResponse {
     private String submitted;
     private String username;
     private String fullname;
+    private String test_acept;
+    private boolean show_test;
     public String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(submittedAt);

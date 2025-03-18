@@ -39,6 +39,7 @@ public class ProblemAddConverter {
             }
         }
         problemEntity.setLanguage(langua.toString());
+        problemEntity.setShow_test(problemDTO.isShow_test() == true ? 1 : 0);
         return problemEntity;
     }
     public ProblemEntity toProblemEntity(ProblemContestDTO problemContestDTO,HttpServletRequest request) {

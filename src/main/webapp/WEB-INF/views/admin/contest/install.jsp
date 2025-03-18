@@ -60,7 +60,11 @@
       <label>Ngôn ngữ sử dụng: </label>
       <form:checkboxes items="${listLanguages}" path="language" cssClass="checkbox-item"/>
     </div>
-    <button class="buttonadd" id="updateProblem">Cập nhật</button>
+    <div>
+      <label class="label">Show test</label>
+      <form:checkbox id="show_test" path="show_test"/>
+    </div>
+    <button class="buttonadd" id="updateContest">Cập nhật</button>
   </form:form>
 
 </div>
@@ -68,7 +72,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  $('#updateProblem').click(function(e){
+  $('#updateContest').click(function(e){
     e.preventDefault();
     var data = {};
     var language  = [];
@@ -80,10 +84,10 @@
     });
     data['languages'] = language;
     data['contestId'] = ${contestDTO.id};
-    console.log(data);
+    data['show_test'] = $('#show_test').prop('checked')
     $.ajax({
       type:"PUT",
-      url: "/admin/update_language_contest",
+      url: "/admin/install_contest",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function () {

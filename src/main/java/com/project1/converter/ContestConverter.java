@@ -42,10 +42,12 @@ public class ContestConverter {
             }
         }
         contestDTO.setLanguage(arr);
+        contestDTO.setShow_test(contestEntity.getShowTest() == 1 ? true : false);
         return contestDTO;
     }
     public ContestEntity toContestEntity(ContestCreate contestCreate) {
         ContestEntity contestEntity = modelMpper.map(contestCreate, ContestEntity.class);
+        contestEntity.setShowTest(0);
         return contestEntity;
     }
 }

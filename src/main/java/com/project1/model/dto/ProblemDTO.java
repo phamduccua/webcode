@@ -19,7 +19,16 @@ public class ProblemDTO extends AbstractDTO{
     private String color;
     private float time_limit;
     private Long memory_limit;
+    private boolean show_test;
     private List<String> language;
+
+    public boolean isShow_test() {
+        return show_test;
+    }
+
+    public void setShow_test(boolean show_test) {
+        this.show_test = show_test;
+    }
 
     public String getCode() {
         return code;

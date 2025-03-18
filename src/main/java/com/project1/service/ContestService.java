@@ -22,7 +22,7 @@ public interface ContestService {
     void updateProblemContest(ProblemContestDTO problemContestDTO,HttpServletRequest request);
     void editMember(Map<String,String> map);
     LeaderBoardResponse leaderBoard(ContestDTO contestDTO);
-    void updateLanguage(ContestUpdateLanguageDTO contestUpdateLanguageDTO);
+    void install(ContestInstallDTO contestUpdateLanguageDTO);
     List<ProblemByUserResponse> findByUser(ProblemByUserRequest problemByUserRequest, HttpServletRequest request, Pageable pageable);
     void updateProblemByUser(Map<String,String> map);
     void deleteProblemContest(Map<String,String> map);

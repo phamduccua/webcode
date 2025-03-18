@@ -294,7 +294,7 @@
                         <p>${item.formattedTime}</p>
                     </td>
                     <td>
-                    <a href="/api/solution/"${item.problemCode}" style="color: #d30000;">${item.problemName}
+                    <a href="/api/solution/${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
                     <c:if test="${item.status == null}">
                         <td class="spinner">
@@ -307,7 +307,12 @@
                     </c:if>
                     <c:if test="${item.status != null}">
                         <c:if test="${item.status == true}">
-                            <td><a style="color: #19BE6B;" href="/api/submission/${item.id}/edit" />AC</td>
+                            <td><a style="color: #19BE6B;" href="/api/submission/${item.id}/edit" />
+                             <c:if test="${item.show_test == true}">
+                                 (${item.test_acept})
+                             </c:if>
+                            AC
+                            </td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
@@ -318,7 +323,12 @@
                                 <td></td>
                             </c:if>
                             <c:if test="${item.code != 'CE'}">
-                                <td><a style="color: #FF0000;" href="/api/submission/${item.id}/edit" />${item.code}</td>
+                                <td><a style="color: #FF0000;" href="/api/submission/${item.id}/edit" />
+                                 <c:if test="${item.show_test == true}">
+                                    (${item.test_acept})
+                                 </c:if>
+                                ${item.code}
+                                </td>
                                 <td>${item.time}s</td>
                                 <td>${item.memoryUsed}Kb</td>
                             </c:if>

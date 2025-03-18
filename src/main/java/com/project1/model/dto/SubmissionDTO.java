@@ -21,6 +21,8 @@ public class SubmissionDTO {
     private String error;
     private String submitted;
     private Long contestId;
+    private String test_acept;
+    private boolean show_test;
     public String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(submittedAt);

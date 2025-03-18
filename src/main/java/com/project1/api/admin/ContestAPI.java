@@ -92,10 +92,10 @@ public class ContestAPI {
         }
     }
 
-    @PutMapping("admin/update_language_contest")
-    public ResponseEntity<?> updateLanguageContest(@RequestBody ContestUpdateLanguageDTO contestUpdateLanguageDTO){
+    @PutMapping("admin/install_contest")
+    public ResponseEntity<?> updateLanguageContest(@RequestBody ContestInstallDTO contestInstallDTO){
         try{
-            contestService.updateLanguage(contestUpdateLanguageDTO);
+            contestService.install(contestInstallDTO);
             return ResponseEntity.ok().build();
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
