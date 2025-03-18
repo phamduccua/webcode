@@ -33,7 +33,6 @@ D:\demo1\webcode\src\main\java\com\project1\controller\web\UserSolution.java
 D:\demo1\webcode\src\main\java\com\project1\controller\web\UserStatus.java
 D:\demo1\webcode\src\main\java\com\project1\converter\ContestConverter.java
 D:\demo1\webcode\src\main\java\com\project1\converter\InputConverter.java
-D:\demo1\webcode\src\main\java\com\project1\converter\OutputResponseConverter.java
 D:\demo1\webcode\src\main\java\com\project1\converter\ProblemAddConverter.java
 D:\demo1\webcode\src\main\java\com\project1\converter\ProblemDTOConverter.java
 D:\demo1\webcode\src\main\java\com\project1\converter\ProblemEntityConverter.java
@@ -66,7 +65,7 @@ D:\demo1\webcode\src\main\java\com\project1\fillter\JwtTokenFilter.java
 D:\demo1\webcode\src\main\java\com\project1\model\dto\AbstractDTO.java
 D:\demo1\webcode\src\main\java\com\project1\model\dto\ContestCreate.java
 D:\demo1\webcode\src\main\java\com\project1\model\dto\ContestDTO.java
-D:\demo1\webcode\src\main\java\com\project1\model\dto\ContestUpdateLanguageDTO.java
+D:\demo1\webcode\src\main\java\com\project1\model\dto\ContestInstallDTO.java
 D:\demo1\webcode\src\main\java\com\project1\model\dto\FileSubmission.java
 D:\demo1\webcode\src\main\java\com\project1\model\dto\InputDTO.java
 D:\demo1\webcode\src\main\java\com\project1\model\dto\LoadUserDTO.java
