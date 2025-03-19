@@ -185,7 +185,6 @@
                     </td>
                     <td class="col-2">
                         <input type="hidden" class="end-time" value="${item.end_time}" />
-                        <div>${now}</div>
                         <span class="status">
                             <c:if test="${item.start_time > now}">
                                 <span class="status upcoming">

@@ -374,7 +374,7 @@
         var count = 0;
         $(".table-body tr").each(function () {
             var status = $(this).find("td:nth-child(4)").text().trim();
-            if (status === "") {
+            if (status === "Loading...") {
                 count++;
             }
         });

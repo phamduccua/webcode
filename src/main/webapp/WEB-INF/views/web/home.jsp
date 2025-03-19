@@ -242,7 +242,6 @@
       contentType: "application/json",
       dataType: "JSON",
       success: function (id) {
-        console.log("ID người dùng:", id);
         $.ajax({
           type: "POST",
           url: "/api/loader",
@@ -250,7 +249,6 @@
           contentType: "application/json",
           dataType: "JSON",
           success: function (response) {
-            console.log(response);
             document.getElementById('idUser').value = response.id;
             var item = document.getElementById('profile');
             if (item) {
