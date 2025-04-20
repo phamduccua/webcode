@@ -5,6 +5,7 @@ import com.project1.entity.ProblemEntity;
 import com.project1.model.dto.ProblemDTO;
 import com.project1.repository.AddProblemRepository;
 import com.project1.service.AddProblemService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,11 @@ public class AddProblemServiceImpl implements AddProblemService {
     private ProblemAddConverter problemAddConverter;
     @Autowired
     private AddProblemRepository addProblemRepository;
+
     @Override
-    public Long addProblem(ProblemDTO problemDTO) {
-        ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemDTO);
-        Long problemId = addProblemRepository.addProblem(problemEntity);
-        return problemId;
+    public void addProblem(ProblemDTO problemDTO, HttpServletRequest request) {
+        ProblemEntity problemEntity = problemAddConverter.toProblemEntity(problemDTO,request);
+
+        addProblemRepository.addProblem(problemEntity);
     }
 }

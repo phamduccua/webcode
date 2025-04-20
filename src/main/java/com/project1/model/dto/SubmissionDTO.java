@@ -11,7 +11,7 @@ import java.util.Date;
 public class SubmissionDTO {
     private Long id;
     private String problemName;
-    private int status;
+    private String status;
     private String time;
     private Long memoryUsed;
     private String language;
@@ -19,6 +19,10 @@ public class SubmissionDTO {
     private String problemCode;
     private String code;
     private String error;
+    private String submitted;
+    private Long contestId;
+    private String test_acept;
+    private boolean show_test;
     public String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(submittedAt);

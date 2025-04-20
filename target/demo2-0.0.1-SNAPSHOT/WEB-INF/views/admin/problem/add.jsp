@@ -8,12 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="/WEB-INF/views/admin/problem/home.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Tạo bài tập</title>
     <style>
         .main {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             position: relative;
             width: 1177.6px;
             margin: 30.39px auto 0;
@@ -54,31 +58,27 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .button {
-            background-color:rgb(0, 255, 238); /* Màu nền */
-            color: white; /* Màu chữ */
-            font-size: 16px; /* Kích thước chữ */
-            font-weight: bold; /* In đậm chữ */
-            padding: 10px 20px; /* Khoảng cách bên trong nút */
-            border: none; /* Loại bỏ viền mặc định */
-            border-radius: 8px; /* Bo tròn góc nút */
-            cursor: pointer; /* Hiển thị biểu tượng tay khi hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-            transition: all 0.3s ease; /* Hiệu ứng mượt khi thay đổi */
+        .buttonadd {
+            background-color:rgb(0, 255, 238);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-
-        /* Hiệu ứng khi di chuột qua nút */
-        .button:hover {
-            background-color: limegreen; /* Đổi màu nền khi hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Tăng đổ bóng */
-            transform: translateY(-2px); /* Dịch lên nhẹ */
+        .buttonadd:hover {
+            background-color: limegreen;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
-
-        /* Hiệu ứng khi nhấn nút */
-        .button:active {
-            background-color: forestgreen; /* Màu tối hơn khi nhấn */
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng lõm */
-            transform: translateY(1px); /* Dịch xuống nhẹ */
+        .buttonadd:active {
+            background-color: forestgreen;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
         }
         select{
             height:25px;
@@ -89,8 +89,30 @@
             margin-right: 5px;
             margin-left: 20px;
         }
-
-
+        #btnupload{
+            width: 100px;
+            height: 30px;
+            margin-left: 20px;
+        }
+        #menu_upload {
+            display: none;
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            top: 350px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            background-color: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            /*align-content: center;*/
+        }
+        .file_upload{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -108,6 +130,7 @@
         <div>
             <label for="problem_statement" class="label">Đề bài</label>
             <form:textarea class="textarea" id="problem_statement" placeholder="Nhập đề bài" path="description"></form:textarea>
+            <button id="btnupload">Chọn tệp</button>
         </div>
         <div>
             <labe class="label">Độ khó</labe>
@@ -153,41 +176,118 @@
             <label for="code" class="label">Giới hạn bộ nhớ</label>
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn bộ nhớ" path="memory_limit"/>
         </div>
-        <button class="button" id="addProblem">Tạo bài tập</button>
+        <div>
+            <label class="label">Show test</label>
+            <form:checkbox id="show_test" path="show_test"/>
+        </div>
+        <button class="buttonadd" id="addProblem">Tạo bài tập</button>
     </form:form>
+    <div class="upload" id="menu_upload">
+        <div id="file_name" style="border: 1px solid black; margin-bottom: 20px;">Chưa có file nào</div>
+        <input type="file" class="file_upload" id="upload">
+        <label for="upload" style="border: 1px solid black;">Chọn tệp</label>
+        <button id="up">Upload</button>
+        <button id="close">Đóng</button>
+    </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $('#addProblem').click(function(e){
+    var listImages = [];
+    $('#btnupload').click(function(e){
         e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'block';
+    });
+    $('#close').click(function(e){
+        e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'none';
+    });
+    $('#up').click(function(e){
+        e.preventDefault();
+        var fileUpload = $('#upload')[0].files[0];
+        if (!fileUpload) {
+            alert('Vui lòng chọn một tệp');
+            return;
+        }
+        else{
+            listImages.push(fileUpload);
+            document.getElementById('problem_statement').value = document.getElementById('problem_statement').value + "\n![image](" + fileUpload.name + ")";
+            document.getElementById('upload').value = "";
+            document.getElementById('file_name').textContent = 'Chưa có file nào';
+        }
+
+    });
+    const fileInput = document.getElementById('upload');
+    const fileNameDiv = document.getElementById('file_name');
+    fileInput.addEventListener('change', function () {
+        fileNameDiv.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'Chưa có file nào';
+    });
+    async function edit_debai(debai) {
+        var arr = debai.split("\n");
+        var fileName = [];
+        for (let i of arr) {
+            if (i.includes("image")) {
+                fileName.push(i);
+            }
+        }
+        for (let i of listImages) {
+            let t = "![image](" + i.name + ")";
+            if (i && i.name && fileName.some(name => t.includes(name))) {
+                const name = i.name;
+                var formData = new FormData();
+                formData.append("file", i);
+                await $.ajax({
+                    type: "POST",
+                    url: "/admin/problem/upload/images",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        debai = debai.replace(`![image](` + name + `)`, `![image](` + response + `)`);
+                    },
+                    error: function () {
+                        alert("Tải lên thất bại");
+                    }
+                });
+            }
+        }
+        return debai;
+    }
+
+    $('#addProblem').click(async function (e) {
+        e.preventDefault();
+        let tmp = document.getElementById('problem_statement').value;
+        tmp = await edit_debai(tmp);
+        document.getElementById('problem_statement').value = tmp;
         var data = {};
         var language = [];
         var formData = $('#listForm').serializeArray();
 
-        $.each(formData, function(i, v){
-            if(v.name !== 'language'){
+        $.each(formData, function (i, v) {
+            if (v.name !== 'language') {
                 data[v.name] = v.value;
-            }
-            else{
+            } else {
                 language.push(v.value);
             }
         });
         data['language'] = language;
+        var code = data['code'];
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
-            success: function (response) {
+            success: function () {
                 Swal.fire({
                     title: 'Thành công!',
                     text: 'Yêu cầu của bạn đã được xử lý.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    window.location.href = "/admin/detail-" + response;
+                    window.location.href = "/admin/detail-" + code;
                 });
             },
             error: function (xhr) {

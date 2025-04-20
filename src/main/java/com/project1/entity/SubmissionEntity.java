@@ -21,10 +21,10 @@ public class SubmissionEntity {
     private String language;
 
     @Column(name="status")
-    private int status;
+    private String status;
 
     @Column(name="execution_time")
-    private double executionTime;
+    private Double executionTime;
 
     @Column(name="memory_used")
     private Long memoryUsed;
@@ -38,7 +38,14 @@ public class SubmissionEntity {
     @Column(name="error")
     private String error;
 
+    @Column(name="test_acept")
+    private String testAcept;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="problem_id")
     private ProblemEntity problem;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private UserEntity user;
 }

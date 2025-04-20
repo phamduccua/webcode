@@ -4,8 +4,11 @@ import com.project1.converter.SubmissionEntityConverter;
 import com.project1.entity.SubmissionEntity;
 import com.project1.repository.AddOrUpdateSubRepository;
 import com.project1.utils.CodeRunnerWorker;
+import com.project1.utils.CodeRunnerWorker1;
 import com.project1.utils.RunCode;
+import com.project1.utils.RunCode1;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +23,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @RestController
-@RequestMapping("/uploads")
+@RequestMapping("/api/uploads")
 public class SubmitAPI {
     @Autowired
     private SubmissionEntityConverter submissionEntityConverter;
@@ -28,28 +31,27 @@ public class SubmitAPI {
     private AddOrUpdateSubRepository addOrUpdateSubRepository;
     @Autowired
     private RunCode runCode;
+    @Autowired
+    private RunCode1 runCode1;
     private final BlockingQueue<SubmissionEntity> submissionQueue = new LinkedBlockingQueue<>();
     @PostConstruct
     public void startCodeRunnerWorker() {
         new Thread(new CodeRunnerWorker(submissionQueue,runCode)).start();
+        new Thread(new CodeRunnerWorker1(submissionQueue,runCode1)).start();
     }
-
     @PostMapping("/file")
     public ResponseEntity<String> submit(@RequestParam("file") MultipartFile file,
                                          @RequestParam("language") String language,
-                                         @RequestParam("id") Long problemId) {
+                                         @RequestParam("id") Long problemId,
+                                            HttpServletRequest request) {
         String fileContent;
-        String fileName;
         try {
-            fileName = file.getOriginalFilename();
-            fileName = fileName.substring(0, fileName.lastIndexOf('.'));
             fileContent = readFileContent(file);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
         }
-        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId, fileName);
+        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(fileContent, language, problemId,request);
         addOrUpdateSubRepository.addOrUpdateSub(submission);
-
         try {
             submissionQueue.put(submission);
             return ResponseEntity.ok("Submission added to queue successfully");
@@ -59,6 +61,22 @@ public class SubmitAPI {
         }
     }
 
+
+    @PostMapping("/code")
+    public ResponseEntity<String> submit(@RequestParam("code") String code,
+                                         @RequestParam("language") String language,
+                                         @RequestParam("problemId") Long problemId,
+                                         HttpServletRequest request) {
+        SubmissionEntity submission = submissionEntityConverter.toSubmissonEntity(code, language, problemId,request);
+        addOrUpdateSubRepository.addOrUpdateSub(submission);
+        try {
+            submissionQueue.put(submission);
+            return ResponseEntity.ok("Submission added to queue successfully");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return ResponseEntity.status(500).body("Failed to add submission to queue: " + e.getMessage());
+        }
+    }
     private String readFileContent(MultipartFile file) throws IOException {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {

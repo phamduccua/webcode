@@ -10,6 +10,8 @@ import com.project1.service.AddOrUpdateTestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 
 public class AddOrUpdateTestCaseServiceImp implements AddOrUpdateTestCaseService {
@@ -32,5 +34,14 @@ public class AddOrUpdateTestCaseServiceImp implements AddOrUpdateTestCaseService
             TestCaseEntity testCaseEntity = testCaseEntityConverter.toTestCaseEntity(testCaseDTO);
             addTestCaseRepository.addTestCase(testCaseEntity);
         }
+    }
+
+    @Override
+    public void editTestExample(Map<String, String> map) {
+        Long id = Long.parseLong(map.get("id"));
+        String value = map.get("example");
+        TestCaseEntity testCaseEntity = testCaseRepository.findById(id).get();
+        testCaseEntity.setExample(value);
+        testCaseRepository.save(testCaseEntity);
     }
 }

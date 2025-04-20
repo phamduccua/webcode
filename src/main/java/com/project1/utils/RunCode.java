@@ -7,12 +7,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import static java.lang.Math.max;
@@ -21,9 +21,12 @@ import static java.lang.Math.max;
 public class RunCode {
     @PersistenceContext
     private EntityManager entityManager;
-    private final String path_init = "D:/webcode/src/main/judge/submissions/";
-
+    private final String path_init =   "/opt/apache-tomcat-10.1.34/webapps/judge/submissions/";
+    private final String path_judge =  "/opt/apache-tomcat-10.1.34/webapps/judge/submissions/";
     private String execute(
+            String path,
+            String outputName,
+            List<String> listInput,
             String language,
             ProblemEntity problem,
             String fileName,
@@ -32,22 +35,19 @@ public class RunCode {
             String timeMemoryfileName
     ) {
         String codeFileName = "solution." + language;
-        return String.format(
-                "docker run --rm " +
-                        "-v=\"%s\":/%s " +
-                        "-v=\"%s\":/testcase.txt " +
-                        "-v=\"%s\":/output.txt " +
-                        "-v=\"%s\":/timeMemory.txt " +
-                        "online-judge %s /output.txt /timeMemory.txt %s %s",
-                fileName,
-                codeFileName,
-                testFileName,
-                outputFileName,
-                timeMemoryfileName,
-                language,
-                problem.getTime_limit() + 0.01,
-                problem.getMemory_limit()
-        );
+        StringBuilder str = new StringBuilder("docker run --rm ");
+        if(listInput.size() > 0){
+            for(String item : listInput){
+                str.append(String.format("-v=\"%s\":/%s ",path + item,item));
+            }
+        }
+        str.append(String.format("-v=\"%s\":/%s ",path + outputName,outputName));
+        str.append(String.format("-v=\"%s\":/%s ",fileName,codeFileName));
+        str.append(String.format("-v=\"%s\":/testcase.txt ",testFileName));
+        str.append(String.format("-v=\"%s\":/output.txt ",outputFileName));
+        str.append(String.format("-v=\"%s\":/timeMemory.txt ",timeMemoryfileName));
+        str.append(String.format("online-judge %s /output.txt /timeMemory.txt %s %s ",language,problem.getTime_limit() + 0.01,problem.getMemory_limit()));
+        return str.toString();
     }
 
     public void run(SubmissionEntity submissionEntity) {
@@ -59,7 +59,6 @@ public class RunCode {
         String testFileName = path + "testcase.txt";
         String outputFileName = path + "output.txt";
         String timeMemoryfileName = path + "timeMemory.txt";
-
         List<TestCaseEntity> allTestCases = problem.getTestCases();
 
         try {
@@ -68,33 +67,73 @@ public class RunCode {
             Files.createFile(Paths.get(fileName));
             Files.createFile(Paths.get(timeMemoryfileName));
             Files.createFile(Paths.get(testFileName));
-            Files.writeString(Paths.get(fileName), code);
-
             boolean ok = true;
-            if(submission.getStatus() == 0){
-                for (TestCaseEntity testCase : allTestCases) {
-                    Files.writeString(Paths.get(testFileName), testCase.getInput());
-                    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", execute(submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
-                    System.out.println(execute(submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
-                    pb.directory(new File(path_init));
-                    Process process = pb.start();
-                    process.waitFor();
-
-                    String expectedOutput = testCase.getExpected_output().trim();
-                    String actualOutput = Files.readString(Paths.get(outputFileName)).trim();
-                    String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
-                    SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
-                    if(sub.getStatus() != 0){
-                        ok = false;
-                        break;
+            int count = 0;
+            for (TestCaseEntity testCase : allTestCases) {
+                Files.writeString(Paths.get(fileName),code);
+                List<String> listFileInput = new ArrayList<>();
+                if(testCase.getType().equals("file")){
+                    List<String> list = ReplaceFileName.newFileName(testCase.getInputs(),path);
+                    listFileInput.addAll(list);
+                    CreateFile.createFileTemp(list,path_judge);
+                    if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                        Files.createFile(Paths.get(path + testCase.getOutputFileName()));
+                        Files.createFile(Paths.get(path_judge + testCase.getOutputFileName()));
                     }
                 }
-                if (ok) {
-                    submission.setStatus(1);
-                    submission.setCode("AC");
+                else{
+                    Files.writeString(Paths.get(testFileName), testCase.getInputs().get(0).getContentFile());
                 }
-                entityManager.merge(submission);
+                ProcessBuilder pb = new ProcessBuilder("bash", "-c", execute(path,testCase.getOutputFileName(),listFileInput,submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
+                System.out.println(execute(path,testCase.getOutputFileName(),listFileInput,submission.getLanguage(), problem, fileName, testFileName, outputFileName, timeMemoryfileName));
+                pb.directory(new File(path_init));
+                Process process = pb.start();
+                process.waitFor();
+                String expectedOutput = testCase.getExpctedOutputFileContent()
+                        .replaceAll("^[\\n\\r]+", "")
+                        .replaceAll("[\\n\\r]+$", "");
+                expectedOutput = TrimUtil.Trim(expectedOutput);
+                String actualOutput = "";
+                if (!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")) {
+                    actualOutput = Files.readString(Paths.get(path + testCase.getOutputFileName()))
+                            .replaceAll("^[\\n\\r]+", "")
+                            .replaceAll("[\\n\\r]+$", "");
+                    actualOutput = TrimUtil.Trim(actualOutput);
+                } else {
+                    actualOutput = Files.readString(Paths.get(outputFileName))
+                            .replaceAll("^[\\n\\r]+", "")
+                            .replaceAll("[\\n\\r]+$", "");
+                    actualOutput = TrimUtil.Trim(actualOutput);
+                }
+                String timeMemoryOutput = Files.readString(Paths.get(timeMemoryfileName)).trim();
+                SubmissionEntity sub = SusscessUtils.isSucess(submission,actualOutput,timeMemoryOutput,expectedOutput);
+                if(sub.getStatus() != null && sub.getStatus().equals("false")){
+                    ok = false;
+                    if(testCase.getType().equals("file")){
+                        DeleteFile.deleteFileTemp(listFileInput,path_judge);
+                        if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                            File file = new File(path_judge + testCase.getOutputFileName());
+                            file.delete();
+                        }
+                    }
+                    break;
+                }
+                if(testCase.getType().equals("file") && ok == true){
+                    DeleteFile.deleteFileTemp(listFileInput,path_judge);
+                    DeleteFile.deleteFileTemp(listFileInput,path);
+                    if(!testCase.getOutputFileName().equals("std") && !testCase.getOutputFileName().equals("output.txt")){
+                        File file = new File(path_judge + testCase.getOutputFileName());
+                        file.delete();
+                    }
+                }
+                count++;
             }
+            if (ok) {
+                submission.setStatus("true");
+                submission.setCode("AC");
+            }
+            submission.setTestAcept(String.valueOf(count) + "/" + String.valueOf(allTestCases.size()));
+            entityManager.merge(submission);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -105,7 +144,7 @@ public class RunCode {
     private void deleteDirectory(Path path) {
         try {
             Files.walk(path)
-                    .sorted(Comparator.reverseOrder()) // Xóa file trước, sau đó thư mục
+                    .sorted(Comparator.reverseOrder())
                     .map(Path::toFile)
                     .forEach(file -> {
                         if (!file.delete()) {
@@ -119,3 +158,4 @@ public class RunCode {
         }
     }
 }
+

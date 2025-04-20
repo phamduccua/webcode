@@ -92,82 +92,20 @@
         }
 
         table.table th {
-            height: 40px !important;
+            height: 50px !important;
+            align-content: center;
             text-align: center !important;
             background-color: #FAEDED !important;
             top: 10px !important;
         }
 
         table.table td {
+            height: 30px;
+            align-content: center;
             text-align: center !important;
             background-color: #F1ECEC !important;
+            padding: 0 !important;
         }
-
-        .head {
-            justify-content: center !important;
-            width: 100% !important;
-            height: 60px !important;
-            box-sizing: border-box !important;
-            background-color: #8B1A1A !important;
-        }
-
-        .button {
-            color: white !important;
-            position: absolute !important;
-            top: 18px !important;
-            border: none !important;
-            padding: 10px 20px !important;
-            text-align: center !important;
-        }
-
-        .button-exam {
-            top: 7px !important;
-            left: 120px !important;
-        }
-
-        .button-status {
-            top: 7px !important;
-            left: 200px !important;
-        }
-
-        .button-history {
-            top: 7px !important;
-            left: 300px !important;
-        }
-
-        .button-rank {
-            top: 7px !important;
-            left: 380px !important;
-        }
-
-        .button-configuration {
-            top: 7px !important;
-            left: 510px !important;
-        }
-
-        .button-gui {
-            top: 7px !important;
-            left: 620px !important;
-        }
-
-        .avatar {
-            background-color: white !important;
-            width: 40px !important;
-            height: 40px !important;
-            border-radius: 50% !important;
-            position: absolute !important;
-            top: 15px !important;
-            right: 40px !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-        }
-
-        .img {
-            width: 70% !important;
-            height: 70% !important;
-        }
-
         .dropdown {
             position: relative !important;
             display: inline-block !important;
@@ -197,63 +135,14 @@
             overflow-y: auto !important;
             width: max-content !important;
         }
-
-        .dropdown:hover .dropdown-menu-wrapper {
-            display: block !important;
-        }
-
-        .table-configuration {
-            border-collapse: collapse !important;
-            width: 100% !important;
-        }
-
-        .table-configuration td {
-            padding: 10px !important;
-            text-align: left !important;
-            cursor: pointer !important;
-            color: black !important;
-        }
-
-        .table-configuration tr:hover td {
-            background-color: #f0f0f0 !important;
-        }
-
-        .scrollable-checkboxes {
-            max-height: 100px !important;
-            overflow-y: auto !important;
-            border: 1px solid #ccc !important;
-            padding: 10px !important;
-        }
-
-        .filter-button-container {
-            text-align: center !important;
-            margin-top: 10px !important;
-        }
-
-        .filter-button {
-            padding: 5px 15px !important;
-            background-color: #f5f5f5 !important;
-            border: 1px solid #ccc !important;
-            cursor: pointer !important;
-            border-radius: 5px !important;
-        }
-
-        .filter-button:hover {
-            background-color: #e0e0e0 !important;
-        }
-
         a {
             text-decoration: none !important;
             pointer-events: auto !important;
         }
-
-        /*.detail p {*/
-        /*    white-space: pre-wrap !important;*/
-        /*}*/
-
         .example {
             width: 100% !important;
             border-collapse: collapse !important;
+            margin-bottom: 50px;
         }
 
         table.example th {
@@ -272,9 +161,15 @@
         }
 
         p {
-            margin: 0px !important;
+            margin: 0 0 5px !important;
+            min-height: 10px;
+            white-space: pre-wrap;
         }
-
+        .img_problem{
+            width: auto;
+            height: auto;
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -298,32 +193,77 @@
             <c:if test="${not empty listTest and listTest.size() > 0}">
     <div>
         <p><strong>Ví dụ</strong></p>
-        <table class="example">
-            <thead>
-                <tr>
-                    <th>Input</th>
-                    <th>Output</th>
-                </tr>
-            </thead>
-            <tbody id="test_case">
+        <div id="example">
+        <c:forEach var="item" items="${listTest}">
+            <c:if test="${item.type == 'std'}">
+                <table class="example">
+                    <thead>
+                        <tr>
+                            <th>Input</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody id="test_case">
+                        <tr class="col-12">
+                            <td class="col-6" data-content="${item.inputs.get(0).contentFile}"></td>
+                            <td class="col-6" data-content="${item.output.contentFile}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${item.type == 'file'}">
+                <table class="example">
+                    <tbody>
+                        <c:forEach var="it" items="${item.inputs}" varStatus="status">
+                            <c:if test="${status.count == 1}">
+                                <tr class="col-12">
+                                    <td class="col-6"><strong>${it.fileName}</strong></td>
+                                    <c:if test="${item.output.fileName == 'std'}">
+                                        <td class="col-6"><strong>Output</strong></td>
+                                    </c:if>
+                                    <c:if test="${item.output.fileName != 'std'}">
+                                        <td class="col-6"><strong>${item.output.fileName}</strong></td>
+                                    </c:if>
+                                </tr>
+                                <tr>
+                                    <td data-content="${it.contentFile}"></td>
+                                    <td data-content="${item.output.contentFile}" rowspan="${item.inputs.size()*2 - 1}"></td>
+                                </tr>
+                            </c:if>
+                            <c:if test="${status.count > 1}">
+                                <tr>
+                                    <td><strong>${it.fileName}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td data-content="${it.contentFile}"></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </c:forEach>
 
-            </tbody>
-        </table>
-    </div>
-</c:if>
+
+                </div>
+
+            </div>
+        </c:if>
 </div><br>
-        <p>Giới hạn bài tập: ${detail.time_limit}s</p>
-        <p>Giới hạn bộ nhớ: ${detail.memory_limit}Kb</p> <br>
+        <p>Giới hạn bài tập: ${detail.time_limit} s</p>
+        <p>Giới hạn bộ nhớ: ${detail.memory_limit} Kb</p> <br>
     <div>
+        <div id="notification" style="display: none;">
+            <p style="color: red;">Đối với ngôn ngữ Java đổi tên file thành "solution" trước khi nộp !!!!</p> <br>
+        </div>
         <form id="uploadForm" enctype="multipart/form-data">
             <div class="form-container">
                 <p>Trình biên dịch</p>
-                <select id="selectPogram" name="programingLanguage">
+                <select id="selectPogram" name="programingLanguage" onchange="onchangeLanguage()">
                     <c:forEach var="item" items="${listLanguage}" >
                         <option value="${item}" >${item}</option>
                     </c:forEach>
                 </select>
-
                 <p class="inputFile_value" onclick="upload()">Chọn tệp</p>
                 <p class="inputFile_browser" onclick="upload()">Duyệt</p>
                 <input type="file" name="file" id="fileInput" accept=".c,.cpp,.java,.py"/>
@@ -356,7 +296,7 @@
                     <td>
                     <a href="/admin/assignment-${item.problemCode}" style="color: #d30000;">${item.problemName}
                     </td>
-                    <c:if test="${item.status == 0}">
+                    <c:if test="${item.status == null}">
                         <td class="spinner">
                             <div class="spinner-border text-primary small-spinner" role="status">
                                 <span class="visually-hidden">Loading...</span>
@@ -365,21 +305,33 @@
                         <td></td>
                         <td></td>
                     </c:if>
-                    <c:if test="${item.status != 0}">
-                        <c:if test="${item.status == 1}">
-                            <td style="color: #19BE6B;">AC</td>
+                    <c:if test="${item.status != null}">
+                        <c:if test="${item.status == true}">
+                            <td><a style="color: #19BE6B;" href="/admin/submission/${item.id}/edit" />
+                            <c:if test="${item.show_test == true}">
+                                (${item.test_acept})
+                            </c:if>
+                            AC
+                            </td>
                             <td>${item.time}s</td>
                             <td>${item.memoryUsed}Kb</td>
                         </c:if>
-                        <c:if test="${item.status == 2}">
-                            <td style="color: #FF0000;">${item.code}</td>
-                            <td>${item.time}s</td>
-                            <td>${item.memoryUsed}Kb</td>
-                        </c:if>
-                        <c:if test="${item.status == 3}">
-                            <td style="color: rgb(0, 0, 0)">CE</td>
-                            <td></td>
-                            <td></td>
+                        <c:if test="${item.status == false}">
+                            <c:if test="${item.code == 'CE'}">
+                                <td><a style="color: rgb(0, 0, 0)" href="/admin/submission/${item.id}/edit" />CE</td>
+                                <td></td>
+                                <td></td>
+                            </c:if>
+                            <c:if test="${item.code != 'CE'}">
+                                <td><a style="color: #FF0000;" href="/admin/submission/${item.id}/edit" />
+                                <c:if test="${item.show_test == true}">
+                                    (${item.test_acept})
+                                </c:if>
+                                ${item.code}
+                                </td>
+                                <td>${item.time}s</td>
+                                <td>${item.memoryUsed}Kb</td>
+                            </c:if>
                         </c:if>
                     </c:if>
                     <td>${item.language}</td>
@@ -397,11 +349,32 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    function onchangeLanguage(){
+        if($('#selectPogram').val() === "Java"){
+            const item = document.getElementById('notification');
+            item.style.display = 'block';
+        }
+        else{
+            const item = document.getElementById('notification');
+            item.style.display = 'none';
+        }
+    }
+    function display(){
+        if($('#selectPogram').val() === 'Java'){
+            const item = document.getElementById('notification');
+            item.style.display = 'block';
+        }
+    }
+    $(document).ready(function () {
+        display();
+    });
+</script>
+<script>
     function updateStatus() {
         var count = 0;
-        $("tbody tr").each(function () {
+        $(".table-body tr").each(function () {
             var status = $(this).find("td:nth-child(4)").text().trim();
-            if (status !== ""  && status !== "AC" && status !== "WA" && status !== "RTE" && status !== "TLE" && status !== "CE"　&& status !== "MLE") {
+            if (status === "Loading...") {
                 count++;
             }
         });
@@ -438,7 +411,7 @@
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        location.reload(); // Tải lại trang
+                        location.reload();
                     }
                 });
 
@@ -448,7 +421,7 @@
                 formData.append('language',language);
                 formData.append('id', id);
                 $.ajax({
-                    url: '/uploads/file',
+                    url: '/api/uploads/file',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -475,10 +448,14 @@
     var description = document.getElementById('description');
     var line_description = `${detail.description}`.split("\n");
     description.innerHTML = "";
+    let rows = '';
     line_description.forEach(item => {
-        const p = document.createElement("p");
-        p.textContent = item;
-        description.appendChild(p);
+        if(item.includes("![image]")){
+            rows += ('<img class="img_problem" ' + 'src="http://luyencode.online/uploads/' + item.substring(9,item.length-1) + '"' + '>');
+        }else{
+            rows += ('<p>' + item + '</p>');
+        }
+        description.innerHTML = rows;
     });
 </script>
 <script>
@@ -502,36 +479,19 @@
     });
 </script>
 <script>
-    const listTest = [
-        <c:forEach var="item" items="${listTest}">
-        {
-            input: `${item.input}`,
-            expected_output: `${item.expected_output}`
-        },
-        </c:forEach>
-    ];
-    var test_case = document.getElementById('test_case');
-    test_case.innerHTML = "";
-
-    listTest.forEach(item => {
-        const tr = document.createElement("tr");
-        const td1 = document.createElement("td");
-        const line_input = item.input.split("\n");
-        line_input.forEach(line => {
-            const p = document.createElement("p");
-            p.textContent = line;
-            td1.appendChild(p);
+    function cut(value){
+        var tmp = value.split('\n');
+        var rows = '';
+        for(let i of tmp){
+            rows += '<p>' + i + '</p>';
+        }
+        return rows;
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('td[data-content]').forEach(td => {
+            const content = td.getAttribute('data-content');
+            td.innerHTML = cut(content);
         });
-        tr.appendChild(td1);
-        const td2 = document.createElement("td");
-        const line_output = item.expected_output.split("\n");
-        line_output.forEach(line => {
-            const p = document.createElement("p");
-            p.textContent = line;
-            td2.appendChild(p);
-        });
-        tr.appendChild(td2);
-        test_case.appendChild(tr);
     });
 
 </script>

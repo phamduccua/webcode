@@ -14,45 +14,6 @@
     <title>Test Case</title>
     <meta charset="UTF-8">
     <style>
-        #home {
-            background-color: #8A1111;
-        }
-
-        .main {
-            width: 1178px; /* Làm tròn giá trị */
-            margin: 30px auto 0;
-            padding: 26px 39px;
-            border-radius: 4px;
-            border: 1.6px solid #e1e4e8;
-            text-align: left;
-        }
-
-        .labelTitle {
-            color: white;
-            font-size: 30px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .menu {
-            background-color: white;
-            width: 800px;
-            border-radius: 4px;
-            border: 1.6px solid #e1e4e8;
-            text-align: left;
-        }
-
-        .chose {
-            background-color: aquamarine;
-            color: black;
-            border: 1px solid #ccc;
-            text-decoration: none;
-            margin: 10px;
-            display: inline-block;
-            border-radius: 4px;
-            padding: 2px;
-        }
-
         .form-group > div {
             margin-bottom: 20px;
             display: flex;
@@ -80,41 +41,58 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .button {
-            background-color:rgb(0, 255, 238); /* Màu nền */
-            color: white; /* Màu chữ */
-            font-size: 16px; /* Kích thước chữ */
-            font-weight: bold; /* In đậm chữ */
-            padding: 10px 20px; /* Khoảng cách bên trong nút */
-            border: none; /* Loại bỏ viền mặc định */
-            border-radius: 8px; /* Bo tròn góc nút */
-            cursor: pointer; /* Hiển thị biểu tượng tay khi hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-            transition: all 0.3s ease; /* Hiệu ứng mượt khi thay đổi */
+        .buttonadd {
+            background-color:rgb(0, 255, 238);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
             margin: 20px;
         }
-
-        /* Hiệu ứng khi di chuột qua nút */
-        .button:hover {
-            background-color: limegreen; /* Đổi màu nền khi hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Tăng đổ bóng */
-            transform: translateY(-2px); /* Dịch lên nhẹ */
+        .buttonadd:hover {
+            background-color: limegreen;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
-        /* Hiệu ứng khi nhấn nút */
-        .button:active {
-            background-color: forestgreen; /* Màu tối hơn khi nhấn */
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng lõm */
-            transform: translateY(1px); /* Dịch xuống nhẹ */
-        }
-        body {
-            font-family: "Times New Roman", Times, serif !important;
+        .buttonadd:active {
+            background-color: forestgreen;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
         }
         .checkbox-item {
             align-items: center;
             margin-bottom: 10px;
             margin-right: 5px;
             margin-left: 20px;
+        }
+        #btnupload{
+            width: 100px;
+            height: 30px;
+            margin-left: 20px;
+        }
+        #menu_upload {
+            display: none;
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            top: 550px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            background-color: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+        .file_upload{
+            display: none;
         }
     </style>
 </head>
@@ -132,6 +110,7 @@
         <div>
             <label for="problem_statement" class="label">Đề bài</label>
             <form:textarea class="textarea" id="problem_statement" placeholder="Nhập đề bài" path="description"></form:textarea>
+            <button id="btnupload">Chọn tệp</button>
         </div>
         <div>
             <labe class="label">Độ khó</labe>
@@ -177,35 +156,132 @@
             <label for="code" class="label">Giới hạn bộ nhớ</label>
             <form:input class="text" type="number" id="code" placeholder="Nhập giới hạn bộ nhớ" path="memory_limit"/>
         </div>
+         <div>
+            <label class="label">Show test</label>
+            <form:checkbox id="show_test" path="show_test"/>
+        </div>
         <form:hidden path="id" id="problemId"/>
-        <button class="button" id="updateProblem">Cập nhật</button>
+        <button class="buttonadd" id="updateProblem">Cập nhật</button>
     </form:form>
+    <div class="upload" id="menu_upload">
+        <div id="file_name" style="border: 1px solid black; margin-bottom: 20px;">Chưa có file nào</div>
+        <input type="file" class="file_upload" id="upload">
+        <label for="upload" style="border: 1px solid black;">Chọn tệp</label>
+        <button id="up">Upload</button>
+        <button id="close">Đóng</button>
+    </div>
 </div>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#updateProblem').click(function(e){
+    var listImages = [];
+    $('#btnupload').click(function(e){
         e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'block';
+    });
+    $('#close').click(function(e){
+        e.preventDefault();
+        const upload = document.getElementById('menu_upload');
+        upload.style.display = 'none';
+    });
+    $('#up').click(function(e){
+        e.preventDefault();
+        var fileUpload = $('#upload')[0].files[0];
+        if (!fileUpload) {
+            alert('Vui lòng chọn một tệp');
+            return;
+        }
+        else{
+            listImages.push(fileUpload);
+            document.getElementById('problem_statement').value = document.getElementById('problem_statement').value + "\n![image](" + fileUpload.name + ")";
+            document.getElementById('upload').value = "";
+            document.getElementById('file_name').textContent = 'Chưa có file nào';
+        }
+
+    });
+    const fileInput = document.getElementById('upload');
+    const fileNameDiv = document.getElementById('file_name');
+    fileInput.addEventListener('change', function () {
+        fileNameDiv.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'Chưa có file nào';
+    });
+    function cutImage(nd){
+        var tmp = nd.split("\n");
+        var images = [];
+        for(let i of tmp){
+            if(i.includes("image")){
+                images.push(i);
+            }
+        }
+        return images;
+    }
+    async function updateImage(imageName, newImageName, des) {
+        for (let i of imageName) {
+            if (!newImageName.some(name => i.includes(name))) {
+                await $.ajax({
+                    type: "delete",
+                    url: "/admin/problem/delete-image/" + i.substring(9,i.length-1),
+                    data: JSON.stringify(i),
+                    contentType: "application/json",
+                    succsess(response) {
+                        console.log(response);
+                    },
+                    error(e) {
+                        alert(e);
+                    }
+                })
+            }
+        }
+        console.log(listImages);
+        for (let i of listImages) {
+            let t = '![image](' + i.name + ')';
+            if (i && newImageName.some(name => t.includes(name))) {
+                const name = i.name;
+                var formData = new FormData();
+                formData.append("file", i);
+                await $.ajax({
+                    type: "POST",
+                    url: "/admin/problem/upload/images",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        des = des.replace(`![image](` + name + `)`, `![image](` + response + `)`);
+                    },
+                    error: function () {
+                        alert("Tải lên thất bại");
+                    }
+                });
+            }
+        }
+        return des;
+    }
+    let imageName = cutImage(`${problemEdit.description}`);
+
+    $('#updateProblem').click(async function (e) {
+        e.preventDefault();
+        let des = document.getElementById('problem_statement').value;
+        let newImageName = cutImage(des);
+        if (JSON.stringify(imageName) !== JSON.stringify(newImageName)) {
+            document.getElementById('problem_statement').value = await updateImage(imageName,newImageName,des);
+        }
         var data = {};
-        var language  = [];
+        var language = [];
         var formData = $('#listForm').serializeArray();
 
-        $.each(formData, function(i, v){
-            if(v.name !== 'language'){
+        $.each(formData, function (i, v) {
+            if (v.name !== 'language') {
                 data[v.name] = v.value;
-            }
-            else{
+            } else {
                 language.push(v.value);
             }
         });
         data['language'] = language;
 
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: "/admin/problem",
             data: JSON.stringify(data),
             contentType: "application/json",
@@ -216,7 +292,7 @@
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    location.reload();
+                    window.location.href = "/admin/detail-" + String($('#code').val());
                 });
             },
             error: function (e) {

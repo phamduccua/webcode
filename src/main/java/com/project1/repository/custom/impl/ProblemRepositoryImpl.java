@@ -20,21 +20,16 @@ public class ProblemRepositoryImpl implements ProblemRepositoryCustom {
     private EntityManager entityManager;
     @Override
     public List<ProblemEntity> findAll(ProblemSearchBuilder problemSearchBuilder) {
-        StringBuilder sql = new StringBuilder("SELECT p.id, p.title, p.description, p.difficulty, p.input_format, p.output_format, p.code, p.type, p.example, p.topic, p.class_id, p.constraints, p.color, p.time_limit, p.memory_limit, p.language \n");
+        StringBuilder sql = new StringBuilder("SELECT p.id, p.title, p.description, p.difficulty, p.input_format, p.output_format, p.code, p.type , p.topic, p.class_id, p.constraints, p.time_limit, p.memory_limit, p.language, p.created_by, p.show_test \n");
         sql.append("FROM problem p \n");
-        sql.append("WHERE 1=1 \n");
+        sql.append("WHERE 1 = 1\n");
+        if(problemSearchBuilder.getCreatedBy() != null) {
+            sql.append("AND p.created_by = " + problemSearchBuilder.getCreatedBy() + " \n");
+        }
         queryNormal(sql, problemSearchBuilder);
         querySpecial(sql, problemSearchBuilder);
         sql.append(" ORDER BY p.difficulty, p.code ");
         Query query = entityManager.createNativeQuery(sql.toString(), ProblemEntity.class);
-//        int offset = (int) pageable.getOffset();
-//        int pageSize = pageable.getPageSize();
-//        query.setFirstResult(offset);
-//        query.setMaxResults(pageSize);
-//        List<ProblemEntity> listResult = query.getResultList();
-//        String countSql = "SELECT COUNT(*) FROM (" + sql.toString() + ") AS count_query";
-//        Query queryCount = entityManager.createNativeQuery(countSql);
-//        Number total = ((Number) queryCount.getSingleResult()).intValue();
         return query.getResultList();
     }
 
@@ -53,7 +48,7 @@ public class ProblemRepositoryImpl implements ProblemRepositoryCustom {
                         else if(fieldName.equals("code") == true){
                             sql.append(" AND ( p." + fieldName + " LIKE '%" + value + "%' ");
                         }
-                        else{
+                        else if(fieldName.equals("title") == true){
                             sql.append(" OR p.title LIKE '%" + value + "%' )");
                         }
                     }

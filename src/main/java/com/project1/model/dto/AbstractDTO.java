@@ -13,7 +13,7 @@ public class AbstractDTO<T> implements Serializable {
     private Date createdDate;
     private Long createdBy;
     private Date updateDate;
-    private int maxPageItems = 2;
+    private int maxPageItems;
     private int page = 1;
     private List<T> listResult = new ArrayList<>();
     private int totalItems = 0;
@@ -130,4 +130,6 @@ public class AbstractDTO<T> implements Serializable {
     public void setSearchValue(String searchValue) {
         this.searchValue = searchValue;
     }
+
+
 }

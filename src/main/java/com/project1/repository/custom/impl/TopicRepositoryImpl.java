@@ -14,7 +14,7 @@ public class TopicRepositoryImpl implements TopicRepository {
     private EntityManager entityManager;
     @Override
     public List<String> findTopic(long classId) {
-        StringBuilder sql = new StringBuilder("SELECT DISTINCT p.topic \n FROM problem p\n WHERE class_id = " + classId);
+        StringBuilder sql = new StringBuilder("SELECT DISTINCT p.topic \n FROM problem p\n WHERE p.topic NOT LIKE '%CONTEST%' AND class_id = " + classId);
         Query query = entityManager.createNativeQuery(sql.toString(),String.class);
         return (List<String>) query.getResultList();
     }

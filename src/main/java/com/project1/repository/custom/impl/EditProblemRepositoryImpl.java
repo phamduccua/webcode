@@ -14,12 +14,8 @@ import org.springframework.stereotype.Repository;
 public class EditProblemRepositoryImpl implements EditProblemRepository {
     @Autowired
     private ProblemRepository problemRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
     @Override
     public void updateProblem(ProblemEntity problemEntity) {
-        ProblemEntity problemEntityNew = problemRepository.findById(problemEntity.getId()).get();
-        problemEntityNew = problemEntity;
-        entityManager.merge(problemEntityNew);
+        problemRepository.save(problemEntity);
     }
 }

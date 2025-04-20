@@ -36,9 +36,6 @@ public class ProblemEntity {
     @Column(name="type")
     private String type;
 
-    @Column(name="example")
-    private String example;
-
     @Column(name="topic")
     private String topic;
 
@@ -48,11 +45,8 @@ public class ProblemEntity {
     @Column(name="constraints")
     private String constraints;
 
-    @Column(name="color")
-    private String color;
-
     @Column(name="time_limit")
-    private float time_limit;
+    private Double time_limit;
 
     @Column(name="memory_limit")
     private Long memory_limit;
@@ -60,9 +54,18 @@ public class ProblemEntity {
     @Column(name="language")
     private String language;
 
-    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Column(name="created_by")
+    private Long createdBy;
+
+    @Column(name="show_test")
+    private Integer show_test;
+
+    @OneToMany(mappedBy="problem", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<TestCaseEntity> testCases = new ArrayList<>();
 
-    @OneToMany(mappedBy="problem", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy="problem", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SubmissionEntity> submissions = new ArrayList<>();
+
+    @ManyToMany(mappedBy="problemEntities", fetch = FetchType.EAGER)
+    private List<ContestEntity> contestEntites = new ArrayList<>();
 }

@@ -20,6 +20,8 @@ public class SubmissionDTOConverter {
         submissionDTO.setProblemName(problemEntity.getTitle());
         submissionDTO.setProblemCode(problemEntity.getCode());
         submissionDTO.setTime(String.format("%.2f",submissionEntity.getExecutionTime()));
+        submissionDTO.setTest_acept(submissionEntity.getTestAcept());
+        submissionDTO.setShow_test(problemEntity.getShow_test() == 1 ? true : false);
         return submissionDTO;
     }
 }

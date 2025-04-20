@@ -20,12 +20,18 @@ public class ProblemDTOConverter {
         ProblemDTO problemDTO = modelMapper.map(item,ProblemDTO.class);
         problemDTO.setGroup(ClassIdUtils.toClassId(item.getClassId()));
         List<String> arr = new ArrayList<>();
-        StringTokenizer str = new StringTokenizer(item.getLanguage(), ",");
-        while(str.hasMoreTokens()){
-            String language = str.nextToken();
-            arr.add(language);
+        if(item.getLanguage() == null || item.getLanguage().equals("")) {
+            System.out.println("null");
+        }
+        else{
+            StringTokenizer str = new StringTokenizer(item.getLanguage(), ",");
+            while(str.hasMoreTokens()){
+                String language = str.nextToken();
+                arr.add(language);
+            }
         }
         problemDTO.setLanguage(arr);
+        problemDTO.setShow_test(item.getShow_test() == 1 ? true : false);
         return problemDTO;
     }
 }
